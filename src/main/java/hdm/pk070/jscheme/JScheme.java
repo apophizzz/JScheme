@@ -13,7 +13,7 @@ public class JScheme {
         for (; ; ) {
             System.out.print("> ");
             SchemeObject read = SchemeReader.withStdin().read();
-            System.out.println(read);
+//            System.out.println();
         }
     }
 }

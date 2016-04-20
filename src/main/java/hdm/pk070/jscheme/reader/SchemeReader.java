@@ -22,10 +22,7 @@ public class SchemeReader {
 
     public static SchemeReader withInputStream(InputStream in) {
         Objects.requireNonNull(in);
-        if (Objects.isNull(schemeReader)) {
-            schemeReader = new SchemeReader(in);
-        }
-        return schemeReader;
+        return new SchemeReader(in);
     }
 
     private SchemeReader(InputStream in) {
@@ -37,6 +34,7 @@ public class SchemeReader {
     public SchemeObject read() {
         // ignore leading whitespace until a character is met
         char ch = this.skipSpaces();
+        System.out.println(ch);
         return null;
     }
 
