@@ -19,7 +19,6 @@ import static org.junit.Assert.assertThat;
 public class SchemeReaderTest {
 
     private SchemeReader schemeReader;
-    private InputStream temp;
 
     private String fakeInput = "Test";
     private String inputWithSpace = " Leading space character";
@@ -27,75 +26,59 @@ public class SchemeReaderTest {
     private String inputWithNewLine = "\nLeading new line character";
     private String inputWithCarriageReturn = "\rLeading carriage return character";
 
-    @Before
-    public void setUp() {
-        temp = System.in;
-        schemeReader = SchemeReader.withStdin();
-    }
 
     @Test
     public void testCreateSchemeReaderInstance() {
-        SchemeReader schemeReader = SchemeReader.withStdin();
+        SchemeReader schemeReaderStdIn = SchemeReader.withStdin();
+        SchemeReader schemeReaderWithStream = SchemeReader.withInputStream(System.in);
 
-        assertThat(schemeReader, notNullValue());
+        assertThat(schemeReaderStdIn, notNullValue());
+        assertThat(schemeReaderWithStream, notNullValue());
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void testPassNullToCreationMethodThrowsException() {
+        SchemeReader.withInputStream(null);
     }
 
     @Test
     public void testReadNextChar() {
-        schemeReader.setStream(redefineStdin(fakeInput));
-
+        schemeReader = SchemeReader.withInputStream(createDummyInputStream(fakeInput));
         String methodName = "readNextChar";
         Object result = ReflectionUtils.invoke(schemeReader, methodName);
 
         assertThat(result, notNullValue());
-        assertThat(((Character) result), equalTo(fakeInput.charAt(0)));
+        assertThat(result, equalTo(fakeInput.charAt(0)));
     }
 
     @Test
-    public void testSkipLeadingTab() {
-        assertSkipWhitespace(inputWithTab);
-    }
-
-    @Test
-    public void testSkipLeadingSpace() {
+    public void testSkipSpaces() {
         assertSkipWhitespace(inputWithSpace);
-    }
-
-    @Test
-    public void testSkipLeadingNewLine() {
+        assertSkipWhitespace(inputWithTab);
         assertSkipWhitespace(inputWithNewLine);
-    }
-
-    @Test
-    public void testSkipLeadingCarriageReturn() {
         assertSkipWhitespace(inputWithCarriageReturn);
     }
 
 
     @After
     public void tearDown() {
-        schemeReader.shutdown();
-        resetStdin();
+        if (Objects.nonNull(schemeReader)) {
+            schemeReader.shutdown();
+        }
     }
 
     private void assertSkipWhitespace(String whitespaceString) {
-        schemeReader.setStream(redefineStdin(inputWithSpace));
-
+        schemeReader = SchemeReader.withInputStream(createDummyInputStream(whitespaceString));
         String methodName = "skipSpaces";
         Object result = ReflectionUtils.invoke(schemeReader, methodName);
 
         assertThat(result, notNullValue());
-        assertThat(((Character) result), equalTo(inputWithSpace.trim
-                ().charAt(0)));
+        assertThat(result, equalTo(inputWithSpace.trim().charAt(0)));
     }
 
-    private InputStream redefineStdin(String userInput) {
+    private InputStream createDummyInputStream(String userInput) {
         Objects.nonNull(userInput);
-        System.setIn(new ByteArrayInputStream(userInput.getBytes()));
-        return System.in;
+        return new ByteArrayInputStream(userInput.getBytes());
     }
 
-    private void resetStdin() {
-        System.setIn(temp);
-    }
 }

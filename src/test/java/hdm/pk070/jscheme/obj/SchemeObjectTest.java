@@ -1,6 +1,5 @@
 package hdm.pk070.jscheme.obj;
 
-import hdm.pk070.jscheme.obj.tag.Tag;
 import hdm.pk070.jscheme.obj.type.SchemeInteger;
 import hdm.pk070.jscheme.obj.type.SchemeString;
 import org.junit.Before;
@@ -30,20 +29,16 @@ public class SchemeObjectTest {
     public void testCreateSchemeIntegerIsValid() {
 
         assertThat(schemeIntObj, notNullValue());
-        assertThat(schemeIntObj.getTag(), notNullValue());
-        assertThat(schemeIntObj.getTag(), equalTo(Tag.T_INTEGER));
         assertThat(schemeIntObj.typeOf(SchemeInteger.class), equalTo(true));
-        assertThat(((SchemeInteger) schemeIntObj).getIntVal(), equalTo(42));
+        assertThat(((SchemeInteger) schemeIntObj).getValue(), equalTo(42));
     }
 
     @Test
     public void testCreateSchemeStringIsValid() {
 
         assertThat(schemeStringObj, notNullValue());
-        assertThat(schemeStringObj.getTag(), notNullValue());
-        assertThat(schemeStringObj.getTag(), equalTo(Tag.T_STRING));
         assertThat(schemeStringObj.typeOf(SchemeString.class), equalTo(true));
-        assertThat(((SchemeString) schemeStringObj).getStringVal(), equalTo("foobar"));
+        assertThat(((SchemeString) schemeStringObj).getValue(), equalTo("foobar"));
     }
 
 
@@ -58,5 +53,13 @@ public class SchemeObjectTest {
     @Test(expected = IllegalArgumentException.class)
     public void testTypeOfThrowsExceptionOnNullInput() {
         schemeStringObj.typeOf(null);
+    }
+
+
+    @Test
+    public void testObjectsMustHaveSameTypeAndValueForEquality() {
+        assertThat(schemeStringObj.equals(schemeIntObj), equalTo(false));
+        assertThat(schemeIntObj.equals(SchemeInteger.createObj((Integer) schemeIntObj.getValue())), equalTo(true));
+        assertThat(schemeStringObj.equals(SchemeString.createObj((String) schemeStringObj.getValue())), equalTo(true));
     }
 }
