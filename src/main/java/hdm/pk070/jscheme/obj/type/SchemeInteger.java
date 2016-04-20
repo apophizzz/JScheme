@@ -1,7 +1,6 @@
 package hdm.pk070.jscheme.obj.type;
 
 import hdm.pk070.jscheme.obj.SchemeObject;
-import hdm.pk070.jscheme.obj.tag.Tag;
 
 /**
  * Created by patrick on 19.04.16.
@@ -16,11 +15,12 @@ public class SchemeInteger extends SchemeObject {
     }
 
     private SchemeInteger(int intVal) {
-        super(Tag.T_INTEGER);
         this.intVal = intVal;
     }
 
-    public int getIntVal() {
+
+    @Override
+    public Integer getValue() {
         return intVal;
     }
 }

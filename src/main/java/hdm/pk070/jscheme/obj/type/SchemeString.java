@@ -1,7 +1,6 @@
 package hdm.pk070.jscheme.obj.type;
 
 import hdm.pk070.jscheme.obj.SchemeObject;
-import hdm.pk070.jscheme.obj.tag.Tag;
 
 import java.util.Objects;
 
@@ -18,12 +17,13 @@ public class SchemeString extends SchemeObject {
     }
 
     protected SchemeString(String stringVal) {
-        super(Tag.T_STRING);
         Objects.requireNonNull(stringVal);
         this.stringVal = stringVal;
     }
 
-    public String getStringVal() {
+
+    @Override
+    public String getValue() {
         return stringVal;
     }
 }
