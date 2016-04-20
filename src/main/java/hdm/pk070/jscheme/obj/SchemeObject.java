@@ -1,7 +1,5 @@
 package hdm.pk070.jscheme.obj;
 
-import hdm.pk070.jscheme.obj.tag.Tag;
-
 import java.util.Objects;
 
 /**
@@ -10,23 +8,30 @@ import java.util.Objects;
 public abstract class SchemeObject {
 
 
-    private Tag tag;
+    protected SchemeObject() {
 
-    protected SchemeObject(Tag tag) {
-        Objects.requireNonNull(tag);
-        this.tag = tag;
     }
 
 
-    public Tag getTag() {
-        return tag;
-    }
-
-    public <T extends SchemeObject> boolean typeOf(Class<T> clazz) {
+    public final <T extends SchemeObject> boolean typeOf(Class<T> clazz) {
         if (Objects.nonNull(clazz)) {
             return this.getClass().equals(clazz);
         }
         throw new IllegalArgumentException("Parameter 'clazz' must not be null.");
     }
 
+    public abstract Object getValue();
+
+    @Override
+    public boolean equals(Object obj) {
+        if (Objects.isNull(obj)) {
+            return false;
+        } else if (!(obj instanceof SchemeObject)) {
+            return false;
+        } else if (obj.getClass() != this.getClass()) {
+            return false;
+        } else {
+            return ((SchemeObject) obj).getValue().equals(this.getValue());
+        }
+    }
 }
