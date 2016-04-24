@@ -1,7 +1,6 @@
 package hdm.pk070.jscheme.reader;
 
 import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
@@ -17,7 +16,7 @@ public class SchemeCharacterReaderTest {
 
     private SchemeCharacterReader schemeCharacterReader;
 
-    private String testInput = "foobar";
+    private String testInput = "\t\nfoobar";
     private String inputWithSpace = " Leading space character";
     private String inputWithTab = "\tLeading tab character";
     private String inputWithNewLine = "\nLeading new line character";
@@ -38,9 +37,9 @@ public class SchemeCharacterReaderTest {
     }
 
     @Test
-    public void testNextCharIs() {
+    public void testNextNonWhitespaceCharIs() {
         schemeCharacterReader = SchemeCharacterReader.withInputStream(new ByteArrayInputStream(testInput.getBytes()));
-        boolean isRightChar = schemeCharacterReader.nextCharIs(testInput.charAt(0));
+        boolean isRightChar = schemeCharacterReader.nextNonWhitespaceCharIs(testInput.trim().charAt(0));
 
         assertThat(isRightChar, equalTo(true));
     }

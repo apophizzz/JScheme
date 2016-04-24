@@ -29,14 +29,14 @@ class SchemeCharacterReader {
     }
 
     /**
-     * This method allows to perform a lookahead on the next character
+     * This method allows to perform a lookahead on the next non-whitespace character
      * without accidentally consuming it.
      *
      * @param ch The character we guess to be the next one
      * @return true, when ch equals the next char available at the stream, false otherwise
      */
-    public boolean nextCharIs(char ch) {
-        char nextChar = readFromPushbackReader();
+    public boolean nextNonWhitespaceCharIs(char ch) {
+        char nextChar = nextNonWhitespaceChar();
         unreadCharacter(ch);
         return nextChar == ch;
     }
