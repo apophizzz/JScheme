@@ -3,7 +3,7 @@ package hdm.pk070.jscheme.util;
 import java.util.Objects;
 
 /**
- * Created by patrick on 19.04.16.
+ * @author patrick.kleindienst
  */
 public class ReflectionMethodParam {
 

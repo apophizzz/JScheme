@@ -5,7 +5,7 @@ import hdm.pk070.jscheme.obj.SchemeObject;
 import java.util.Objects;
 
 /**
- * Created by patrick on 19.04.16.
+ * @author patrick.kleindienst
  */
 public class SchemeString extends SchemeObject {
 

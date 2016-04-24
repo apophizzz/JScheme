@@ -5,7 +5,7 @@ import java.lang.reflect.Method;
 import java.util.Objects;
 
 /**
- * Created by patrick on 19.04.16.
+ * @author patrick.kleindienst
  */
 public class ReflectionUtils {
 

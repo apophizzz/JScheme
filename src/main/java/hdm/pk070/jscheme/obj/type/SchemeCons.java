@@ -3,7 +3,7 @@ package hdm.pk070.jscheme.obj.type;
 import hdm.pk070.jscheme.obj.SchemeObject;
 
 /**
- * Created by patrick on 19.04.16.
+ * @author patrick.kleindienst
  */
 public class SchemeCons extends SchemeObject {
 

@@ -10,7 +10,7 @@ import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertThat;
 
 /**
- * Created by patrick on 19.04.16.
+ * @author patrick.kleindienst
  */
 
 public class SchemeObjectTest {

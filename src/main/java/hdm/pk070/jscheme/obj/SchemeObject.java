@@ -3,7 +3,7 @@ package hdm.pk070.jscheme.obj;
 import java.util.Objects;
 
 /**
- * Created by patrick on 19.04.16.
+ * @author patrick.kleindienst
  */
 public abstract class SchemeObject {
 
