@@ -26,4 +26,9 @@ public class SchemeString extends SchemeObject {
     public String getValue() {
         return stringVal;
     }
+
+    @Override
+    public String toString() {
+        return stringVal;
+    }
 }

@@ -23,4 +23,9 @@ public class SchemeInteger extends SchemeObject {
     public Integer getValue() {
         return intVal;
     }
+
+    @Override
+    public String toString() {
+        return String.valueOf(intVal);
+    }
 }
