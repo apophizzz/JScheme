@@ -2,6 +2,7 @@ package hdm.pk070.jscheme.reader;
 
 import hdm.pk070.jscheme.reader.exception.SchemeReaderException;
 
+import javax.print.DocFlavor;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -37,12 +38,30 @@ class SchemeCharacterReader {
      */
     public boolean nextNonWhitespaceCharIs(char ch) {
         char nextChar = nextNonWhitespaceChar();
-        unreadCharacter(ch);
+        unreadCharacter(nextChar);
         return nextChar == ch;
     }
 
+    public boolean nextNonWhitespaceCharIsDigit() {
+        char nextChar = nextNonWhitespaceChar();
+        unreadCharacter(nextChar);
+        return Character.isDigit(nextChar);
+    }
+
     /**
-     * Read next character from the {@link PushbackReader} instance
+     * Checks if the next non-whitespace character available is a digit.
+     *
+     * @return true if digit, false otherwise
+     */
+    public boolean nextCharIsDigit() {
+        char nextChar = readFromPushbackReader();
+        unreadCharacter(nextChar);
+        return Character.isDigit(nextChar);
+    }
+
+
+    /**
+     * Read next character from the {@link PushbackReader} instance.
      *
      * @return next character returned by the {@link PushbackReader}
      */
@@ -82,6 +101,13 @@ class SchemeCharacterReader {
             ch = readFromPushbackReader();
         } while (Character.isWhitespace(ch));
         return ch;
+    }
+
+    /**
+     *
+     */
+    public void skip() {
+        readFromPushbackReader();
     }
 
     /**
