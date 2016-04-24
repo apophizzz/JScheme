@@ -11,9 +11,6 @@ import java.util.Objects;
  */
 public class SchemeReader {
 
-
-    private BufferedReader bufferedReader;
-
     private SchemeCharacterReader schemeCharacterReader;
 
     public static SchemeReader withStdin() {
