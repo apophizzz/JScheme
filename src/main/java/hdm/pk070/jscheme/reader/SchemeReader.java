@@ -7,14 +7,14 @@ import java.io.*;
 import java.util.Objects;
 
 /**
- * Created by patrick on 19.04.16.
+ * @author patrick.kleindienst
  */
 public class SchemeReader {
 
 
-    private static SchemeReader schemeReader;
-
     private BufferedReader bufferedReader;
+
+    private SchemeCharacterReader schemeCharacterReader;
 
     public static SchemeReader withStdin() {
         return withInputStream(System.in);
@@ -27,44 +27,24 @@ public class SchemeReader {
 
     private SchemeReader(InputStream in) {
         Objects.requireNonNull(in);
-        this.bufferedReader = new BufferedReader(new InputStreamReader(in));
+        this.schemeCharacterReader = SchemeCharacterReader.withInputStream(in);
     }
 
 
     public SchemeObject read() {
         // ignore leading whitespace until a character is met
-        char ch = this.skipSpaces();
-        System.out.println(ch);
+//        char ch = this.skipSpaces();
+//        System.out.println(ch);
+        schemeCharacterReader.nextNonWhitespaceChar();
         return null;
     }
 
     public void shutdown() {
-        try {
-            this.bufferedReader.close();
-        } catch (IOException e) {
-            throw new SchemeReaderException("Could not close SchemeReader input stream", e);
-        }
+        schemeCharacterReader.shutdown();
     }
 
     public void setStream(InputStream inputStream) {
-        this.bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-    }
-
-    private Character skipSpaces() {
-        char ch;
-        do {
-            ch = readNextChar();
-        } while (Character.isWhitespace(ch));
-        return ch;
-    }
-
-    private char readNextChar() {
-        try {
-            return (char) this.bufferedReader.read();
-        } catch (IOException e) {
-            shutdown();
-            throw new SchemeReaderException("Exception occurred trying to read next character from input stream", e);
-        }
+        this.schemeCharacterReader = SchemeCharacterReader.withInputStream(inputStream);
     }
 
 
