@@ -12,8 +12,8 @@ public class JScheme {
         System.out.println("Welcome to Scheme\n");
         for (; ; ) {
             System.out.print("> ");
-            SchemeObject read = SchemeReader.withStdin().read();
-//            System.out.println();
+            SchemeObject result = SchemeReader.withStdin().read();
+            System.out.println(result);
         }
     }
 }
