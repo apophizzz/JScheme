@@ -1,9 +1,11 @@
 package hdm.pk070.jscheme.reader;
 
+import hdm.pk070.jscheme.SchemeConstants;
 import hdm.pk070.jscheme.obj.SchemeObject;
-import hdm.pk070.jscheme.reader.exception.SchemeReaderException;
+import hdm.pk070.jscheme.obj.type.SchemeInteger;
+import hdm.pk070.jscheme.obj.type.SchemeString;
 
-import java.io.*;
+import java.io.InputStream;
 import java.util.Objects;
 
 /**
@@ -29,19 +31,73 @@ public class SchemeReader {
 
 
     public SchemeObject read() {
-        // ignore leading whitespace until a character is met
-//        char ch = this.skipSpaces();
-//        System.out.println(ch);
-        schemeCharacterReader.nextNonWhitespaceChar();
-        return null;
+        if (schemeCharacterReader.nextNonWhitespaceCharIs('(')) {
+            return readList();
+        }
+        if (schemeCharacterReader.nextNonWhitespaceCharIs('"')) {
+            return readString();
+        }
+        // TODO ISSUE: input '123abc' must be evaluated as a symbol. Right now
+        // '123' is read as a number and 'abc' as a symbol.
+        if (schemeCharacterReader.nextNonWhitespaceCharIsDigit()) {
+            return readNumber();
+        }
+        return readSymbol();
+    }
+
+    private SchemeObject readSymbol() {
+        throw new UnsupportedOperationException("readSymbol: Not implemented yet.");
+    }
+
+
+    private SchemeObject readNumber() {
+        int intVal = 0;
+        while (schemeCharacterReader.nextCharIsDigit()) {
+            intVal = intVal * 10 + (Character.getNumericValue(schemeCharacterReader.nextNonWhitespaceChar()));
+        }
+        return SchemeInteger.createObj(intVal);
+    }
+
+    private SchemeObject readString() {
+        StringBuffer stringBuffer = new StringBuffer();
+        stringBuffer.append(schemeCharacterReader.nextNonWhitespaceChar());
+
+        while ((!schemeCharacterReader.nextNonWhitespaceCharIs('"')) && (!schemeCharacterReader
+                .nextNonWhitespaceCharIs((char) SchemeConstants.EOF))) {
+            if (schemeCharacterReader.nextNonWhitespaceCharIs('\\')) {
+                schemeCharacterReader.skip();
+                char ch = schemeCharacterReader.nextNonWhitespaceChar();
+                switch (ch) {
+                    case ((char) SchemeConstants.EOF):
+                        // TODO throw error
+                        break;
+                    case 'r':
+                        stringBuffer.append('\r');
+                        break;
+                    case 't':
+                        stringBuffer.append('\t');
+                        break;
+                    case 'n':
+                        stringBuffer.append('\n');
+                        break;
+                    default:
+                        break;
+                }
+            } else {
+                stringBuffer.append(schemeCharacterReader.nextNonWhitespaceChar());
+            }
+        }
+
+        stringBuffer.append(schemeCharacterReader.nextNonWhitespaceChar());
+        return SchemeString.createObj(stringBuffer.toString());
+    }
+
+    private SchemeObject readList() {
+        throw new UnsupportedOperationException("readList: Not implemented yet.");
     }
 
     public void shutdown() {
         schemeCharacterReader.shutdown();
-    }
-
-    public void setStream(InputStream inputStream) {
-        this.schemeCharacterReader = SchemeCharacterReader.withInputStream(inputStream);
     }
 
 
