@@ -2,9 +2,17 @@ package hdm.pk070.jscheme.reader;
 
 import hdm.pk070.jscheme.obj.SchemeObject;
 import hdm.pk070.jscheme.obj.type.*;
+import hdm.pk070.jscheme.symbolTable.SchemeSymbolTable;
 import hdm.pk070.jscheme.util.ReflectionUtils;
 import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mockito;
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PowerMockIgnore;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
 
 import java.io.ByteArrayInputStream;
 import java.util.Objects;
@@ -16,14 +24,35 @@ import static org.junit.Assert.*;
 /**
  * @author patrick.kleindienst
  */
+
+@RunWith(PowerMockRunner.class)
+@PowerMockIgnore("javax.management.*")
+@PrepareForTest(SchemeSymbolTable.class)
 public class SchemeReaderTest {
 
     private static final String METHOD_READ_NUMBER = "readNumber";
     private static final String METHOD_READ_STRING = "readString";
     private static final String METHOD_READ_SYMBOL = "readSymbol";
 
+    private SchemeSymbolTable symbolTableMock;
+
     private SchemeReader schemeReader;
 
+
+    @Before
+    public void setUp() {
+        symbolTableMock = Mockito.mock(SchemeSymbolTable.class);
+        Mockito.when(symbolTableMock.getOrAdd("abc")).thenReturn(new SchemeSymbol("abc"));
+
+        PowerMockito.mockStatic(SchemeSymbolTable.class);
+        PowerMockito.when(SchemeSymbolTable.getInstance()).thenReturn(symbolTableMock);
+    }
+
+    @Test
+    public void testSymbolTableMockIsReady() {
+        assertThat(SchemeSymbolTable.getInstance(), notNullValue());
+        assertThat(SchemeSymbolTable.getInstance(), equalTo(symbolTableMock));
+    }
 
     @Test
     public void testCreateSchemeReaderInstance() {
@@ -75,10 +104,11 @@ public class SchemeReaderTest {
         assertReadSymbol("nil", new SchemeNil());
         assertReadSymbol("#t", new SchemeTrue());
         assertReadSymbol("#f", new SchemeFalse());
+        assertReadSymbol("abc", new SchemeSymbol("abc"));
     }
 
 
-    private <T extends SchemeSymbol> void assertReadSymbol(String input, SchemeSymbol expectedSymbol) {
+    private void assertReadSymbol(String input, SchemeSymbol expectedSymbol) {
         Objects.requireNonNull(expectedSymbol);
         schemeReader = SchemeReader.withInputStream(new ByteArrayInputStream(input.getBytes()));
         Object symbol = ReflectionUtils.invoke(schemeReader, METHOD_READ_SYMBOL);
