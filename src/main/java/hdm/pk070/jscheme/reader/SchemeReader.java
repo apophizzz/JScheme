@@ -2,8 +2,8 @@ package hdm.pk070.jscheme.reader;
 
 import hdm.pk070.jscheme.SchemeConstants;
 import hdm.pk070.jscheme.obj.SchemeObject;
-import hdm.pk070.jscheme.obj.type.SchemeInteger;
-import hdm.pk070.jscheme.obj.type.SchemeString;
+import hdm.pk070.jscheme.obj.type.*;
+import hdm.pk070.jscheme.symbolTable.SymbolTable;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -18,6 +18,7 @@ public class SchemeReader {
 
     private static final Logger LOGGER = LogManager.getRootLogger();
 
+
     private SchemeCharacterReader schemeCharacterReader;
 
     public static SchemeReader withStdin() {
@@ -29,6 +30,7 @@ public class SchemeReader {
         return new SchemeReader(in);
     }
 
+
     private SchemeReader(InputStream in) {
         Objects.requireNonNull(in);
         this.schemeCharacterReader = SchemeCharacterReader.withInputStream(in);
@@ -36,42 +38,76 @@ public class SchemeReader {
 
 
     public SchemeObject read() {
-        if (schemeCharacterReader.nextNonWhitespaceCharIs('(')) {
+
+        schemeCharacterReader.skipLeadingWhitespace();
+
+        if (schemeCharacterReader.nextCharIs('(')) {
             return readList();
         }
-        if (schemeCharacterReader.nextNonWhitespaceCharIs('"')) {
+        if (schemeCharacterReader.nextCharIs('"')) {
             return readString();
         }
         // TODO ISSUE: input '123abc' must be evaluated as a symbol. Right now
         // '123' is read as a number and 'abc' as a symbol.
-        if (schemeCharacterReader.nextNonWhitespaceCharIsDigit()) {
+        if (schemeCharacterReader.nextCharIsDigit()) {
             return readNumber();
         }
         return readSymbol();
     }
 
     private SchemeObject readSymbol() {
-        throw new UnsupportedOperationException("readSymbol: Not implemented yet.");
+
+        StringBuffer symbolBuffer = new StringBuffer();
+        char ch;
+
+        while ((!schemeCharacterReader.nextCharIs('(')) && (!schemeCharacterReader
+                .nextCharIs(')')) && (!schemeCharacterReader.nextCharIsWhiteSpace()) && (!schemeCharacterReader
+                .nextCharIs((char) SchemeConstants
+                        .EOF))) {
+            ch = schemeCharacterReader.nextChar();
+            symbolBuffer.append(ch);
+            LOGGER.debug(String.format("Added character %c (%d) to symbol buffer", ch, (int) ch));
+        }
+
+        if (symbolBuffer.toString().equals("nil")) {
+            return new SchemeNil();
+        }
+
+        if (symbolBuffer.toString().startsWith("#")) {
+            if (symbolBuffer.toString().equals("#t")) {
+                return new SchemeTrue();
+            } else if (symbolBuffer.toString().equals("#f")) {
+                return new SchemeFalse();
+            }
+        }
+
+        // TODO: return SchemeSymbol
+        // If symbol table already contains object, return the corresponding SchemeSymbol object
+        // If symbol table does not contain the object, construct SchemeSymbol object, store it and return it
+
+        return SymbolTable.getInstance().getOrAdd(symbolBuffer.toString());
     }
 
 
     private SchemeObject readNumber() {
         int intVal = 0;
         while (schemeCharacterReader.nextCharIsDigit()) {
-            intVal = intVal * 10 + (Character.getNumericValue(schemeCharacterReader.nextNonWhitespaceChar()));
+            intVal = intVal * 10 + (Character.getNumericValue(schemeCharacterReader.nextChar()));
         }
         return SchemeInteger.createObj(intVal);
     }
 
     private SchemeObject readString() {
         StringBuffer stringBuffer = new StringBuffer();
-        stringBuffer.append(schemeCharacterReader.nextNonWhitespaceChar());
+        char ch = schemeCharacterReader.nextChar();
+        stringBuffer.append(ch);
+        LOGGER.debug(String.format("Added character %c (%d) to string buffer", ch, (int) ch));
 
         while ((!schemeCharacterReader.nextCharIs('"')) && (!schemeCharacterReader
                 .nextCharIs((char) SchemeConstants.EOF))) {
             if (schemeCharacterReader.nextCharIs('\\')) {
                 schemeCharacterReader.skip();
-                char ch = schemeCharacterReader.nextChar();
+                ch = schemeCharacterReader.nextChar();
                 switch (ch) {
                     case ((char) SchemeConstants.EOF):
                         // TODO throw error
@@ -89,11 +125,17 @@ public class SchemeReader {
                         break;
                 }
             } else {
-                stringBuffer.append(schemeCharacterReader.nextChar());
+                ch = schemeCharacterReader.nextChar();
+                stringBuffer.append(ch);
+                LOGGER.debug(String.format("Added character %c (%d) to buffer", ch, (int) ch));
             }
         }
 
-        stringBuffer.append(schemeCharacterReader.nextChar());
+        if (!schemeCharacterReader.nextCharIs((char) SchemeConstants.EOF)) {
+            ch = schemeCharacterReader.nextChar();
+            stringBuffer.append(ch);
+            LOGGER.debug(String.format("Added character %c (%d) to buffer", ch, (int) ch));
+        }
         return SchemeString.createObj(stringBuffer.toString());
     }
 
@@ -102,6 +144,7 @@ public class SchemeReader {
     }
 
     public void shutdown() {
+        LOGGER.debug("Free resources for SchemeReader instance " + this.toString());
         schemeCharacterReader.shutdown();
     }
 
