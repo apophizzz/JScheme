@@ -42,10 +42,20 @@ class SchemeCharacterReader {
         return nextChar == ch;
     }
 
+    public boolean nextCharIs(char ch) {
+        char nextChar = readFromPushbackReader();
+        unreadCharacter(nextChar);
+        return nextChar == ch;
+    }
+
     public boolean nextNonWhitespaceCharIsDigit() {
         char nextChar = nextNonWhitespaceChar();
         unreadCharacter(nextChar);
         return Character.isDigit(nextChar);
+    }
+
+    public char nextChar() {
+        return readFromPushbackReader();
     }
 
     /**

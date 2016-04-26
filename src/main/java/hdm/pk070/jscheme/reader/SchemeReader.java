@@ -62,11 +62,11 @@ public class SchemeReader {
         StringBuffer stringBuffer = new StringBuffer();
         stringBuffer.append(schemeCharacterReader.nextNonWhitespaceChar());
 
-        while ((!schemeCharacterReader.nextNonWhitespaceCharIs('"')) && (!schemeCharacterReader
-                .nextNonWhitespaceCharIs((char) SchemeConstants.EOF))) {
-            if (schemeCharacterReader.nextNonWhitespaceCharIs('\\')) {
+        while ((!schemeCharacterReader.nextCharIs('"')) && (!schemeCharacterReader
+                .nextCharIs((char) SchemeConstants.EOF))) {
+            if (schemeCharacterReader.nextCharIs('\\')) {
                 schemeCharacterReader.skip();
-                char ch = schemeCharacterReader.nextNonWhitespaceChar();
+                char ch = schemeCharacterReader.nextChar();
                 switch (ch) {
                     case ((char) SchemeConstants.EOF):
                         // TODO throw error
@@ -84,11 +84,11 @@ public class SchemeReader {
                         break;
                 }
             } else {
-                stringBuffer.append(schemeCharacterReader.nextNonWhitespaceChar());
+                stringBuffer.append(schemeCharacterReader.nextChar());
             }
         }
 
-        stringBuffer.append(schemeCharacterReader.nextNonWhitespaceChar());
+        stringBuffer.append(schemeCharacterReader.nextChar());
         return SchemeString.createObj(stringBuffer.toString());
     }
 
