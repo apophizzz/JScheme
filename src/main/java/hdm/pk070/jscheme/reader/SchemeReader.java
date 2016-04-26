@@ -4,14 +4,19 @@ import hdm.pk070.jscheme.SchemeConstants;
 import hdm.pk070.jscheme.obj.SchemeObject;
 import hdm.pk070.jscheme.obj.type.SchemeInteger;
 import hdm.pk070.jscheme.obj.type.SchemeString;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.InputStream;
 import java.util.Objects;
+
 
 /**
  * @author patrick.kleindienst
  */
 public class SchemeReader {
+
+    private static final Logger LOGGER = LogManager.getRootLogger();
 
     private SchemeCharacterReader schemeCharacterReader;
 
