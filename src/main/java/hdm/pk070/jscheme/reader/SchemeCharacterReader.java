@@ -1,9 +1,7 @@
 package hdm.pk070.jscheme.reader;
 
-import hdm.pk070.jscheme.SchemeConstants;
 import hdm.pk070.jscheme.reader.exception.SchemeReaderException;
 
-import javax.print.DocFlavor;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
