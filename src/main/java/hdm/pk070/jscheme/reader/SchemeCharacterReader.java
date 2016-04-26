@@ -1,5 +1,6 @@
 package hdm.pk070.jscheme.reader;
 
+import hdm.pk070.jscheme.SchemeConstants;
 import hdm.pk070.jscheme.reader.exception.SchemeReaderException;
 
 import javax.print.DocFlavor;
@@ -69,6 +70,12 @@ class SchemeCharacterReader {
         return Character.isDigit(nextChar);
     }
 
+    public boolean nextCharIsWhiteSpace() {
+        char ch = readFromPushbackReader();
+        unreadCharacter(ch);
+        return Character.isWhitespace(ch);
+    }
+
 
     /**
      * Read next character from the {@link PushbackReader} instance.
@@ -111,6 +118,14 @@ class SchemeCharacterReader {
             ch = readFromPushbackReader();
         } while (Character.isWhitespace(ch));
         return ch;
+    }
+
+    public void skipLeadingWhitespace() {
+        char ch;
+        do {
+            ch = readFromPushbackReader();
+        } while (Character.isWhitespace(ch));
+        unreadCharacter(ch);
     }
 
     /**
