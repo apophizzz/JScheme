@@ -1,9 +1,10 @@
 package hdm.pk070.jscheme.reader;
 
 import hdm.pk070.jscheme.SchemeConstants;
+import hdm.pk070.jscheme.error.SchemeError;
 import hdm.pk070.jscheme.obj.SchemeObject;
 import hdm.pk070.jscheme.obj.type.*;
-import hdm.pk070.jscheme.symbolTable.SymbolTable;
+import hdm.pk070.jscheme.symbolTable.SchemeSymbolTable;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -69,23 +70,18 @@ public class SchemeReader {
             LOGGER.debug(String.format("Added character %c (%d) to symbol buffer", ch, (int) ch));
         }
 
-        if (symbolBuffer.toString().equals("nil")) {
+        if (symbolBuffer.toString().equals(SchemeConstants.NIL_VAL)) {
             return new SchemeNil();
         }
 
         if (symbolBuffer.toString().startsWith("#")) {
-            if (symbolBuffer.toString().equals("#t")) {
+            if (symbolBuffer.toString().equals(SchemeConstants.BOOL_TRUE_VAL)) {
                 return new SchemeTrue();
-            } else if (symbolBuffer.toString().equals("#f")) {
+            } else if (symbolBuffer.toString().equals(SchemeConstants.BOOL_FALSE_VAL)) {
                 return new SchemeFalse();
             }
         }
-
-        // TODO: return SchemeSymbol
-        // If symbol table already contains object, return the corresponding SchemeSymbol object
-        // If symbol table does not contain the object, construct SchemeSymbol object, store it and return it
-
-        return SymbolTable.getInstance().getOrAdd(symbolBuffer.toString());
+        return SchemeSymbolTable.getInstance().getOrAdd(symbolBuffer.toString());
     }
 
 
@@ -110,7 +106,7 @@ public class SchemeReader {
                 ch = schemeCharacterReader.nextChar();
                 switch (ch) {
                     case ((char) SchemeConstants.EOF):
-                        // TODO throw error
+                        SchemeError.print("Unexpected EOF");
                         break;
                     case 'r':
                         stringBuffer.append('\r');
@@ -141,6 +137,7 @@ public class SchemeReader {
 
     private SchemeObject readList() {
         throw new UnsupportedOperationException("readList: Not implemented yet.");
+
     }
 
     public void shutdown() {
