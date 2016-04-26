@@ -8,12 +8,15 @@ import hdm.pk070.jscheme.reader.SchemeReader;
  */
 public class JScheme {
 
+
     public static void main(String[] args) {
-        System.out.println("Welcome to Scheme\n");
+        System.out.println("\n### Welcome to Scheme ###\n");
+        SchemeReader schemeReader = SchemeReader.withStdin();
         for (; ; ) {
-            System.out.print("> ");
-            SchemeObject result = SchemeReader.withStdin().read();
-            System.out.println(result);
+            System.out.print(">> ");
+            SchemeObject result = schemeReader.read();
+            System.out.println("=> " + result);
         }
     }
+
 }
