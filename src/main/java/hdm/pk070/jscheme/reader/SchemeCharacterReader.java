@@ -1,5 +1,6 @@
 package hdm.pk070.jscheme.reader;
 
+import hdm.pk070.jscheme.SchemeConstants;
 import hdm.pk070.jscheme.reader.exception.SchemeReaderException;
 
 import java.io.IOException;
@@ -129,8 +130,18 @@ class SchemeCharacterReader {
     /**
      *
      */
-    public void skip() {
+    public void skipNext() {
         readFromPushbackReader();
+    }
+
+    /**
+     *
+     */
+    public void clearInputStream() {
+        char ch;
+        do {
+            ch = readFromPushbackReader();
+        } while (ch != '\n');
     }
 
     /**
