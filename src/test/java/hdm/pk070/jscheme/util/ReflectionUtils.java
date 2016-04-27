@@ -1,5 +1,6 @@
 package hdm.pk070.jscheme.util;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Objects;
@@ -9,7 +10,7 @@ import java.util.Objects;
  */
 public class ReflectionUtils {
 
-    public static Object invoke(Object caller, String methodName, ReflectionMethodParam... params) {
+    public static Object invokeMethod(Object caller, String methodName, ReflectionMethodParam... params) {
         Method method = getMethodFromClass(caller.getClass(), methodName, toTypeArray(params));
         makeAccessibleIfNecessary(method);
         return invokeMethod(method, caller, toValueArray(params));
@@ -66,6 +67,39 @@ public class ReflectionUtils {
         } else {
             return new Object[]{};
         }
+    }
+
+
+    public static Object getAttributeVal(Object obj, String attribute) {
+        Field field = getFieldByName(obj, attribute);
+        makeAccessibleIfNecessary(field);
+        return getFieldValFromObj(obj, field);
+    }
+
+    private static Field getFieldByName(Object obj, String fieldName) {
+        Field field = null;
+        try {
+            field = obj.getClass().getDeclaredField(fieldName);
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        }
+        return field;
+    }
+
+    private static void makeAccessibleIfNecessary(Field field) {
+        if (!field.isAccessible()) {
+            field.setAccessible(true);
+        }
+    }
+
+    private static Object getFieldValFromObj(Object obj, Field field) {
+        Object result = null;
+        try {
+            result = field.get(obj);
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 
 }
