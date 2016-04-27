@@ -1,5 +1,6 @@
 package hdm.pk070.jscheme;
 
+import hdm.pk070.jscheme.error.SchemeError;
 import hdm.pk070.jscheme.obj.SchemeObject;
 import hdm.pk070.jscheme.reader.SchemeReader;
 
@@ -14,8 +15,22 @@ public class JScheme {
         SchemeReader schemeReader = SchemeReader.withStdin();
         for (; ; ) {
             System.out.print(">> ");
-            SchemeObject result = schemeReader.read();
-            System.out.println("=> " + result);
+            SchemeObject result;
+            try {
+                result = schemeReader.read();
+                System.out.println("=> " + result);
+            } catch (SchemeError schemeError) {
+                schemeReader.clearReaderOnError();
+                System.err.println("---------------------");
+                System.err.println("ERROR: " + schemeError.getMessage());
+                System.err.println("---------------------");
+
+                try {
+                    Thread.sleep(250);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
