@@ -9,7 +9,11 @@ public class SchemeSymbol extends SchemeObject {
 
     private String symbolVal;
 
-    public SchemeSymbol(String symbolVal) {
+    public static SchemeSymbol createObj(String symbolVal) {
+        return new SchemeSymbol(symbolVal);
+    }
+
+    protected SchemeSymbol(String symbolVal) {
         this.symbolVal = symbolVal;
     }
 
