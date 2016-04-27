@@ -38,7 +38,7 @@ public class SchemeSymbolTable {
     }
 
 
-    public SchemeSymbol getOrAdd(String symbolName) {
+    public SchemeSymbol getOrAdd(String symbolName) throws SchemeError {
         Objects.requireNonNull(symbolName);
 
         int nextIndex;
@@ -72,18 +72,18 @@ public class SchemeSymbolTable {
 
             // if there's no free slot available in the table, throw error
             if (nextIndex == startIndex) {
-                SchemeError.print("Symbol table problem!");
+                throw new SchemeError("Symbol table problem!");
             }
         }
     }
 
-    private void doRehashIfRequired() {
+    private void doRehashIfRequired() throws SchemeError {
         if (tableFillSize > 0.75 * tableSize) {
             startRehash();
         }
     }
 
-    private void startRehash() {
+    private void startRehash() throws SchemeError {
         int oldTableSize = tableSize;
         int newTableSize = getNextPowerOfTwoMinusOne();
         tableSize = newTableSize;
@@ -115,7 +115,7 @@ public class SchemeSymbolTable {
 
                     // if the whole table has been searched, there's no free slot > error!
                     if (nextIndex == startIndex) {
-                        SchemeError.print("Symbol table problem!");
+                        throw new SchemeError("Symbol table problem!");
                     }
                 }
 
