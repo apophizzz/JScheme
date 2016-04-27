@@ -4,6 +4,7 @@ import hdm.pk070.jscheme.SchemeConstants;
 import hdm.pk070.jscheme.obj.type.SchemeSymbol;
 import hdm.pk070.jscheme.util.ReflectionMethodParam;
 import hdm.pk070.jscheme.util.ReflectionUtils;
+import hdm.pk070.jscheme.util.exception.ReflectionMethodCallException;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -60,6 +61,12 @@ public class SchemeSymbolTableTest {
         assertThat(ReflectionUtils.invokeMethod(schemeSymbolTable, "isFreeSlot", new ReflectionMethodParam(int.class,
                 randomIndex)), equalTo(false));
 
+    }
+
+    @Test(expected = ReflectionMethodCallException.class)
+    public void testIsFreeSlotThrowsException() {
+        ReflectionUtils.invokeMethod(schemeSymbolTable, "isFreeSlot", new ReflectionMethodParam(int.class, Integer
+                .MAX_VALUE));
     }
 
     @Test
