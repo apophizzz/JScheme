@@ -38,7 +38,7 @@ public class SchemeReader {
     }
 
 
-    public SchemeObject read() {
+    public SchemeObject read() throws SchemeError {
 
         schemeCharacterReader.skipLeadingWhitespace();
 
@@ -56,7 +56,7 @@ public class SchemeReader {
         return readSymbol();
     }
 
-    private SchemeObject readSymbol() {
+    private SchemeObject readSymbol() throws SchemeError {
 
         StringBuffer symbolBuffer = new StringBuffer();
         char ch;
@@ -93,7 +93,7 @@ public class SchemeReader {
         return SchemeInteger.createObj(intVal);
     }
 
-    private SchemeObject readString() {
+    private SchemeObject readString() throws SchemeError {
         StringBuffer stringBuffer = new StringBuffer();
         char ch = schemeCharacterReader.nextChar();
         stringBuffer.append(ch);
@@ -102,12 +102,11 @@ public class SchemeReader {
         while ((!schemeCharacterReader.nextCharIs('"')) && (!schemeCharacterReader
                 .nextCharIs((char) SchemeConstants.EOF))) {
             if (schemeCharacterReader.nextCharIs('\\')) {
-                schemeCharacterReader.skip();
+                schemeCharacterReader.skipNext();
                 ch = schemeCharacterReader.nextChar();
                 switch (ch) {
                     case ((char) SchemeConstants.EOF):
-                        SchemeError.print("Unexpected EOF");
-                        break;
+                        throw new SchemeError("Unexpected EOF");
                     case 'r':
                         stringBuffer.append('\r');
                         break;
@@ -135,14 +134,18 @@ public class SchemeReader {
         return SchemeString.createObj(stringBuffer.toString());
     }
 
-    private SchemeObject readList() {
-        throw new UnsupportedOperationException("readList: Not implemented yet.");
-
+    private SchemeObject readList() throws SchemeError {
+//        throw new UnsupportedOperationException("readList: Not implemented yet.");
+        throw new SchemeError("Bla");
     }
 
     public void shutdown() {
         LOGGER.debug("Free resources for SchemeReader instance " + this.toString());
         schemeCharacterReader.shutdown();
+    }
+
+    public void clearReaderOnError() {
+        schemeCharacterReader.clearInputStream();
     }
 
 
