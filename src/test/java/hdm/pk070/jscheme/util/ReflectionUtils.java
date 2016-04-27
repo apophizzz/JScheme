@@ -1,5 +1,7 @@
 package hdm.pk070.jscheme.util;
 
+import hdm.pk070.jscheme.util.exception.ReflectionMethodCallException;
+
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -26,11 +28,10 @@ public class ReflectionUtils {
         try {
             return method.invoke(caller, paramValues);
         } catch (IllegalAccessException e) {
-            e.printStackTrace();
+            throw new ReflectionMethodCallException("An exception was raised during reflection method call.", e);
         } catch (InvocationTargetException e) {
-            e.printStackTrace();
+            throw new ReflectionMethodCallException("An exception was raised during reflection method call.", e);
         }
-        return null;
     }
 
     private static Method getMethodFromClass(Class clazz, String methodName, Class... paramClasses) {
