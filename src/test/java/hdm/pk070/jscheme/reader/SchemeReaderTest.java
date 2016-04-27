@@ -42,7 +42,7 @@ public class SchemeReaderTest {
     @Before
     public void setUp() {
         symbolTableMock = Mockito.mock(SchemeSymbolTable.class);
-        Mockito.when(symbolTableMock.getOrAdd("abc")).thenReturn(new SchemeSymbol("abc"));
+        Mockito.when(symbolTableMock.getOrAdd("abc")).thenReturn(SchemeSymbol.createObj("abc"));
 
         PowerMockito.mockStatic(SchemeSymbolTable.class);
         PowerMockito.when(SchemeSymbolTable.getInstance()).thenReturn(symbolTableMock);
@@ -73,7 +73,7 @@ public class SchemeReaderTest {
     public void testReadNumber() {
         String testInput = "1234";
         schemeReader = SchemeReader.withInputStream(new ByteArrayInputStream(testInput.getBytes()));
-        Object number = ReflectionUtils.invoke(schemeReader, METHOD_READ_NUMBER);
+        Object number = ReflectionUtils.invokeMethod(schemeReader, METHOD_READ_NUMBER);
 
         assertThat("number is null!", number, notNullValue());
         assertThat("number is not of type SchemeObject!", SchemeObject.class.isAssignableFrom(number.getClass()),
@@ -88,7 +88,7 @@ public class SchemeReaderTest {
     public void testReadString() {
         String testInput = "\"This is just a test\"";
         schemeReader = SchemeReader.withInputStream(new ByteArrayInputStream(testInput.getBytes()));
-        Object string = ReflectionUtils.invoke(schemeReader, METHOD_READ_STRING);
+        Object string = ReflectionUtils.invokeMethod(schemeReader, METHOD_READ_STRING);
 
         assertThat("string is null!", string, notNullValue());
         assertThat("string is not of type SchemeObject!", SchemeObject.class.isAssignableFrom(string.getClass()),
@@ -101,17 +101,17 @@ public class SchemeReaderTest {
 
     @Test
     public void testReadSymbol() {
-        assertReadSymbol("nil", new SchemeNil());
-        assertReadSymbol("#t", new SchemeTrue());
-        assertReadSymbol("#f", new SchemeFalse());
-        assertReadSymbol("abc", new SchemeSymbol("abc"));
+        assertReadSymbol("nil", SchemeNil.createObj());
+        assertReadSymbol("#t", SchemeTrue.createObj());
+        assertReadSymbol("#f", SchemeFalse.createObj());
+        assertReadSymbol("abc", SchemeSymbol.createObj("abc"));
     }
 
 
     private void assertReadSymbol(String input, SchemeSymbol expectedSymbol) {
         Objects.requireNonNull(expectedSymbol);
         schemeReader = SchemeReader.withInputStream(new ByteArrayInputStream(input.getBytes()));
-        Object symbol = ReflectionUtils.invoke(schemeReader, METHOD_READ_SYMBOL);
+        Object symbol = ReflectionUtils.invokeMethod(schemeReader, METHOD_READ_SYMBOL);
 
         assertThat("symbol is null!", symbol, notNullValue());
         assertThat("symbol is not of type SchemeObject!", SchemeObject.class.isAssignableFrom(symbol.getClass()),
