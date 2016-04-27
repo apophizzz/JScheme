@@ -31,7 +31,7 @@ public class SchemeSymbolTableTest {
     }
 
     @Test
-    public void testGetOrAdd() {
+    public void testGetOrAdd() throws Exception {
         SchemeSymbol testSymbol = schemeSymbolTable.getOrAdd("foobar");
         SchemeSymbol validationSymbol = schemeSymbolTable.getOrAdd("foobar");
 

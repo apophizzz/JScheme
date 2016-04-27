@@ -1,5 +1,6 @@
 package hdm.pk070.jscheme.reader;
 
+import hdm.pk070.jscheme.error.SchemeError;
 import hdm.pk070.jscheme.obj.SchemeObject;
 import hdm.pk070.jscheme.obj.type.*;
 import hdm.pk070.jscheme.symbolTable.SchemeSymbolTable;
@@ -40,7 +41,7 @@ public class SchemeReaderTest {
 
 
     @Before
-    public void setUp() {
+    public void setUp() throws Exception {
         symbolTableMock = Mockito.mock(SchemeSymbolTable.class);
         Mockito.when(symbolTableMock.getOrAdd("abc")).thenReturn(SchemeSymbol.createObj("abc"));
 
