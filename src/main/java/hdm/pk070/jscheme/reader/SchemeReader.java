@@ -71,14 +71,14 @@ public class SchemeReader {
         }
 
         if (symbolBuffer.toString().equals(SchemeConstants.NIL_VAL)) {
-            return new SchemeNil();
+            return SchemeNil.createObj();
         }
 
         if (symbolBuffer.toString().startsWith("#")) {
             if (symbolBuffer.toString().equals(SchemeConstants.BOOL_TRUE_VAL)) {
-                return new SchemeTrue();
+                return SchemeTrue.createObj();
             } else if (symbolBuffer.toString().equals(SchemeConstants.BOOL_FALSE_VAL)) {
-                return new SchemeFalse();
+                return SchemeFalse.createObj();
             }
         }
         return SchemeSymbolTable.getInstance().getOrAdd(symbolBuffer.toString());
