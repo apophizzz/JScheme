@@ -39,6 +39,6 @@ public class StandardHashAlgProviderTest {
     }
 
     private Object doHashing(String input) {
-        return ReflectionUtils.invoke(hashAlgProvider, "computeHash", new ReflectionMethodParam(String.class, input));
+        return ReflectionUtils.invokeMethod(hashAlgProvider, "computeHash", new ReflectionMethodParam(String.class, input));
     }
 }
