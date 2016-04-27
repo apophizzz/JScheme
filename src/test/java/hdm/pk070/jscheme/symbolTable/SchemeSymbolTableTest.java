@@ -20,8 +20,8 @@ public class SchemeSymbolTableTest {
 
 
     private SchemeSymbolTable schemeSymbolTable;
-
     private SchemeSymbol[] symbolArray;
+
 
     @Before
     public void setUp() {
@@ -69,6 +69,34 @@ public class SchemeSymbolTableTest {
         int tableFillSizeAfter = (int) ReflectionUtils.getAttributeVal(schemeSymbolTable, "tableFillSize");
 
         assertThat("Table fill size is not incremented!", tableFillSizeAfter > tableFillSizeBefore, equalTo(true));
+    }
+
+    @Test
+    public void testGetNextPowerOfTwoMinusOne() {
+        int initialTableSize = (int) ReflectionUtils.getAttributeVal(schemeSymbolTable, "tableSize");
+        int nextTableSize = (int) ReflectionUtils.invokeMethod(schemeSymbolTable, "getNextPowerOfTwoMinusOne");
+
+        assertThat("Subsequent table size must be greater than previous!", nextTableSize > initialTableSize, equalTo
+                (true));
+        assertThat(nextTableSize == ((initialTableSize + 1) * 2 - 1), equalTo(true));
+    }
+
+    @Test
+    public void testStartRehash() {
+        int symbolTableSizeBeforeRehash = (int) ReflectionUtils.getAttributeVal(schemeSymbolTable, "tableSize");
+        SchemeSymbol[] symbolTableBeforeRehash = (SchemeSymbol[]) ReflectionUtils.getAttributeVal(schemeSymbolTable,
+                "symbolTable");
+
+        ReflectionUtils.invokeMethod(schemeSymbolTable, "startRehash");
+
+        int symbolTableSizeAfterRehash = (int) ReflectionUtils.getAttributeVal(schemeSymbolTable, "tableSize");
+        SchemeSymbol[] symbolTableAfterRehash = (SchemeSymbol[]) ReflectionUtils.getAttributeVal(schemeSymbolTable,
+                "symbolTable");
+
+        assertThat("New symbol table size does not match expected value!", symbolTableSizeAfterRehash == (
+                (symbolTableSizeBeforeRehash + 1) * 2 - 1), equalTo(true));
+        assertThat("Length of new symbol table does not match expected value!", symbolTableAfterRehash.length == (
+                (symbolTableBeforeRehash.length + 1) * 2 - 1), equalTo(true));
     }
 
     private int getRandomTableIndex() {

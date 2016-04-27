@@ -84,9 +84,50 @@ public class SchemeSymbolTable {
     }
 
     private void startRehash() {
-        // TODO implement rehash
+        int oldTableSize = tableSize;
+        int newTableSize = getNextPowerOfTwoMinusOne();
+        tableSize = newTableSize;
+
+        SchemeSymbol[] oldSymbolTable = symbolTable;
+        SchemeSymbol[] newSymbolTable = new SchemeSymbol[newTableSize];
+
+        for (int oldTableIndex = 0; oldTableIndex < oldTableSize; oldTableIndex++) {
+            SchemeSymbol oldSymbol = oldSymbolTable[oldTableIndex];
+
+            // in case oldSymbol is not null
+            if (Objects.nonNull(oldSymbol)) {
+                // re-compute hash
+                int hash = hashAlgProvider.computeHash(oldSymbol.getValue());
+                int startIndex = hash % newTableSize;
+                int nextIndex = startIndex;
+
+                // same old story: search for free slot
+                for (; ; ) {
+
+                    if (isFreeSlot(nextIndex)) {
+                        // if slot is free: add symbol and end loop
+                        newSymbolTable[nextIndex] = oldSymbol;
+                        break;
+                    }
+
+                    // increment search index if slot is occupied
+                    nextIndex = ++nextIndex % newTableSize;
+
+                    // if the whole table has been searched, there's no free slot > error!
+                    if (nextIndex == startIndex) {
+                        SchemeError.print("Symbol table problem!");
+                    }
+                }
+
+            }
+        }
+        // update table reference
+        symbolTable = newSymbolTable;
     }
 
+    private int getNextPowerOfTwoMinusOne() {
+        return (tableSize + 1) * 2 - 1;
+    }
 
     private void incrementFillSize() {
         tableFillSize++;
