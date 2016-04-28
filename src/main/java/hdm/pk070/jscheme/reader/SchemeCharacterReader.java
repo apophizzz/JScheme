@@ -2,6 +2,8 @@ package hdm.pk070.jscheme.reader;
 
 import hdm.pk070.jscheme.SchemeConstants;
 import hdm.pk070.jscheme.reader.exception.SchemeReaderException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -17,6 +19,8 @@ import java.util.Objects;
  * @author patrick.kleindienst
  */
 class SchemeCharacterReader {
+
+    private static final Logger LOGGER = LogManager.getRootLogger();
 
     private PushbackReader pushbackReader;
 
@@ -55,7 +59,9 @@ class SchemeCharacterReader {
     }
 
     public char nextChar() {
-        return readFromPushbackReader();
+        char ch = readFromPushbackReader();
+        LOGGER.debug(String.format("CharacterReader consumed char %c", ch));
+        return ch;
     }
 
     /**
@@ -138,10 +144,19 @@ class SchemeCharacterReader {
      *
      */
     public void clearInputStream() {
-        char ch;
         do {
-            ch = readFromPushbackReader();
-        } while (ch != '\n');
+            readFromPushbackReader();
+        } while (isPushbackReaderReady());
+    }
+
+    private boolean isPushbackReaderReady() {
+        boolean ready = false;
+        try {
+            ready = pushbackReader.ready();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return ready;
     }
 
     /**
