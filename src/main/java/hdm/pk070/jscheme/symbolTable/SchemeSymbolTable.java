@@ -51,7 +51,7 @@ public class SchemeSymbolTable {
 
             // In case the current index marks a free slot
             if (isFreeSlot(nextIndex)) {
-                SchemeSymbol schemeSymbol = SchemeSymbol.createObj(symbolName);
+                SchemeSymbol schemeSymbol = new SchemeSymbol(symbolName);
                 addToTable(schemeSymbol, nextIndex);
                 incrementFillSize();
                 doRehashIfRequired();
@@ -89,7 +89,7 @@ public class SchemeSymbolTable {
         tableSize = newTableSize;
 
         SchemeSymbol[] oldSymbolTable = symbolTable;
-        SchemeSymbol[] newSymbolTable = new SchemeSymbol[newTableSize];
+        symbolTable = new SchemeSymbol[newTableSize];
 
         for (int oldTableIndex = 0; oldTableIndex < oldTableSize; oldTableIndex++) {
             SchemeSymbol oldSymbol = oldSymbolTable[oldTableIndex];
@@ -106,7 +106,7 @@ public class SchemeSymbolTable {
 
                     if (isFreeSlot(nextIndex)) {
                         // if slot is free: add symbol and end loop
-                        newSymbolTable[nextIndex] = oldSymbol;
+                        symbolTable[nextIndex] = oldSymbol;
                         break;
                     }
 
@@ -115,14 +115,14 @@ public class SchemeSymbolTable {
 
                     // if the whole table has been searched, there's no free slot > error!
                     if (nextIndex == startIndex) {
+                        // switch back to old table in case of there's no free slot
+                        symbolTable = oldSymbolTable;
                         throw new SchemeError("Symbol table problem!");
                     }
                 }
 
             }
         }
-        // update table reference
-        symbolTable = newSymbolTable;
     }
 
     private int getNextPowerOfTwoMinusOne() {
