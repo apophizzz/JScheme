@@ -41,7 +41,7 @@ public class SchemeSymbolTableTest {
     @Test
     public void testAddToTable() {
         int randomIndex = getRandomTableIndex();
-        SchemeSymbol testSymbol = SchemeSymbol.createObj("foobar");
+        SchemeSymbol testSymbol = new SchemeSymbol("foobar");
 
         ReflectionUtils.invokeMethod(schemeSymbolTable, "addToTable", new ReflectionMethodParam(SchemeSymbol.class,
                 testSymbol), new ReflectionMethodParam(int.class, randomIndex));
@@ -57,7 +57,7 @@ public class SchemeSymbolTableTest {
 
         assertThat(ReflectionUtils.invokeMethod(schemeSymbolTable, "isFreeSlot", new ReflectionMethodParam(int.class,
                 randomIndex)), equalTo(true));
-        symbolArray[randomIndex] = SchemeSymbol.createObj("foobar");
+        symbolArray[randomIndex] = new SchemeSymbol("foobar");
         assertThat(ReflectionUtils.invokeMethod(schemeSymbolTable, "isFreeSlot", new ReflectionMethodParam(int.class,
                 randomIndex)), equalTo(false));
 
