@@ -10,11 +10,7 @@ public class SchemeInteger extends SchemeObject {
 
     private int intVal;
 
-    public static SchemeInteger createObj(int intVal) {
-        return new SchemeInteger(intVal);
-    }
-
-    private SchemeInteger(int intVal) {
+    public SchemeInteger(int intVal) {
         this.intVal = intVal;
     }
 

@@ -12,11 +12,7 @@ public class SchemeString extends SchemeObject {
 
     private String stringVal;
 
-    public static SchemeString createObj(String stringVal) {
-        return new SchemeString(stringVal);
-    }
-
-    protected SchemeString(String stringVal) {
+    public SchemeString(String stringVal) {
         Objects.requireNonNull(stringVal);
         this.stringVal = stringVal;
     }
