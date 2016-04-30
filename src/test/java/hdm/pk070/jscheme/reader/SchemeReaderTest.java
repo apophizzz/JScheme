@@ -20,7 +20,7 @@ import java.util.Objects;
 
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.notNullValue;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
 
 /**
  * @author patrick.kleindienst
@@ -32,7 +32,6 @@ import static org.junit.Assert.*;
 public class SchemeReaderTest {
 
     private static final String METHOD_READ_NUMBER = "readNumber";
-    private static final String METHOD_READ_STRING = "readString";
     private static final String METHOD_READ_SYMBOL = "readSymbol";
 
     private SchemeSymbolTable symbolTableMock;
@@ -86,17 +85,48 @@ public class SchemeReaderTest {
     }
 
     @Test
-    public void testReadString() {
+    public void testReadString() throws SchemeError {
         String testInput = "\"This is just a test\"";
         schemeReader = SchemeReader.withInputStream(new ByteArrayInputStream(testInput.getBytes()));
-        Object string = ReflectionUtils.invokeMethod(schemeReader, METHOD_READ_STRING);
+        SchemeObject schemeObject = schemeReader.read();
 
-        assertThat("string is null!", string, notNullValue());
-        assertThat("string is not of type SchemeObject!", SchemeObject.class.isAssignableFrom(string.getClass()),
-                equalTo(true));
-        assertThat("string is not of type SchemeString!", ((SchemeObject) string).typeOf(SchemeString.class), equalTo
-                (true));
-        assertThat("string does not have expected value!", ((SchemeString) string).getValue(), equalTo(testInput));
+        assertThat(schemeObject, notNullValue());
+        assertThat(schemeObject.getValue(), equalTo(testInput));
+
+
+        testInput = "\n\"This is just a test\"";
+        schemeReader = SchemeReader.withInputStream(new ByteArrayInputStream(testInput.getBytes()));
+        schemeObject = schemeReader.read();
+
+        assertThat(schemeObject, notNullValue());
+        assertThat(schemeObject.getValue(), equalTo(testInput.trim()));
+
+
+        testInput = "\t\"This is just a test\"";
+        schemeReader = SchemeReader.withInputStream(new ByteArrayInputStream(testInput.getBytes()));
+        schemeObject = schemeReader.read();
+        schemeReader.shutdown();
+
+        assertThat(schemeObject, notNullValue());
+        assertThat(schemeObject.getValue(), equalTo(testInput.trim()));
+
+
+        testInput = "\r\"This is just a test\"";
+        schemeReader = SchemeReader.withInputStream(new ByteArrayInputStream(testInput.getBytes()));
+        schemeObject = schemeReader.read();
+        schemeReader.shutdown();
+
+        assertThat(schemeObject, notNullValue());
+        assertThat(schemeObject.getValue(), equalTo(testInput.trim()));
+
+
+        testInput = "       \"This is just a test\"      ";
+        schemeReader = SchemeReader.withInputStream(new ByteArrayInputStream(testInput.getBytes()));
+        schemeObject = schemeReader.read();
+        schemeReader.shutdown();
+
+        assertThat(schemeObject, notNullValue());
+        assertThat(schemeObject.getValue(), equalTo(testInput.trim()));
     }
 
 

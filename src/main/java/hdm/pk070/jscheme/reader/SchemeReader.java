@@ -4,6 +4,7 @@ import hdm.pk070.jscheme.SchemeConstants;
 import hdm.pk070.jscheme.error.SchemeError;
 import hdm.pk070.jscheme.obj.SchemeObject;
 import hdm.pk070.jscheme.obj.type.*;
+import hdm.pk070.jscheme.reader.obj.StringObjReader;
 import hdm.pk070.jscheme.symbolTable.SchemeSymbolTable;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -46,7 +47,7 @@ public class SchemeReader {
             return readList();
         }
         if (schemeCharacterReader.nextCharIs('"')) {
-            return readString();
+            return StringObjReader.createInstance(schemeCharacterReader).read();
         }
         // TODO ISSUE: input '123abc' must be evaluated as a symbol. Right now
         // '123' is read as a number and 'abc' as a symbol.
@@ -93,46 +94,6 @@ public class SchemeReader {
         return SchemeInteger.createObj(intVal);
     }
 
-    private SchemeObject readString() throws SchemeError {
-        StringBuffer stringBuffer = new StringBuffer();
-        char ch = schemeCharacterReader.nextChar();
-        stringBuffer.append(ch);
-        LOGGER.debug(String.format("Added character %c (%d) to string buffer", ch, (int) ch));
-
-        while ((!schemeCharacterReader.nextCharIs('"')) && (!schemeCharacterReader
-                .nextCharIs((char) SchemeConstants.EOF))) {
-            if (schemeCharacterReader.nextCharIs('\\')) {
-                schemeCharacterReader.skipNext();
-                ch = schemeCharacterReader.nextChar();
-                switch (ch) {
-                    case ((char) SchemeConstants.EOF):
-                        throw new SchemeError("Unexpected EOF");
-                    case 'r':
-                        stringBuffer.append('\r');
-                        break;
-                    case 't':
-                        stringBuffer.append('\t');
-                        break;
-                    case 'n':
-                        stringBuffer.append('\n');
-                        break;
-                    default:
-                        break;
-                }
-            } else {
-                ch = schemeCharacterReader.nextChar();
-                stringBuffer.append(ch);
-                LOGGER.debug(String.format("Added character %c (%d) to buffer", ch, (int) ch));
-            }
-        }
-
-        if (!schemeCharacterReader.nextCharIs((char) SchemeConstants.EOF)) {
-            ch = schemeCharacterReader.nextChar();
-            stringBuffer.append(ch);
-            LOGGER.debug(String.format("Added character %c (%d) to buffer", ch, (int) ch));
-        }
-        return SchemeString.createObj(stringBuffer.toString());
-    }
 
     private SchemeObject readList() throws SchemeError {
 //        throw new UnsupportedOperationException("readList: Not implemented yet.");
