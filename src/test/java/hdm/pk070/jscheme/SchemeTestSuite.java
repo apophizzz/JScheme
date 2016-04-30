@@ -6,6 +6,8 @@ import hdm.pk070.jscheme.reader.SchemeCharacterReaderTest;
 import hdm.pk070.jscheme.reader.SchemeReaderTest;
 import hdm.pk070.jscheme.reader.obj.IntegerObjReaderTest;
 import hdm.pk070.jscheme.reader.obj.StringObjReaderTest;
+import hdm.pk070.jscheme.reader.obj.SymbolObjReader;
+import hdm.pk070.jscheme.reader.obj.SymbolObjReaderTest;
 import hdm.pk070.jscheme.symbolTable.SchemeSymbolTableTest;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
@@ -16,6 +18,7 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({SchemeReaderTest.class, StringObjReaderTest.class, IntegerObjReaderTest.class,
+        SymbolObjReaderTest.class,
         SchemeCharacterReaderTest.class,
         PushbackReaderLearningTest.class,
         StandardHashAlgProviderTest.class, SchemeSymbolTableTest.class})
