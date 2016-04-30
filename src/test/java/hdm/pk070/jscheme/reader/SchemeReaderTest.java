@@ -41,7 +41,7 @@ public class SchemeReaderTest {
     @Before
     public void setUp() throws Exception {
         symbolTableMock = Mockito.mock(SchemeSymbolTable.class);
-        Mockito.when(symbolTableMock.getOrAdd("abc")).thenReturn(SchemeSymbol.createObj("abc"));
+        Mockito.when(symbolTableMock.getOrAdd("abc")).thenReturn(new SchemeSymbol("abc"));
 
         PowerMockito.mockStatic(SchemeSymbolTable.class);
         PowerMockito.when(SchemeSymbolTable.getInstance()).thenReturn(symbolTableMock);
@@ -86,27 +86,25 @@ public class SchemeReaderTest {
 
 
     @Test
-    public void testReadSymbol() {
-        assertReadSymbol("nil", SchemeNil.createObj());
-        assertReadSymbol("#t", SchemeTrue.createObj());
-        assertReadSymbol("#f", SchemeFalse.createObj());
-        assertReadSymbol("abc", SchemeSymbol.createObj("abc"));
+    public void testReadSymbol() throws SchemeError {
+        assertReadSymbol("nil   ", new SchemeNil());
+        assertReadSymbol("   #t  ", new SchemeTrue());
+        assertReadSymbol("       #f", new SchemeFalse());
+        assertReadSymbol("abc", new SchemeSymbol("abc"));
     }
 
 
-    private void assertReadSymbol(String input, SchemeSymbol expectedSymbol) {
+    private void assertReadSymbol(String input, SchemeSymbol expectedSymbol) throws SchemeError {
         Objects.requireNonNull(expectedSymbol);
         schemeReader = SchemeReader.withInputStream(new ByteArrayInputStream(input.getBytes()));
-        Object symbol = ReflectionUtils.invokeMethod(schemeReader, METHOD_READ_SYMBOL);
+        SchemeObject schemeObject = schemeReader.read();
 
-        assertThat("symbol is null!", symbol, notNullValue());
-        assertThat("symbol is not of type SchemeObject!", SchemeObject.class.isAssignableFrom(symbol.getClass()),
+        assertThat("symbol is null!", schemeObject, notNullValue());
+        assertThat("symbol is not of type SchemeSymbol!", SchemeSymbol.class.isAssignableFrom(schemeObject.getClass()),
                 equalTo(true));
-        assertThat("symbol is not of type SchemeSymbol!", SchemeSymbol.class.isAssignableFrom(symbol.getClass()),
-                equalTo(true));
-        assertThat(String.format("symbol is not of type %s!", expectedSymbol.getClass().getSimpleName()), (
-                (SchemeSymbol) symbol).typeOf(expectedSymbol.getClass()), equalTo(true));
-        assertThat("symbol does not have expected value!", symbol, equalTo(expectedSymbol));
+        assertThat(String.format("symbol is not of type %s!", expectedSymbol.getClass().getSimpleName()),
+                schemeObject.typeOf(expectedSymbol.getClass()), equalTo(true));
+        assertThat("symbol does not have expected value!", schemeObject, equalTo(expectedSymbol));
     }
 
     @After
