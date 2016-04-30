@@ -31,7 +31,6 @@ import static org.junit.Assert.assertThat;
 @PrepareForTest(SchemeSymbolTable.class)
 public class SchemeReaderTest {
 
-    private static final String METHOD_READ_NUMBER = "readNumber";
     private static final String METHOD_READ_SYMBOL = "readSymbol";
 
     private SchemeSymbolTable symbolTableMock;
@@ -70,63 +69,19 @@ public class SchemeReaderTest {
 
 
     @Test
-    public void testReadNumber() {
-        String testInput = "1234";
-        schemeReader = SchemeReader.withInputStream(new ByteArrayInputStream(testInput.getBytes()));
-        Object number = ReflectionUtils.invokeMethod(schemeReader, METHOD_READ_NUMBER);
-
-        assertThat("number is null!", number, notNullValue());
-        assertThat("number is not of type SchemeObject!", SchemeObject.class.isAssignableFrom(number.getClass()),
-                equalTo(true));
-        assertThat("number is not of type SchemeInteger!", ((SchemeObject) number).typeOf(SchemeInteger.class),
-                equalTo(true));
-        assertThat("number does not have expected value!", ((SchemeInteger) number).getValue(), equalTo(Integer
-                .valueOf(testInput)));
+    public void testReadNumber() throws SchemeError {
+        assertNumberInput("1234");
+        assertNumberInput("   1234");
+        assertNumberInput("    1234    ");
     }
 
     @Test
     public void testReadString() throws SchemeError {
-        String testInput = "\"This is just a test\"";
-        schemeReader = SchemeReader.withInputStream(new ByteArrayInputStream(testInput.getBytes()));
-        SchemeObject schemeObject = schemeReader.read();
-
-        assertThat(schemeObject, notNullValue());
-        assertThat(schemeObject.getValue(), equalTo(testInput));
-
-
-        testInput = "\n\"This is just a test\"";
-        schemeReader = SchemeReader.withInputStream(new ByteArrayInputStream(testInput.getBytes()));
-        schemeObject = schemeReader.read();
-
-        assertThat(schemeObject, notNullValue());
-        assertThat(schemeObject.getValue(), equalTo(testInput.trim()));
-
-
-        testInput = "\t\"This is just a test\"";
-        schemeReader = SchemeReader.withInputStream(new ByteArrayInputStream(testInput.getBytes()));
-        schemeObject = schemeReader.read();
-        schemeReader.shutdown();
-
-        assertThat(schemeObject, notNullValue());
-        assertThat(schemeObject.getValue(), equalTo(testInput.trim()));
-
-
-        testInput = "\r\"This is just a test\"";
-        schemeReader = SchemeReader.withInputStream(new ByteArrayInputStream(testInput.getBytes()));
-        schemeObject = schemeReader.read();
-        schemeReader.shutdown();
-
-        assertThat(schemeObject, notNullValue());
-        assertThat(schemeObject.getValue(), equalTo(testInput.trim()));
-
-
-        testInput = "       \"This is just a test\"      ";
-        schemeReader = SchemeReader.withInputStream(new ByteArrayInputStream(testInput.getBytes()));
-        schemeObject = schemeReader.read();
-        schemeReader.shutdown();
-
-        assertThat(schemeObject, notNullValue());
-        assertThat(schemeObject.getValue(), equalTo(testInput.trim()));
+        assertStringInput("\"This is just a test\"");
+        assertStringInput("\n\"This is just a test\"");
+        assertStringInput("\t\"This is just a test\"");
+        assertStringInput("\r\"This is just a test\"");
+        assertStringInput("       \"This is just a test\"      ");
     }
 
 
@@ -161,5 +116,25 @@ public class SchemeReaderTest {
         }
     }
 
+
+    private void assertNumberInput(String numberInput) throws SchemeError {
+        schemeReader = SchemeReader.withInputStream(new ByteArrayInputStream(numberInput.getBytes()));
+        SchemeObject number = schemeReader.read();
+
+        assertThat("number is null!", number, notNullValue());
+        assertThat("number is not of type SchemeInteger!", number.typeOf(SchemeInteger.class),
+                equalTo(true));
+        assertThat("number does not have expected value!", number.getValue(), equalTo(Integer
+                .valueOf(numberInput.trim())));
+    }
+
+    private void assertStringInput(String stringInput) throws SchemeError {
+        schemeReader = SchemeReader.withInputStream(new ByteArrayInputStream(stringInput.getBytes()));
+        SchemeObject schemeObject = schemeReader.read();
+
+        assertThat(schemeObject, notNullValue());
+        assertThat(schemeObject.typeOf(SchemeString.class), equalTo(true));
+        assertThat(schemeObject.getValue(), equalTo(stringInput.trim()));
+    }
 
 }
