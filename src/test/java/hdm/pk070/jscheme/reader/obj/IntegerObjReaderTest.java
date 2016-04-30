@@ -6,10 +6,12 @@ import hdm.pk070.jscheme.obj.type.SchemeInteger;
 import hdm.pk070.jscheme.reader.SchemeCharacterReader;
 import hdm.pk070.jscheme.util.ReflectionMethodParam;
 import hdm.pk070.jscheme.util.ReflectionUtils;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
+import java.util.Objects;
 
 import static org.junit.Assert.*;
 import static org.hamcrest.Matchers.*;
@@ -46,5 +48,12 @@ public class IntegerObjReaderTest {
         assertThat(charAsInt, notNullValue());
         assertThat(charAsInt.getClass(), equalTo(Integer.class));
         assertThat(charAsInt, equalTo(1));
+    }
+
+    @After
+    public void tearDown() {
+        if (Objects.nonNull(schemeCharacterReader)) {
+            schemeCharacterReader.shutdown();
+        }
     }
 }
