@@ -1,7 +1,6 @@
 package hdm.pk070.jscheme.reader.obj;
 
 import hdm.pk070.jscheme.error.SchemeError;
-import hdm.pk070.jscheme.obj.SchemeObject;
 import hdm.pk070.jscheme.obj.type.SchemeInteger;
 import hdm.pk070.jscheme.reader.SchemeCharacterReader;
 
@@ -25,7 +24,7 @@ public class IntegerObjReader extends SchemeObjReader {
         while (schemeCharacterReader.nextCharIsDigit()) {
             intVal = intVal * 10 + numericCharToInt(schemeCharacterReader.nextChar());
         }
-        return SchemeInteger.createObj(intVal);
+        return new SchemeInteger(intVal);
     }
 
     private int numericCharToInt(char ch) {

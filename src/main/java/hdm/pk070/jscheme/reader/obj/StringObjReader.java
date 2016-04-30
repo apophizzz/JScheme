@@ -44,7 +44,7 @@ public class StringObjReader extends SchemeObjReader {
         } else {
             throw new SchemeError("Unexpected EOF: String must end with '\"'");
         }
-        return SchemeString.createObj(stringBuffer.toString());
+        return new SchemeString(stringBuffer.toString());
     }
 
     private void appendNextChar(StringBuffer buffer) {

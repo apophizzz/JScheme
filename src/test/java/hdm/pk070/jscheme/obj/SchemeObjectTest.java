@@ -21,8 +21,8 @@ public class SchemeObjectTest {
 
     @Before
     public void setUp() {
-        this.schemeIntObj = SchemeInteger.createObj(42);
-        this.schemeStringObj = SchemeString.createObj("foobar");
+        this.schemeIntObj = new SchemeInteger(42);
+        this.schemeStringObj = new SchemeString("foobar");
     }
 
     @Test
@@ -59,7 +59,7 @@ public class SchemeObjectTest {
     @Test
     public void testObjectsMustHaveSameTypeAndValueForEquality() {
         assertThat(schemeStringObj.equals(schemeIntObj), equalTo(false));
-        assertThat(schemeIntObj.equals(SchemeInteger.createObj((Integer) schemeIntObj.getValue())), equalTo(true));
-        assertThat(schemeStringObj.equals(SchemeString.createObj((String) schemeStringObj.getValue())), equalTo(true));
+        assertThat(schemeIntObj.equals(new SchemeInteger((Integer) schemeIntObj.getValue())), equalTo(true));
+        assertThat(schemeStringObj.equals(new SchemeString((String) schemeStringObj.getValue())), equalTo(true));
     }
 }
