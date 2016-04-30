@@ -1,6 +1,5 @@
 package hdm.pk070.jscheme.reader;
 
-import hdm.pk070.jscheme.SchemeConstants;
 import hdm.pk070.jscheme.reader.exception.SchemeReaderException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -18,7 +17,7 @@ import java.util.Objects;
  *
  * @author patrick.kleindienst
  */
-class SchemeCharacterReader {
+public class SchemeCharacterReader {
 
     private static final Logger LOGGER = LogManager.getRootLogger();
 
