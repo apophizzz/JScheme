@@ -3,7 +3,6 @@ package hdm.pk070.jscheme.reader.obj;
 import hdm.pk070.jscheme.error.SchemeError;
 import hdm.pk070.jscheme.obj.type.SchemeString;
 import hdm.pk070.jscheme.reader.SchemeCharacterReader;
-import hdm.pk070.jscheme.reader.obj.StringObjReader;
 import hdm.pk070.jscheme.util.ReflectionMethodParam;
 import hdm.pk070.jscheme.util.ReflectionUtils;
 import org.junit.After;
@@ -13,8 +12,9 @@ import org.junit.Test;
 import java.io.ByteArrayInputStream;
 import java.util.Objects;
 
-import static org.junit.Assert.*;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.notNullValue;
+import static org.junit.Assert.assertThat;
 
 /**
  *
