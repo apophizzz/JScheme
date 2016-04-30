@@ -1,12 +1,10 @@
 package hdm.pk070.jscheme.reader;
 
-import hdm.pk070.jscheme.SchemeConstants;
 import hdm.pk070.jscheme.error.SchemeError;
 import hdm.pk070.jscheme.obj.SchemeObject;
-import hdm.pk070.jscheme.obj.type.*;
 import hdm.pk070.jscheme.reader.obj.IntegerObjReader;
 import hdm.pk070.jscheme.reader.obj.StringObjReader;
-import hdm.pk070.jscheme.symbolTable.SchemeSymbolTable;
+import hdm.pk070.jscheme.reader.obj.SymbolObjReader;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -55,35 +53,7 @@ public class SchemeReader {
         if (schemeCharacterReader.nextCharIsDigit()) {
             return IntegerObjReader.createInstance(schemeCharacterReader).read();
         }
-        return readSymbol();
-    }
-
-    private SchemeObject readSymbol() throws SchemeError {
-
-        StringBuffer symbolBuffer = new StringBuffer();
-        char ch;
-
-        while ((!schemeCharacterReader.nextCharIs('(')) && (!schemeCharacterReader
-                .nextCharIs(')')) && (!schemeCharacterReader.nextCharIsWhiteSpace()) && (!schemeCharacterReader
-                .nextCharIs((char) SchemeConstants
-                        .EOF))) {
-            ch = schemeCharacterReader.nextChar();
-            symbolBuffer.append(ch);
-            LOGGER.debug(String.format("Added character %c (%d) to symbol buffer", ch, (int) ch));
-        }
-
-        if (symbolBuffer.toString().equals(SchemeConstants.NIL_VAL)) {
-            return SchemeNil.createObj();
-        }
-
-        if (symbolBuffer.toString().startsWith("#")) {
-            if (symbolBuffer.toString().equals(SchemeConstants.BOOL_TRUE_VAL)) {
-                return SchemeTrue.createObj();
-            } else if (symbolBuffer.toString().equals(SchemeConstants.BOOL_FALSE_VAL)) {
-                return SchemeFalse.createObj();
-            }
-        }
-        return SchemeSymbolTable.getInstance().getOrAdd(symbolBuffer.toString());
+        return SymbolObjReader.createInstance(schemeCharacterReader).read();
     }
 
 
