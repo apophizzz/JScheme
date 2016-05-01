@@ -92,11 +92,11 @@ public class SchemeSymbolTable {
 
     private void startRehash() throws SchemeError {
         int oldTableSize = tableSize;
-        LOGGER.debug(String.format("Old symbol table size is %d", oldTableSize));
+        LOGGER.debug(String.format("Rehash: Old symbol table size is %d", oldTableSize));
 
         int newTableSize = getNextPowerOfTwoMinusOne();
         tableSize = newTableSize;
-        LOGGER.debug(String.format("New table size is %d", newTableSize));
+        LOGGER.debug(String.format("Rehash: New table size is %d", newTableSize));
 
         SchemeSymbol[] oldSymbolTable = symbolTable;
         symbolTable = new SchemeSymbol[newTableSize];
