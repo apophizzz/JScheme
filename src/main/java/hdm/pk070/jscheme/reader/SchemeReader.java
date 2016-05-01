@@ -73,6 +73,7 @@ public class SchemeReader {
     }
 
     public void switchInputStream(InputStream inputStream) {
+        schemeCharacterReader.shutdown();
         schemeCharacterReader = SchemeCharacterReader.withInputStream(inputStream);
     }
 
