@@ -5,6 +5,8 @@ import hdm.pk070.jscheme.error.SchemeError;
 import hdm.pk070.jscheme.hash.HashAlgProvider;
 import hdm.pk070.jscheme.hash.impl.StandardHashAlgProvider;
 import hdm.pk070.jscheme.obj.type.SchemeSymbol;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.Objects;
 
@@ -12,6 +14,8 @@ import java.util.Objects;
  *
  */
 public class SchemeSymbolTable {
+
+    private static final Logger LOGGER = LogManager.getLogger(SchemeSymbolTable.class.getName());
 
     private static int tableSize = SchemeConstants.INITIAL_SYMBOL_TABLE_SIZE;
     private static SchemeSymbolTable schemeSymbolTable;
@@ -63,6 +67,8 @@ public class SchemeSymbolTable {
             symbol = symbolTable[nextIndex];
             if (symbol.getValue().equals(symbolName)) {
                 // return symbol in slot 'nextIndex'
+                LOGGER.debug(String.format("Symbol '%s' already present in symbol table, gets returned", symbol
+                        .toString()));
                 return symbol;
             }
 
@@ -79,14 +85,18 @@ public class SchemeSymbolTable {
 
     private void doRehashIfRequired() throws SchemeError {
         if (tableFillSize > 0.75 * tableSize) {
+            LOGGER.debug("Rehash initiated ...");
             startRehash();
         }
     }
 
     private void startRehash() throws SchemeError {
         int oldTableSize = tableSize;
+        LOGGER.debug(String.format("Old symbol table size is %d", oldTableSize));
+
         int newTableSize = getNextPowerOfTwoMinusOne();
         tableSize = newTableSize;
+        LOGGER.debug(String.format("New table size is %d", newTableSize));
 
         SchemeSymbol[] oldSymbolTable = symbolTable;
         symbolTable = new SchemeSymbol[newTableSize];
@@ -117,6 +127,7 @@ public class SchemeSymbolTable {
                     if (nextIndex == startIndex) {
                         // switch back to old table in case of there's no free slot
                         symbolTable = oldSymbolTable;
+                        LOGGER.debug("Symbol table error. No free slot found!");
                         throw new SchemeError("Symbol table problem!");
                     }
                 }
@@ -138,12 +149,13 @@ public class SchemeSymbolTable {
         if (slotNum > 0 && slotNum < tableSize) {
             return Objects.isNull(symbolTable[slotNum]) ? true : false;
         }
-        throw new IllegalArgumentException(String.format("Symbol symbolTable index must be between %d and %d!", 0,
+        throw new IllegalArgumentException(String.format("symbolTable index must be between %d and %d!", 0,
                 (tableSize - 1)));
     }
 
     private void addToTable(SchemeSymbol symbol, int slotNum) {
         symbolTable[slotNum] = symbol;
+        LOGGER.debug(String.format("Symbol '%s' has been added to symbol table", symbol.toString()));
     }
 
 

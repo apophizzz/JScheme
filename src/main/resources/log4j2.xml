@@ -2,7 +2,13 @@
 <Configuration status="info">
 
     <Appenders>
-        <File name="JSchemeFileAppender" fileName="logs/jscheme_log">
+        <File name="JSchemeFileAppender" fileName="logs/jscheme.log" append="false">
+            <PatternLayout>
+                <Pattern>%d %p [%t]: %m%n</Pattern>
+            </PatternLayout>
+        </File>
+
+        <File name="SymbolTableAppender" fileName="logs/symbol_table.log" append="false">
             <PatternLayout>
                 <Pattern>%d %p [%t]: %m%n</Pattern>
             </PatternLayout>
@@ -10,6 +16,10 @@
     </Appenders>
 
     <Loggers>
+        <Logger name="hdm.pk070.jscheme.symbolTable.SchemeSymbolTable" additivity="false">
+            <AppenderRef ref="SymbolTableAppender"/>
+        </Logger>
+
         <Root level="debug">
             <AppenderRef ref="JSchemeFileAppender"/>
         </Root>
