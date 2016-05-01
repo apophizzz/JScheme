@@ -4,8 +4,10 @@ import hdm.pk070.jscheme.error.SchemeError;
 import hdm.pk070.jscheme.obj.SchemeObject;
 import hdm.pk070.jscheme.obj.type.*;
 import hdm.pk070.jscheme.symbolTable.SchemeSymbolTable;
-import hdm.pk070.jscheme.util.ReflectionUtils;
-import org.junit.*;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.powermock.api.mockito.PowerMockito;
@@ -28,8 +30,6 @@ import static org.junit.Assert.assertThat;
 @PowerMockIgnore("javax.management.*")
 @PrepareForTest(SchemeSymbolTable.class)
 public class SchemeReaderTest {
-
-    private static final String METHOD_READ_SYMBOL = "readSymbol";
 
     private static SchemeReader schemeReader;
 
@@ -98,26 +98,30 @@ public class SchemeReaderTest {
 
     @Test
     public void testReadList() throws SchemeError {
-        schemeReader.switchInputStream(new ByteArrayInputStream("(1)".getBytes()));
+        assertReadList("   (1)  ", new SchemeInteger(1), new SchemeNil());
+        assertReadList("    (1 2  )", new SchemeInteger(1), new SchemeCons(new SchemeInteger(2), new SchemeNil()));
+        assertReadList("(  1 2 3    )", new SchemeInteger(1), new SchemeCons(new SchemeInteger(2), new SchemeCons(new
+                SchemeInteger(3), new SchemeNil())));
+        assertReadEmptyList();
+    }
+
+    private void assertReadList(String fakeInput, SchemeObject expectedCar, SchemeObject expectedCdr) throws
+            SchemeError {
+        schemeReader.switchInputStream(new ByteArrayInputStream(fakeInput.getBytes()));
+        SchemeObject schemeObject = schemeReader.read();
+
+        assertThat("schemeObject must not be null!", schemeObject, notNullValue());
+        assertThat("schemeObject is not of type SchemeCons!", schemeObject.typeOf(SchemeCons.class), equalTo(true));
+        assertThat(((SchemeCons) schemeObject).getCar(), equalTo(expectedCar));
+        assertThat(((SchemeCons) schemeObject).getCdr(), equalTo(expectedCdr));
+    }
+
+    private void assertReadEmptyList() throws SchemeError {
+        schemeReader.switchInputStream(new ByteArrayInputStream("()".getBytes()));
         SchemeObject schemeObject = schemeReader.read();
 
         assertThat(schemeObject, notNullValue());
-        assertThat(schemeObject.typeOf(SchemeCons.class), equalTo(true));
-        assertThat(((SchemeCons) schemeObject).getCar(), equalTo(new SchemeInteger(1)));
-        assertThat(((SchemeCons) schemeObject).getCdr(), equalTo(new SchemeNil()));
-
-
-        schemeReader.switchInputStream(new ByteArrayInputStream("()".getBytes()));
-        schemeObject = schemeReader.read();
-        assertThat(schemeObject, notNullValue());
         assertThat(schemeObject.typeOf(SchemeNil.class), equalTo(true));
-
-        schemeReader.switchInputStream(new ByteArrayInputStream("(1 2 3)".getBytes()));
-        schemeObject = schemeReader.read();
-        assertThat(schemeObject, notNullValue());
-        assertThat(schemeObject.typeOf(SchemeCons.class), equalTo(true));
-        assertThat(((SchemeCons) schemeObject).getCar(), equalTo(new SchemeInteger(1)));
-        assertThat(((SchemeCons) schemeObject).getCdr().typeOf(SchemeCons.class), equalTo(true));
     }
 
 
