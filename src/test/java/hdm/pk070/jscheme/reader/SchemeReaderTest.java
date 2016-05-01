@@ -5,9 +5,7 @@ import hdm.pk070.jscheme.obj.SchemeObject;
 import hdm.pk070.jscheme.obj.type.*;
 import hdm.pk070.jscheme.symbolTable.SchemeSymbolTable;
 import hdm.pk070.jscheme.util.ReflectionUtils;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.powermock.api.mockito.PowerMockito;
@@ -33,9 +31,14 @@ public class SchemeReaderTest {
 
     private static final String METHOD_READ_SYMBOL = "readSymbol";
 
+    private static SchemeReader schemeReader;
+
     private SchemeSymbolTable symbolTableMock;
 
-    private SchemeReader schemeReader;
+    @BeforeClass
+    public static void beforeClass() {
+        schemeReader = SchemeReader.withInputStream(new ByteArrayInputStream("".getBytes()));
+    }
 
 
     @Before
@@ -93,10 +96,34 @@ public class SchemeReaderTest {
         assertReadSymbol("abc", new SchemeSymbol("abc"));
     }
 
+    @Test
+    public void testReadList() throws SchemeError {
+        schemeReader.switchInputStream(new ByteArrayInputStream("(1)".getBytes()));
+        SchemeObject schemeObject = schemeReader.read();
+
+        assertThat(schemeObject, notNullValue());
+        assertThat(schemeObject.typeOf(SchemeCons.class), equalTo(true));
+        assertThat(((SchemeCons) schemeObject).getCar(), equalTo(new SchemeInteger(1)));
+        assertThat(((SchemeCons) schemeObject).getCdr(), equalTo(new SchemeNil()));
+
+
+        schemeReader.switchInputStream(new ByteArrayInputStream("()".getBytes()));
+        schemeObject = schemeReader.read();
+        assertThat(schemeObject, notNullValue());
+        assertThat(schemeObject.typeOf(SchemeNil.class), equalTo(true));
+
+        schemeReader.switchInputStream(new ByteArrayInputStream("(1 2 3)".getBytes()));
+        schemeObject = schemeReader.read();
+        assertThat(schemeObject, notNullValue());
+        assertThat(schemeObject.typeOf(SchemeCons.class), equalTo(true));
+        assertThat(((SchemeCons) schemeObject).getCar(), equalTo(new SchemeInteger(1)));
+        assertThat(((SchemeCons) schemeObject).getCdr().typeOf(SchemeCons.class), equalTo(true));
+    }
+
 
     private void assertReadSymbol(String input, SchemeSymbol expectedSymbol) throws SchemeError {
         Objects.requireNonNull(expectedSymbol);
-        schemeReader = SchemeReader.withInputStream(new ByteArrayInputStream(input.getBytes()));
+        schemeReader.switchInputStream(new ByteArrayInputStream(input.getBytes()));
         SchemeObject schemeObject = schemeReader.read();
 
         assertThat("symbol is null!", schemeObject, notNullValue());
@@ -107,8 +134,8 @@ public class SchemeReaderTest {
         assertThat("symbol does not have expected value!", schemeObject, equalTo(expectedSymbol));
     }
 
-    @After
-    public void tearDown() {
+    @AfterClass
+    public static void tearDown() {
         if (Objects.nonNull(schemeReader)) {
             schemeReader.shutdown();
         }
@@ -116,7 +143,7 @@ public class SchemeReaderTest {
 
 
     private void assertNumberInput(String numberInput) throws SchemeError {
-        schemeReader = SchemeReader.withInputStream(new ByteArrayInputStream(numberInput.getBytes()));
+        schemeReader.switchInputStream(new ByteArrayInputStream(numberInput.getBytes()));
         SchemeObject number = schemeReader.read();
 
         assertThat("number is null!", number, notNullValue());
@@ -127,7 +154,7 @@ public class SchemeReaderTest {
     }
 
     private void assertStringInput(String stringInput) throws SchemeError {
-        schemeReader = SchemeReader.withInputStream(new ByteArrayInputStream(stringInput.getBytes()));
+        schemeReader.switchInputStream(new ByteArrayInputStream(stringInput.getBytes()));
         SchemeObject schemeObject = schemeReader.read();
 
         assertThat(schemeObject, notNullValue());
