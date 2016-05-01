@@ -3,6 +3,7 @@ package hdm.pk070.jscheme.reader;
 import hdm.pk070.jscheme.error.SchemeError;
 import hdm.pk070.jscheme.obj.SchemeObject;
 import hdm.pk070.jscheme.reader.obj.IntegerObjReader;
+import hdm.pk070.jscheme.reader.obj.ListReader;
 import hdm.pk070.jscheme.reader.obj.StringObjReader;
 import hdm.pk070.jscheme.reader.obj.SymbolObjReader;
 import org.apache.logging.log4j.LogManager;
@@ -19,6 +20,7 @@ public class SchemeReader {
 
     private static final Logger LOGGER = LogManager.getRootLogger();
 
+    private static SchemeReader schemeReader;
 
     private SchemeCharacterReader schemeCharacterReader;
 
@@ -28,7 +30,10 @@ public class SchemeReader {
 
     public static SchemeReader withInputStream(InputStream in) {
         Objects.requireNonNull(in);
-        return new SchemeReader(in);
+        if (Objects.isNull(schemeReader)) {
+            schemeReader = new SchemeReader(in);
+        }
+        return schemeReader;
     }
 
 
@@ -43,7 +48,8 @@ public class SchemeReader {
         schemeCharacterReader.skipLeadingWhitespace();
 
         if (schemeCharacterReader.nextCharIs('(')) {
-            return readList();
+            schemeCharacterReader.skipNext();
+            return ListReader.createInstance(schemeCharacterReader).read();
         }
         if (schemeCharacterReader.nextCharIs('"')) {
             return StringObjReader.createInstance(schemeCharacterReader).read();
@@ -57,11 +63,6 @@ public class SchemeReader {
     }
 
 
-    private SchemeObject readList() throws SchemeError {
-//        throw new UnsupportedOperationException("readList: Not implemented yet.");
-        throw new SchemeError("Bla");
-    }
-
     public void shutdown() {
         LOGGER.debug("Free resources for SchemeReader instance " + this.toString());
         schemeCharacterReader.shutdown();
@@ -69,6 +70,10 @@ public class SchemeReader {
 
     public void clearReaderOnError() {
         schemeCharacterReader.clearInputStream();
+    }
+
+    public void switchInputStream(InputStream inputStream) {
+        schemeCharacterReader = SchemeCharacterReader.withInputStream(inputStream);
     }
 
 
