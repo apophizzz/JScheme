@@ -25,15 +25,11 @@ public class ListReader extends SchemeObjReader {
     public SchemeObject read() throws SchemeError {
         SchemeObject firstElement, rest, returnVal;
 
-        // skip opening brace '('
-//        if (schemeCharacterReader.nextNonWhitespaceCharIs('(')) {
-//            schemeCharacterReader.skipNext();
-//        }
-
         // check first non whitespace character after opening brace, since input may be like '(   abc ...)'
         if (schemeCharacterReader.nextNonWhitespaceCharIs(')')) {
-            // if input is empty list (), return nil
+            // make input stream drop ')'
             schemeCharacterReader.skipNext();
+            // if input is empty list (), return nil
             return new SchemeNil();
         }
 
