@@ -9,6 +9,9 @@ import hdm.pk070.jscheme.reader.SchemeReader;
  */
 public class JScheme {
 
+    private static final String ANSI_RED = "\u001B[31m";
+    private static final String ANSI_RESET = "\u001B[0m";
+
 
     public static void main(String[] args) {
         System.out.println("\n### Welcome to Scheme ###\n");
@@ -21,13 +24,7 @@ public class JScheme {
                 System.out.println("=> " + result);
             } catch (SchemeError schemeError) {
                 schemeReader.clearReaderOnError();
-                System.err.println("### ERROR: " + schemeError.getMessage());
-
-                try {
-                    Thread.sleep(250);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+                System.out.println(ANSI_RED + "### ERROR: " + schemeError.getMessage() + ANSI_RESET);
             }
         }
     }
