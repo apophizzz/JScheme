@@ -11,5 +11,4 @@ public class SchemeConstants {
     public static final String BOOL_FALSE_VAL = "#f";
     public static final String NIL_VAL = "nil";
 
-    public static final int INITIAL_SYMBOL_TABLE_SIZE = 511;
 }
