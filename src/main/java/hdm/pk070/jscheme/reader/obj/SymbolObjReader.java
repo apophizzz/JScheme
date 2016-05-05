@@ -49,7 +49,12 @@ public class SymbolObjReader extends SchemeObjReader {
                 return new SchemeFalse();
             }
         }
-        return SchemeSymbolTable.getInstance().getOrAdd(symbolBuffer.toString());
+
+        if (symbolBuffer.toString().length() > 0) {
+            return SchemeSymbolTable.getInstance().getOrAdd(symbolBuffer.toString());
+        } else {
+            throw new SchemeError("Cannot process empty symbol name!");
+        }
     }
 
 
