@@ -21,9 +21,7 @@ public class JScheme {
                 System.out.println("=> " + result);
             } catch (SchemeError schemeError) {
                 schemeReader.clearReaderOnError();
-                System.err.println("---------------------");
-                System.err.println("ERROR: " + schemeError.getMessage());
-                System.err.println("---------------------");
+                System.err.println("### ERROR: " + schemeError.getMessage());
 
                 try {
                     Thread.sleep(250);
