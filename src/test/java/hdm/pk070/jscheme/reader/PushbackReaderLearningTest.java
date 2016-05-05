@@ -24,7 +24,7 @@ public class PushbackReaderLearningTest {
     public void setUp() {
         testString = "foobar";
         ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(testString.getBytes());
-        pushbackReader = new PushbackReader(new InputStreamReader(byteArrayInputStream));
+        pushbackReader = new PushbackReader(new InputStreamReader(byteArrayInputStream), 10);
     }
 
     @Test
@@ -32,12 +32,22 @@ public class PushbackReaderLearningTest {
         char ch = readFromPushbackReader();
         assertThat(ch, equalTo(testString.charAt(0)));
 
-        unreadCharacterFromPushbackReader(ch);
+        unreadCharacterToPushbackReader(ch);
         char ch2 = readFromPushbackReader();
         assertThat(ch2, equalTo(ch));
         assertThat(ch2, equalTo(testString.charAt(0)));
     }
 
+    @Test
+    public void testReadAndUnreadMultipleCharacters() throws Exception {
+        char c1 = readFromPushbackReader();
+        char c2 = readFromPushbackReader();
+        unreadCharacterToPushbackReader(c2);
+        unreadCharacterToPushbackReader(c1);
+
+        assertThat("PushbackReader did not provide expected character!", readFromPushbackReader(), equalTo(c1));
+        assertThat("PushbackReader did not provide expected character!", readFromPushbackReader(), equalTo(c2));
+    }
 
     private char readFromPushbackReader() {
         int ch = 0;
@@ -49,7 +59,7 @@ public class PushbackReaderLearningTest {
         return (char) ch;
     }
 
-    private void unreadCharacterFromPushbackReader(char ch) {
+    private void unreadCharacterToPushbackReader(char ch) {
         try {
             pushbackReader.unread(ch);
         } catch (IOException e) {
