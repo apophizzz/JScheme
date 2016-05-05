@@ -7,14 +7,21 @@ import java.util.Objects;
 /**
  * @author patrick.kleindienst
  */
-public class SchemeCons extends SchemeObject {
+public final class SchemeCons extends SchemeObject {
 
     private SchemeObject car;
     private SchemeObject cdr;
 
     public SchemeCons(SchemeObject car, SchemeObject cdr) {
+        Objects.requireNonNull(car);
+        Objects.requireNonNull(cdr);
         this.car = car;
-        this.cdr = cdr;
+
+        if (cdr.getClass().equals(SchemeCons.class) || cdr.getClass().equals(SchemeNil.class)) {
+            this.cdr = cdr;
+        } else {
+            throw new IllegalArgumentException("Cdr of SchemeCons must be SchemeCons or SchemeNil!");
+        }
     }
 
     @Override
@@ -55,6 +62,9 @@ public class SchemeCons extends SchemeObject {
         if (Objects.isNull(obj)) {
             return false;
         }
+        if (this == obj) {
+            return true;
+        }
         if (!obj.getClass().equals(this.getClass())) {
             return false;
         }
@@ -65,5 +75,17 @@ public class SchemeCons extends SchemeObject {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int hashCode = 5;
+        if (Objects.nonNull(car)) {
+            hashCode = (hashCode * 31) + car.hashCode();
+        }
+        if (Objects.nonNull(cdr)) {
+            hashCode = (hashCode * 31) + cdr.hashCode();
+        }
+        return hashCode;
     }
 }
