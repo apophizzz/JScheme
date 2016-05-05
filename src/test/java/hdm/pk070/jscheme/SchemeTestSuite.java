@@ -1,5 +1,7 @@
 package hdm.pk070.jscheme;
 
+import hdm.pk070.jscheme.eval.SchemeEvalTest;
+import hdm.pk070.jscheme.eval.SymbolEvaluatorTest;
 import hdm.pk070.jscheme.hash.impl.StandardHashAlgProviderTest;
 import hdm.pk070.jscheme.reader.PushbackReaderLearningTest;
 import hdm.pk070.jscheme.reader.SchemeCharacterReaderTest;
@@ -13,6 +15,8 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
 /**
+ * A test suite for collecting all the single test classes of the JScheme project.
+ *
  * @author patrick.kleindienst
  */
 
@@ -21,6 +25,7 @@ import org.junit.runners.Suite;
         SymbolObjReaderTest.class,
         SchemeCharacterReaderTest.class,
         PushbackReaderLearningTest.class,
-        StandardHashAlgProviderTest.class, SchemeSymbolTableTest.class})
+        StandardHashAlgProviderTest.class, SchemeSymbolTableTest.class, SchemeEvalTest.class, SymbolEvaluatorTest
+        .class})
 public class SchemeTestSuite {
 }
