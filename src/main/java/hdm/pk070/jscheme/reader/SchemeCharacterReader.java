@@ -76,7 +76,8 @@ public class SchemeCharacterReader {
         charBuffer.add(readFromPushbackReader());
         Collections.reverse(charBuffer);
 
-        if (Character.isWhitespace(charBuffer.get(0)) || charBuffer.get(0) == (char) SchemeConstants.EOF) {
+        if (Character.isWhitespace(charBuffer.get(0)) || charBuffer.get(0) == (char) SchemeConstants.EOF ||
+                isBeginningOrEndOfList(charBuffer.get(0))) {
             LOGGER.debug("Found that input is a number!");
             charBuffer.forEach(ch -> unreadCharacter(ch));
             return true;
@@ -85,6 +86,10 @@ public class SchemeCharacterReader {
         LOGGER.debug("Found that input is a symbol!");
         charBuffer.forEach(ch -> unreadCharacter(ch));
         return false;
+    }
+
+    private boolean isBeginningOrEndOfList(char ch) {
+        return ((ch == '(') || (ch == ')'));
     }
 
     /**

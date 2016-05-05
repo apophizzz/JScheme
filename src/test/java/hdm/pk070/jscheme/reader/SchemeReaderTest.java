@@ -99,6 +99,7 @@ public class SchemeReaderTest {
     @Test
     public void testReadList() throws SchemeError {
         assertReadList("   (1)  ", new SchemeInteger(1), new SchemeNil());
+        assertReadList("   ( 1 )  ", new SchemeInteger(1), new SchemeNil());
         assertReadList("    (1 2  )", new SchemeInteger(1), new SchemeCons(new SchemeInteger(2), new SchemeNil()));
         assertReadList("(  1 2 3    )", new SchemeInteger(1), new SchemeCons(new SchemeInteger(2), new SchemeCons(new
                 SchemeInteger(3), new SchemeNil())));
