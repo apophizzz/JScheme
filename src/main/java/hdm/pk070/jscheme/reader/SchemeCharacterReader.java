@@ -1,5 +1,6 @@
 package hdm.pk070.jscheme.reader;
 
+import hdm.pk070.jscheme.SchemeConstants;
 import hdm.pk070.jscheme.reader.exception.SchemeReaderException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -29,7 +30,7 @@ public class SchemeCharacterReader {
 
     private SchemeCharacterReader(InputStream inputStream) {
         Objects.requireNonNull(inputStream);
-        this.pushbackReader = new PushbackReader(new InputStreamReader(inputStream));
+        this.pushbackReader = new PushbackReader(new InputStreamReader(inputStream), 1024);
     }
 
     /**
@@ -61,6 +62,26 @@ public class SchemeCharacterReader {
         char ch = readFromPushbackReader();
         LOGGER.debug(String.format("CharacterReader consumed char %c", ch));
         return ch;
+    }
+
+    public boolean inputIsNumber() {
+        List<Character> charBuffer = new LinkedList<>();
+        while (nextCharIsDigit()) {
+            charBuffer.add(readFromPushbackReader());
+        }
+
+        charBuffer.add(readFromPushbackReader());
+        Collections.reverse(charBuffer);
+
+        if (Character.isWhitespace(charBuffer.get(0)) || charBuffer.get(0) == (char) SchemeConstants.EOF) {
+            LOGGER.debug("Found that input is a number!");
+            charBuffer.forEach(ch -> unreadCharacter(ch));
+            return true;
+        }
+
+        LOGGER.debug("Found that input is a symbol!");
+        charBuffer.forEach(ch -> unreadCharacter(ch));
+        return false;
     }
 
     /**
