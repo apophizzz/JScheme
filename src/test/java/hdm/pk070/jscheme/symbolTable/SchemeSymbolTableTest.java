@@ -80,7 +80,7 @@ public class SchemeSymbolTableTest {
 
     @Test
     public void testGetNextPowerOfTwoMinusOne() {
-        int initialTableSize = (int) ReflectionUtils.getAttributeVal(schemeSymbolTable, "tableSize");
+        int initialTableSize = (int) ReflectionUtils.getAttributeVal(schemeSymbolTable, "currentTableSize");
         int nextTableSize = (int) ReflectionUtils.invokeMethod(schemeSymbolTable, "getNextPowerOfTwoMinusOne");
 
         assertThat("Subsequent table size must be greater than previous!", nextTableSize > initialTableSize, equalTo
@@ -90,13 +90,13 @@ public class SchemeSymbolTableTest {
 
     @Test
     public void testStartRehash() {
-        int symbolTableSizeBeforeRehash = (int) ReflectionUtils.getAttributeVal(schemeSymbolTable, "tableSize");
+        int symbolTableSizeBeforeRehash = (int) ReflectionUtils.getAttributeVal(schemeSymbolTable, "currentTableSize");
         SchemeSymbol[] symbolTableBeforeRehash = (SchemeSymbol[]) ReflectionUtils.getAttributeVal(schemeSymbolTable,
                 "symbolTable");
 
         ReflectionUtils.invokeMethod(schemeSymbolTable, "startRehash");
 
-        int symbolTableSizeAfterRehash = (int) ReflectionUtils.getAttributeVal(schemeSymbolTable, "tableSize");
+        int symbolTableSizeAfterRehash = (int) ReflectionUtils.getAttributeVal(schemeSymbolTable, "currentTableSize");
         SchemeSymbol[] symbolTableAfterRehash = (SchemeSymbol[]) ReflectionUtils.getAttributeVal(schemeSymbolTable,
                 "symbolTable");
 
@@ -107,6 +107,6 @@ public class SchemeSymbolTableTest {
     }
 
     private int getRandomTableIndex() {
-        return new Random().nextInt((SchemeConstants.INITIAL_SYMBOL_TABLE_SIZE - 1));
+        return new Random().nextInt((SchemeSymbolTable.INITIAL_SYMBOL_TABLE_SIZE - 1));
     }
 }

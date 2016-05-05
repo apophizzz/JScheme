@@ -1,6 +1,5 @@
 package hdm.pk070.jscheme.symbolTable;
 
-import hdm.pk070.jscheme.SchemeConstants;
 import hdm.pk070.jscheme.error.SchemeError;
 import hdm.pk070.jscheme.hash.HashAlgProvider;
 import hdm.pk070.jscheme.hash.impl.StandardHashAlgProvider;
@@ -16,8 +15,9 @@ import java.util.Objects;
 public class SchemeSymbolTable {
 
     private static final Logger LOGGER = LogManager.getLogger(SchemeSymbolTable.class.getName());
+    public static final int INITIAL_SYMBOL_TABLE_SIZE = 511;
 
-    private static int tableSize = SchemeConstants.INITIAL_SYMBOL_TABLE_SIZE;
+    private static int currentTableSize = INITIAL_SYMBOL_TABLE_SIZE;
     private static SchemeSymbolTable schemeSymbolTable;
 
     private SchemeSymbol[] symbolTable;
@@ -37,7 +37,7 @@ public class SchemeSymbolTable {
 
     private SchemeSymbolTable(HashAlgProvider hashAlgProvider) {
         this.hashAlgProvider = hashAlgProvider;
-        this.symbolTable = new SchemeSymbol[tableSize];
+        this.symbolTable = new SchemeSymbol[currentTableSize];
         this.tableFillSize = 0;
     }
 
@@ -47,7 +47,7 @@ public class SchemeSymbolTable {
 
         int nextIndex;
         int hashVal = hashAlgProvider.computeHash(symbolName);
-        int startIndex = hashVal % tableSize;
+        int startIndex = hashVal % currentTableSize;
         SchemeSymbol symbol;
         nextIndex = startIndex;
 
@@ -74,7 +74,7 @@ public class SchemeSymbolTable {
 
             // if the symbol at slot 'nextIndex' is not the symbol we searched for, we have
             // a hash collision > store new symbol at next slot available
-            nextIndex = ++nextIndex % tableSize;
+            nextIndex = ++nextIndex % currentTableSize;
 
             // if there's no free slot available in the table, throw error
             if (nextIndex == startIndex) {
@@ -84,18 +84,18 @@ public class SchemeSymbolTable {
     }
 
     private void doRehashIfRequired() throws SchemeError {
-        if (tableFillSize > 0.75 * tableSize) {
+        if (tableFillSize > 0.75 * currentTableSize) {
             LOGGER.debug("Rehash initiated ...");
             startRehash();
         }
     }
 
     private void startRehash() throws SchemeError {
-        int oldTableSize = tableSize;
+        int oldTableSize = currentTableSize;
         LOGGER.debug(String.format("Rehash: Old symbol table size is %d", oldTableSize));
 
         int newTableSize = getNextPowerOfTwoMinusOne();
-        tableSize = newTableSize;
+        currentTableSize = newTableSize;
         LOGGER.debug(String.format("Rehash: New table size is %d", newTableSize));
 
         SchemeSymbol[] oldSymbolTable = symbolTable;
@@ -137,7 +137,7 @@ public class SchemeSymbolTable {
     }
 
     private int getNextPowerOfTwoMinusOne() {
-        return (tableSize + 1) * 2 - 1;
+        return (currentTableSize + 1) * 2 - 1;
     }
 
     private void incrementFillSize() {
@@ -146,11 +146,11 @@ public class SchemeSymbolTable {
 
 
     private boolean isFreeSlot(int slotNum) {
-        if (slotNum > 0 && slotNum < tableSize) {
+        if (slotNum > 0 && slotNum < currentTableSize) {
             return Objects.isNull(symbolTable[slotNum]) ? true : false;
         }
         throw new IllegalArgumentException(String.format("symbolTable index must be between %d and %d!", 0,
-                (tableSize - 1)));
+                (currentTableSize - 1)));
     }
 
     private void addToTable(SchemeSymbol symbol, int slotNum) {
