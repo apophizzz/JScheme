@@ -52,6 +52,28 @@ public class SchemeCharacterReaderTest {
         assertWhitespaceIsSkipped(inputWithCarriageReturn);
     }
 
+    @Test
+    public void testInputIsNumber() {
+        schemeCharacterReader = SchemeCharacterReader.withInputStream(new ByteArrayInputStream("12345".getBytes()));
+        boolean isNumber = schemeCharacterReader.inputIsNumber();
+        assertThat(isNumber, equalTo(true));
+
+        schemeCharacterReader = SchemeCharacterReader.withInputStream(new ByteArrayInputStream("12345\n".getBytes()));
+        isNumber = schemeCharacterReader.inputIsNumber();
+        assertThat(isNumber, equalTo(true));
+    }
+
+    @Test
+    public void testInputIsNotNumber() {
+        schemeCharacterReader = SchemeCharacterReader.withInputStream(new ByteArrayInputStream("123%bc".getBytes()));
+        boolean isNumber = schemeCharacterReader.inputIsNumber();
+        assertThat(isNumber, equalTo(false));
+
+        schemeCharacterReader = SchemeCharacterReader.withInputStream(new ByteArrayInputStream("123#bc".getBytes()));
+        isNumber = schemeCharacterReader.inputIsNumber();
+        assertThat(isNumber, equalTo(false));
+    }
+
     @After
     public void tearDown() {
         if (Objects.nonNull(schemeCharacterReader)) {
