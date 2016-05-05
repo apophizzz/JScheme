@@ -81,8 +81,8 @@ public class SchemeCharacterReader {
                 isBeginningOrEndOfList(charBuffer.get(0))) {
 
             if (charBuffer.size() == 1 && isBeginningOrEndOfList(charBuffer.get(0))) {
-                // we read something like '12)' or '12(' -> throw error
-                throw new SchemeError("Error when reading number");
+                // we read something like '12)' -> throw error
+                throw new SchemeError("read: Unexpected '" + charBuffer.get(0) + "'");
             }
 
             LOGGER.debug("Found that input is a number!");
