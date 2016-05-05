@@ -7,7 +7,7 @@ import java.util.Objects;
 /**
  * @author patrick.kleindienst
  */
-public class SchemeString extends SchemeObject {
+public final class SchemeString extends SchemeObject {
 
 
     private String stringVal;

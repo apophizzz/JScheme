@@ -5,7 +5,7 @@ import hdm.pk070.jscheme.obj.SchemeObject;
 /**
  * @author patrick.kleindienst
  */
-public class SchemeInteger extends SchemeObject {
+public final class SchemeInteger extends SchemeObject {
 
 
     private int intVal;
