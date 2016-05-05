@@ -1,6 +1,7 @@
 package hdm.pk070.jscheme.reader;
 
 import hdm.pk070.jscheme.SchemeConstants;
+import hdm.pk070.jscheme.error.SchemeError;
 import hdm.pk070.jscheme.reader.exception.SchemeReaderException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -67,7 +68,7 @@ public class SchemeCharacterReader {
         return ch;
     }
 
-    public boolean inputIsNumber() {
+    public boolean inputIsNumber() throws SchemeError {
         List<Character> charBuffer = new LinkedList<>();
         while (nextCharIsDigit()) {
             charBuffer.add(readFromPushbackReader());
@@ -78,6 +79,12 @@ public class SchemeCharacterReader {
 
         if (Character.isWhitespace(charBuffer.get(0)) || charBuffer.get(0) == (char) SchemeConstants.EOF ||
                 isBeginningOrEndOfList(charBuffer.get(0))) {
+
+            if (charBuffer.size() == 1 && isBeginningOrEndOfList(charBuffer.get(0))) {
+                // we read something like '12)' or '12(' -> throw error
+                throw new SchemeError("Error when reading number");
+            }
+
             LOGGER.debug("Found that input is a number!");
             charBuffer.forEach(ch -> unreadCharacter(ch));
             return true;

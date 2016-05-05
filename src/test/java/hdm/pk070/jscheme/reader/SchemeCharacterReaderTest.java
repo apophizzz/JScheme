@@ -1,5 +1,6 @@
 package hdm.pk070.jscheme.reader;
 
+import hdm.pk070.jscheme.error.SchemeError;
 import org.junit.After;
 import org.junit.Test;
 
@@ -53,7 +54,7 @@ public class SchemeCharacterReaderTest {
     }
 
     @Test
-    public void testInputIsNumber() {
+    public void testInputIsNumber() throws SchemeError {
         schemeCharacterReader = SchemeCharacterReader.withInputStream(new ByteArrayInputStream("12345".getBytes()));
         boolean isNumber = schemeCharacterReader.inputIsNumber();
         assertThat(isNumber, equalTo(true));
@@ -64,7 +65,7 @@ public class SchemeCharacterReaderTest {
     }
 
     @Test
-    public void testInputIsNotNumber() {
+    public void testInputIsNotNumber() throws SchemeError {
         schemeCharacterReader = SchemeCharacterReader.withInputStream(new ByteArrayInputStream("123%bc".getBytes()));
         boolean isNumber = schemeCharacterReader.inputIsNumber();
         assertThat(isNumber, equalTo(false));
