@@ -26,6 +26,8 @@ public abstract class SchemeObject {
     public boolean equals(Object obj) {
         if (Objects.isNull(obj)) {
             return false;
+        } else if (this == obj) {
+            return true;
         } else if (!(obj instanceof SchemeObject)) {
             return false;
         } else if (obj.getClass() != this.getClass()) {
@@ -33,5 +35,10 @@ public abstract class SchemeObject {
         } else {
             return ((SchemeObject) obj).getValue().equals(this.getValue());
         }
+    }
+
+    @Override
+    public int hashCode() {
+        return this.getValue().hashCode();
     }
 }
