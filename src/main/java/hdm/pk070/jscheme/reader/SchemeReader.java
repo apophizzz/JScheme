@@ -56,7 +56,7 @@ public class SchemeReader {
         }
         // TODO ISSUE: input '123abc' must be evaluated as a symbol. Right now
         // '123' is read as a number and 'abc' as a symbol.
-        if (schemeCharacterReader.nextCharIsDigit()) {
+        if (schemeCharacterReader.inputIsNumber()) {
             return IntegerObjReader.createInstance(schemeCharacterReader).read();
         }
         return SymbolObjReader.createInstance(schemeCharacterReader).read();
