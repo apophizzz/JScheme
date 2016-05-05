@@ -3,6 +3,8 @@ package hdm.pk070.jscheme;
 import hdm.pk070.jscheme.eval.SchemeEvalTest;
 import hdm.pk070.jscheme.eval.SymbolEvaluatorTest;
 import hdm.pk070.jscheme.hash.impl.StandardHashAlgProviderTest;
+import hdm.pk070.jscheme.obj.SchemeObjectTest;
+import hdm.pk070.jscheme.obj.type.SchemeConsTest;
 import hdm.pk070.jscheme.reader.PushbackReaderLearningTest;
 import hdm.pk070.jscheme.reader.SchemeCharacterReaderTest;
 import hdm.pk070.jscheme.reader.SchemeReaderTest;
@@ -21,7 +23,8 @@ import org.junit.runners.Suite;
  */
 
 @RunWith(Suite.class)
-@Suite.SuiteClasses({SchemeReaderTest.class, StringObjReaderTest.class, IntegerObjReaderTest.class,
+@Suite.SuiteClasses({SchemeObjectTest.class, SchemeConsTest.class, SchemeReaderTest.class, StringObjReaderTest.class,
+        IntegerObjReaderTest.class,
         SymbolObjReaderTest.class,
         SchemeCharacterReaderTest.class,
         PushbackReaderLearningTest.class,
