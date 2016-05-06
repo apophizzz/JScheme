@@ -1,5 +1,6 @@
 package hdm.pk070.jscheme;
 
+import hdm.pk070.jscheme.environment.GlobalEnvironmentTest;
 import hdm.pk070.jscheme.eval.SchemeEvalTest;
 import hdm.pk070.jscheme.eval.SymbolEvaluatorTest;
 import hdm.pk070.jscheme.hash.impl.StandardHashAlgProviderTest;
@@ -28,7 +29,8 @@ import org.junit.runners.Suite;
         SymbolObjReaderTest.class,
         SchemeCharacterReaderTest.class,
         PushbackReaderLearningTest.class,
-        StandardHashAlgProviderTest.class, SchemeSymbolTableTest.class, SchemeEvalTest.class, SymbolEvaluatorTest
+        StandardHashAlgProviderTest.class, SchemeSymbolTableTest.class, GlobalEnvironmentTest.class, SchemeEvalTest
+        .class, SymbolEvaluatorTest
         .class})
 public class SchemeTestSuite {
 }
