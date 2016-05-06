@@ -1,5 +1,6 @@
 package hdm.pk070.jscheme.environment;
 
+import hdm.pk070.jscheme.error.SchemeError;
 import hdm.pk070.jscheme.obj.SchemeObject;
 import hdm.pk070.jscheme.obj.type.SchemeSymbol;
 
@@ -16,6 +17,7 @@ public class GlobalEnvironment {
     private static GlobalEnvironment globalEnvironment = null;
 
     private EnvironmentEntry[] environmentEntries = new EnvironmentEntry[INITIAL_GLOBAL_ENV_SIZE];
+    private int currentFillSize;
 
     public static GlobalEnvironment getInstance() {
         if (Objects.isNull(globalEnvironment)) {
@@ -26,6 +28,7 @@ public class GlobalEnvironment {
 
 
     private GlobalEnvironment() {
+        currentFillSize = 0;
     }
 
     public SchemeObject get(SchemeSymbol envKey) {
@@ -58,7 +61,7 @@ public class GlobalEnvironment {
             }
 
             // 7. Compute next index to be checked
-            nextIndex = (nextIndex + 1) % currentGlobalEnvSize;
+            nextIndex = (++nextIndex) % currentGlobalEnvSize;
 
             // 8. If nextIndex again reaches the startIndex, we've searched the whole env without success
             if (nextIndex == startIndex) {
@@ -69,12 +72,62 @@ public class GlobalEnvironment {
 
     }
 
-    public void put(SchemeSymbol envKey, SchemeObject envValue) {
-        // TODO: implementation
-
+    public void put(SchemeSymbol envKey, SchemeObject envValue) throws SchemeError {
         // 1. Create numeric key based on envKey (maybe hashcode?)
+        int hash = envKey.hashCode();
+
         // 2. Compute startIndex = key (step 1) % current size of global env
+        int startIndex = hash % currentGlobalEnvSize;
+
         // 3. Before searching the next free slot, set nextIndex = startIndex (see step 2)
+        int nextIndex = startIndex;
+        SchemeSymbol keyFound;
+
+        System.out.println("Start searching for free slot...");
+        for (; ; ) {
+            System.out.println("Next try ...");
+
+            if (Objects.nonNull(environmentEntries[nextIndex])) {
+                // 4. Entry already exists, overwrite
+
+                keyFound = environmentEntries[nextIndex].getKey();
+                if (keyFound == envKey) {
+                    environmentEntries[nextIndex].setValue(envValue);
+                    // 5. End here
+                    System.out.println("Entry already exists");
+                    return;
+                }
+            }
+
+            if (Objects.isNull(environmentEntries[nextIndex])) {
+                System.out.println("Create new entry");
+                // 6. Entry does not exist yet - store new entry
+                environmentEntries[nextIndex] = EnvironmentEntry.create(envKey, envValue);
+
+                // 7. Increment fill size
+                currentFillSize++;
+
+                // 8. Check current fill size and initiate rehash if necessary
+                doRehashIfRequired();
+
+                // 9. End here
+                return;
+            }
+
+
+            // 10. Increment next index if the wrong key has been found
+            nextIndex = (++nextIndex) % currentGlobalEnvSize;
+
+            // 11. If nextIndex reaches startIndex again, no free slot could have been found -> throw error
+            if (nextIndex == startIndex) {
+                throw new SchemeError("Global environment crammed!");
+            }
+
+        }
+
+    }
+
+    private void doRehashIfRequired() {
         return;
     }
 }

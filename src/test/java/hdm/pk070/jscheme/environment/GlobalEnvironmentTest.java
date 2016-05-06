@@ -1,5 +1,6 @@
 package hdm.pk070.jscheme.environment;
 
+import hdm.pk070.jscheme.error.SchemeError;
 import hdm.pk070.jscheme.obj.SchemeObject;
 import hdm.pk070.jscheme.obj.type.SchemeInteger;
 import hdm.pk070.jscheme.obj.type.SchemeSymbol;
@@ -44,13 +45,15 @@ public class GlobalEnvironmentTest {
     }
 
     @Test
-    public void testPutEntryIntoEnvironment() {
-        globalEnvironment = GlobalEnvironment.getInstance();
-        globalEnvironment.put(new SchemeSymbol("foo"), new SchemeInteger(42));
+    public void testPutEntryIntoEnvironment() throws SchemeError {
+        SchemeSymbol testSymbol = new SchemeSymbol("foo");
+        globalEnvironment.put(testSymbol, new SchemeInteger(42));
         EnvironmentEntry[] environmentEntries = (EnvironmentEntry[]) ReflectionUtils.getAttributeVal
                 (globalEnvironment, "environmentEntries");
 
-        assertThat(environmentEntries.length, equalTo(1));
+        assertThat(ReflectionUtils.getAttributeVal(globalEnvironment, "currentFillSize"), equalTo(1));
+        assertThat(globalEnvironment.get(testSymbol), notNullValue());
+        assertThat(globalEnvironment.get(testSymbol), equalTo(new SchemeInteger(42)));
     }
 
     @After
