@@ -46,8 +46,7 @@ public class SchemeConsTest {
         hashSet.add(cons3);
 
         boolean containsCons1 = hashSet.contains(new SchemeCons(new SchemeInteger(42), new SchemeCons(new SchemeInteger
-                (43), new SchemeNil
-                ())));
+                (43), new SchemeNil())));
         boolean containsCons3 = hashSet.contains(new SchemeCons(new SchemeString("foobar"), new SchemeNil()));
 
         assertThat(containsCons1, equalTo(true));
