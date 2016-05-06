@@ -48,8 +48,6 @@ public class GlobalEnvironmentTest {
     public void testPutEntryIntoEnvironment() throws SchemeError {
         SchemeSymbol testSymbol = new SchemeSymbol("foo");
         globalEnvironment.put(testSymbol, new SchemeInteger(42));
-        EnvironmentEntry[] environmentEntries = (EnvironmentEntry[]) ReflectionUtils.getAttributeVal
-                (globalEnvironment, "environmentEntries");
 
         assertThat(ReflectionUtils.getAttributeVal(globalEnvironment, "currentFillSize"), equalTo(1));
         assertThat(globalEnvironment.get(testSymbol), notNullValue());
