@@ -19,15 +19,27 @@
                 <Pattern>%d %p [%t]: %m%n</Pattern>
             </PatternLayout>
         </File>
+
+        <File name="GlobalEnvAppender" fileName="logs/global_env.log" append="false">
+            <PatternLayout>
+                <Pattern>%d %p [%t]: %m%n</Pattern>
+            </PatternLayout>
+        </File>
+
     </Appenders>
 
     <Loggers>
+
+        <Logger name="hdm.pk070.jscheme.symbolTable.SchemeSymbolTable" additivity="false">
+            <AppenderRef ref="SymbolTableAppender"/>
+        </Logger>
+
         <Logger name="hdm.pk070.jscheme.EvalLogger" additivity="false">
             <AppenderRef ref="EvalAppender"/>
         </Logger>
 
-        <Logger name="hdm.pk070.jscheme.symbolTable.SchemeSymbolTable" additivity="false">
-            <AppenderRef ref="SymbolTableAppender"/>
+        <Logger name="hdm.pk070.jscheme.GlobalEnvLogger" additivity="false">
+            <AppenderRef ref="GlobalEnvAppender"/>
         </Logger>
 
         <Root level="debug">
