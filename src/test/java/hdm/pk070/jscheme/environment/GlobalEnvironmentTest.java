@@ -9,6 +9,10 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.Arrays;
+import java.util.Objects;
+import java.util.Optional;
+
 import static org.junit.Assert.*;
 import static org.hamcrest.Matchers.*;
 
@@ -25,11 +29,19 @@ public class GlobalEnvironmentTest {
     }
 
     @Test
-    public void testGetEntryFromEnvironment() {
-        EnvironmentEntry[] environmentEntries = (EnvironmentEntry[]) ReflectionUtils.getAttributeVal
-                (globalEnvironment, "environmentEntries");
+    public void testPutEntryIntoEnvironment() throws SchemeError {
+        SchemeSymbol testSymbol = new SchemeSymbol("foo");
+        globalEnvironment.put(testSymbol, new SchemeInteger(42));
+
+        assertThat(ReflectionUtils.getAttributeVal(globalEnvironment, "currentFillSize"), equalTo(1));
+        assertThat(globalEnvironmentContains(EnvironmentEntry.create(testSymbol, new SchemeInteger(42))),
+                equalTo(true));
+    }
+
+    @Test
+    public void testGetEntryFromEnvironment() throws SchemeError {
         SchemeSymbol keySymbol = new SchemeSymbol("foo");
-        environmentEntries[0] = EnvironmentEntry.create(keySymbol, new SchemeInteger(42));
+        globalEnvironment.put(keySymbol, new SchemeInteger(42));
         SchemeObject result = globalEnvironment.get(keySymbol);
 
         assertThat("result must not be null!", result, notNullValue());
@@ -45,20 +57,31 @@ public class GlobalEnvironmentTest {
     }
 
     @Test
-    public void testPutEntryIntoEnvironment() throws SchemeError {
-        SchemeSymbol testSymbol = new SchemeSymbol("foo");
-        globalEnvironment.put(testSymbol, new SchemeInteger(42));
+    public void testRehash() {
+        ReflectionUtils.invokeMethod(globalEnvironment, "startRehash");
+        EnvironmentEntry[] environmentEntries = (EnvironmentEntry[]) ReflectionUtils.getAttributeVal
+                (globalEnvironment, "currentGlobalEnvironmentEntries");
 
-        assertThat(ReflectionUtils.getAttributeVal(globalEnvironment, "currentFillSize"), equalTo(1));
-        assertThat(globalEnvironment.get(testSymbol), notNullValue());
-        assertThat(globalEnvironment.get(testSymbol), equalTo(new SchemeInteger(42)));
+        assertThat(environmentEntries.length, equalTo((511 + 1) * 2 - 1));
     }
 
     @After
     public void tearDown() {
         // reset environment for each test since it is a singleton
         EnvironmentEntry[] environmentEntries = (EnvironmentEntry[]) ReflectionUtils.getAttributeVal
-                (globalEnvironment, "environmentEntries");
+                (globalEnvironment, "currentGlobalEnvironmentEntries");
         environmentEntries = new EnvironmentEntry[511];
+    }
+
+    private boolean globalEnvironmentContains(EnvironmentEntry expectedEntry) {
+        EnvironmentEntry[] currentGlobalEnvironmentEntries = (EnvironmentEntry[]) ReflectionUtils.getAttributeVal
+                (globalEnvironment,
+                        "currentGlobalEnvironmentEntries");
+        Optional<EnvironmentEntry> entryOptional = Arrays.asList(currentGlobalEnvironmentEntries).stream()
+                .filter(entry -> Objects.nonNull(entry))
+                .filter(envEntry -> envEntry.equals(expectedEntry))
+                .findAny();
+
+        return entryOptional.isPresent();
     }
 }
