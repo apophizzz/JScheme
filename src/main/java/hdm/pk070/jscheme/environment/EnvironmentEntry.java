@@ -30,13 +30,33 @@ class EnvironmentEntry {
         return value;
     }
 
-    public void setKey(SchemeSymbol key) {
-        Objects.requireNonNull(key);
-        this.key = key;
-    }
-
     public void setValue(SchemeObject value) {
         Objects.requireNonNull(value);
         this.value = value;
     }
+
+    // TODO: Review equals method (value comparison obsolete?)
+    @Override
+    public boolean equals(Object obj) {
+        if (Objects.isNull(obj)) {
+            return false;
+        }
+        if (!this.getClass().equals(obj.getClass())) {
+            return false;
+        }
+        if (obj == this) {
+            return true;
+        }
+        // CAUTION: Two environment entries can only be considered equal if their keys both
+        // point to exactly the same SchemeSymbol from symbol table!
+        if (!(key == ((EnvironmentEntry) obj).getKey())) {
+            return false;
+        }
+        if (!value.equals(((EnvironmentEntry) obj).getValue())) {
+            return false;
+        }
+        return true;
+    }
+
+    // TODO: Overwrite hashcode method!
 }
