@@ -127,6 +127,7 @@ public class SchemeSymbolTable {
                     if (nextIndex == startIndex) {
                         // switch back to old table in case of there's no free slot
                         symbolTable = oldSymbolTable;
+                        currentTableSize = oldTableSize;
                         LOGGER.debug("Symbol table error. No free slot found!");
                         throw new SchemeError("Symbol table problem!");
                     }
