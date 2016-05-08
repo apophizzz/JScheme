@@ -1,11 +1,12 @@
 package hdm.pk070.jscheme.util;
 
 import hdm.pk070.jscheme.util.exception.ReflectionMethodCallException;
+import hdm.pk070.jscheme.util.exception.ReflectionUtilsException;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * @author patrick.kleindienst
@@ -15,7 +16,7 @@ public class ReflectionUtils {
     public static Object invokeMethod(Object caller, String methodName, ReflectionMethodParam... params) {
         Method method = getMethodFromClass(caller.getClass(), methodName, toTypeArray(params));
         makeAccessibleIfNecessary(method);
-        return invokeMethod(method, caller, toValueArray(params));
+        return invoke(method, caller, toValueArray(params));
     }
 
     private static void makeAccessibleIfNecessary(Method method) {
@@ -24,7 +25,7 @@ public class ReflectionUtils {
         }
     }
 
-    private static Object invokeMethod(Method method, Object caller, Object... paramValues) {
+    private static Object invoke(Method method, Object caller, Object... paramValues) {
         try {
             return method.invoke(caller, paramValues);
         } catch (IllegalAccessException e) {
@@ -36,13 +37,24 @@ public class ReflectionUtils {
 
     private static Method getMethodFromClass(Class clazz, String methodName, Class... paramClasses) {
         Objects.requireNonNull(clazz);
-        Method method = null;
-        try {
-            method = clazz.getDeclaredMethod(methodName, paramClasses);
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
+        Objects.requireNonNull(methodName);
+        return checkClassHierarchy(clazz, methodName, paramClasses);
+    }
+
+    private static Method checkClassHierarchy(Class clazz, String methodName, Class... paramClasses) {
+        Class type = clazz;
+        while (Objects.nonNull(type)) {
+            try {
+                Method method = type.getDeclaredMethod(methodName, paramClasses);
+                if (Objects.nonNull(method)) {
+                    return method;
+                }
+            } catch (NoSuchMethodException e) {
+                type = type.getSuperclass();
+            }
         }
-        return method;
+        throw new ReflectionUtilsException(String.format("Unable to find method %s in class hierarchy of %s",
+                methodName, clazz.getSimpleName()));
     }
 
     private static Class[] toTypeArray(ReflectionMethodParam[] params) {
@@ -77,14 +89,38 @@ public class ReflectionUtils {
         return getFieldValFromObj(obj, field);
     }
 
-    private static Field getFieldByName(Object obj, String fieldName) {
-        Field field = null;
-        try {
-            field = obj.getClass().getDeclaredField(fieldName);
-        } catch (NoSuchFieldException e) {
-            e.printStackTrace();
+    public static void setAttributeVal(Object obj, String attribute, Object value) {
+        Field field = getFieldByName(obj, attribute);
+        makeAccessibleIfNecessary(field);
+        if (field.getType().equals(value.getClass())) {
+            try {
+                field.set(obj, value);
+            } catch (IllegalAccessException e) {
+                throw new ReflectionUtilsException("Error changing value of attribute");
+            }
         }
-        return field;
+    }
+
+    private static Field getFieldByName(Object obj, String fieldName) {
+        List<Field> allFields = collectFields(obj);
+        Optional<Field> foundField = allFields.stream().filter(collectedField -> collectedField.getName().equals
+                (fieldName)).findAny();
+        if (!foundField.isPresent()) {
+            throw new ReflectionUtilsException(String.format("Unable to find field named %s", fieldName));
+        }
+        return foundField.get();
+    }
+
+    private static List<Field> collectFields(Object obj) {
+        List<Field> fields = new ArrayList<>();
+        fields.addAll(Arrays.asList(obj.getClass().getDeclaredFields()));
+        Class type = obj.getClass();
+
+        while (Objects.nonNull(type.getSuperclass())) {
+            type = type.getSuperclass();
+            fields.addAll(Arrays.asList(type.getDeclaredFields()));
+        }
+        return fields;
     }
 
     private static void makeAccessibleIfNecessary(Field field) {
