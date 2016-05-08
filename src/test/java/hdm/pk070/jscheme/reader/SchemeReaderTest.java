@@ -9,6 +9,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PowerMockIgnore;
@@ -17,6 +18,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
 
 import java.io.ByteArrayInputStream;
 import java.util.Objects;
+import java.util.Optional;
 
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.notNullValue;
@@ -43,8 +45,10 @@ public class SchemeReaderTest {
 
     @Before
     public void setUp() throws Exception {
+        SchemeSymbol testSymbol = new SchemeSymbol("abc");
         symbolTableMock = Mockito.mock(SchemeSymbolTable.class);
-        Mockito.when(symbolTableMock.getOrAdd("abc")).thenReturn(new SchemeSymbol("abc"));
+        Mockito.when(symbolTableMock.add(new SchemeSymbol("abc"))).thenReturn(testSymbol);
+        Mockito.when(symbolTableMock.get("abc")).thenReturn(Optional.of(new SchemeSymbol("abc")));
 
         PowerMockito.mockStatic(SchemeSymbolTable.class);
         PowerMockito.when(SchemeSymbolTable.getInstance()).thenReturn(symbolTableMock);

@@ -97,9 +97,7 @@ public class GlobalEnvironment {
         int nextIndex = startIndex;
         SchemeSymbol keyFound;
 
-        System.out.println("Start searching for free slot...");
         for (; ; ) {
-            System.out.println("Next try ...");
 
             if (Objects.nonNull(currentGlobalEnvironmentEntries[nextIndex])) {
                 // 4. Entry already exists, overwrite
@@ -108,13 +106,11 @@ public class GlobalEnvironment {
                 if (keyFound == envKey) {
                     currentGlobalEnvironmentEntries[nextIndex].setValue(envValue);
                     // 5. End here
-                    System.out.println("Entry already exists");
                     return;
                 }
             }
 
             if (Objects.isNull(currentGlobalEnvironmentEntries[nextIndex])) {
-                System.out.println("Create new entry");
                 // 6. Entry does not exist yet - store new entry
                 currentGlobalEnvironmentEntries[nextIndex] = EnvironmentEntry.create(envKey, envValue);
 

@@ -12,6 +12,8 @@ import hdm.pk070.jscheme.symbolTable.SchemeSymbolTable;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.Optional;
+
 /**
  *
  */
@@ -51,7 +53,10 @@ public class SymbolObjReader extends SchemeObjReader {
         }
 
         if (symbolBuffer.toString().length() > 0) {
-            return SchemeSymbolTable.getInstance().getOrAdd(symbolBuffer.toString());
+            Optional<SchemeSymbol> searchedSymbolOptional = SchemeSymbolTable.getInstance().
+                    get(symbolBuffer.toString());
+            return searchedSymbolOptional.orElse(SchemeSymbolTable.getInstance().
+                    add(new SchemeSymbol(symbolBuffer.toString())));
         } else {
             throw new SchemeError("Cannot process empty symbol name!");
         }
