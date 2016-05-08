@@ -1,6 +1,6 @@
 package hdm.pk070.jscheme.eval;
 
-import hdm.pk070.jscheme.environment.GlobalEnvironment;
+import hdm.pk070.jscheme.table.environment.GlobalEnvironment;
 import hdm.pk070.jscheme.error.SchemeError;
 import hdm.pk070.jscheme.obj.SchemeObject;
 import hdm.pk070.jscheme.obj.type.SchemeInteger;

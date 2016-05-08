@@ -1,4 +1,4 @@
-package hdm.pk070.jscheme.environment;
+package hdm.pk070.jscheme.table.environment;
 
 import hdm.pk070.jscheme.error.SchemeError;
 import hdm.pk070.jscheme.obj.SchemeObject;

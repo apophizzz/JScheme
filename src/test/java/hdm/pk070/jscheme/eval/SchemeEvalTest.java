@@ -1,19 +1,11 @@
 package hdm.pk070.jscheme.eval;
 
-import hdm.pk070.jscheme.environment.GlobalEnvironment;
 import hdm.pk070.jscheme.error.SchemeError;
 import hdm.pk070.jscheme.obj.SchemeObject;
 import hdm.pk070.jscheme.obj.type.SchemeInteger;
 import hdm.pk070.jscheme.obj.type.SchemeString;
-import hdm.pk070.jscheme.obj.type.SchemeSymbol;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mockito;
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PowerMockIgnore;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
 
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.notNullValue;

@@ -1,8 +1,8 @@
-package hdm.pk070.jscheme.symbolTable;
+package hdm.pk070.jscheme.table.symbolTable;
 
 import hdm.pk070.jscheme.error.SchemeError;
-import hdm.pk070.jscheme.hash.HashAlgProvider;
-import hdm.pk070.jscheme.hash.impl.StandardHashAlgProvider;
+import hdm.pk070.jscheme.table.hash.HashAlgProvider;
+import hdm.pk070.jscheme.table.hash.impl.StandardHashAlgProvider;
 import hdm.pk070.jscheme.obj.type.SchemeSymbol;
 import hdm.pk070.jscheme.util.ReflectionMethodParam;
 import hdm.pk070.jscheme.util.ReflectionUtils;

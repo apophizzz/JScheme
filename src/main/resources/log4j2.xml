@@ -30,7 +30,7 @@
 
     <Loggers>
 
-        <Logger name="hdm.pk070.jscheme.symbolTable.SchemeSymbolTable" additivity="false">
+        <Logger name="hdm.pk070.jscheme.table.symbolTable.SchemeSymbolTable" additivity="false">
             <AppenderRef ref="SymbolTableAppender"/>
         </Logger>
 

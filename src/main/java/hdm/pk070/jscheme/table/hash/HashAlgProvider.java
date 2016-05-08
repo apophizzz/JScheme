@@ -1,4 +1,4 @@
-package hdm.pk070.jscheme.hash;
+package hdm.pk070.jscheme.table.hash;
 
 /**
  *

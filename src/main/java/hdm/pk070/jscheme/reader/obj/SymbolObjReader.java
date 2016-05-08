@@ -2,13 +2,12 @@ package hdm.pk070.jscheme.reader.obj;
 
 import hdm.pk070.jscheme.SchemeConstants;
 import hdm.pk070.jscheme.error.SchemeError;
-import hdm.pk070.jscheme.obj.SchemeObject;
 import hdm.pk070.jscheme.obj.type.SchemeFalse;
 import hdm.pk070.jscheme.obj.type.SchemeNil;
 import hdm.pk070.jscheme.obj.type.SchemeSymbol;
 import hdm.pk070.jscheme.obj.type.SchemeTrue;
 import hdm.pk070.jscheme.reader.SchemeCharacterReader;
-import hdm.pk070.jscheme.symbolTable.SchemeSymbolTable;
+import hdm.pk070.jscheme.table.symbolTable.SchemeSymbolTable;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

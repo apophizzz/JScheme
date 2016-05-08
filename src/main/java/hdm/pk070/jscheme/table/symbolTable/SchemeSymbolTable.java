@@ -1,11 +1,9 @@
-package hdm.pk070.jscheme.symbolTable;
+package hdm.pk070.jscheme.table.symbolTable;
 
-import hdm.pk070.jscheme.hash.HashAlgProvider;
-import hdm.pk070.jscheme.hash.impl.StandardHashAlgProvider;
+import hdm.pk070.jscheme.table.hash.HashAlgProvider;
+import hdm.pk070.jscheme.table.hash.impl.StandardHashAlgProvider;
 import hdm.pk070.jscheme.obj.type.SchemeSymbol;
 import hdm.pk070.jscheme.table.BaseTable;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import java.util.Objects;
 

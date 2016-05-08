@@ -1,6 +1,6 @@
-package hdm.pk070.jscheme.hash.impl;
+package hdm.pk070.jscheme.table.hash.impl;
 
-import hdm.pk070.jscheme.hash.HashAlgProvider;
+import hdm.pk070.jscheme.table.hash.HashAlgProvider;
 import hdm.pk070.jscheme.util.ReflectionMethodParam;
 import hdm.pk070.jscheme.util.ReflectionUtils;
 import org.junit.Before;
