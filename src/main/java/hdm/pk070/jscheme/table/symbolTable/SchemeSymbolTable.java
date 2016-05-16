@@ -3,14 +3,14 @@ package hdm.pk070.jscheme.table.symbolTable;
 import hdm.pk070.jscheme.table.hash.HashAlgProvider;
 import hdm.pk070.jscheme.table.hash.impl.StandardHashAlgProvider;
 import hdm.pk070.jscheme.obj.type.SchemeSymbol;
-import hdm.pk070.jscheme.table.BaseTable;
+import hdm.pk070.jscheme.table.ResizableTable;
 
 import java.util.Objects;
 
 /**
  *
  */
-public class SchemeSymbolTable extends BaseTable<String, SchemeSymbol> {
+public class SchemeSymbolTable extends ResizableTable<String, SchemeSymbol> {
 
     private static SchemeSymbolTable schemeSymbolTableInstance = null;
 
@@ -32,13 +32,18 @@ public class SchemeSymbolTable extends BaseTable<String, SchemeSymbol> {
     }
 
     @Override
-    protected int toHashVal(String key) {
+    protected SchemeSymbol handleDuplicateEntries(SchemeSymbol newEntry, SchemeSymbol oldEntry, int oldEntryIndex) {
+        return oldEntry;
+    }
+
+    @Override
+    protected int keyToHashVal(String key) {
         return hashAlgProvider.computeHash(key);
     }
 
     @Override
-    protected int toHashVal(SchemeSymbol value) {
-        return toHashVal(value.getValue());
+    protected int valueToHashVal(SchemeSymbol value) {
+        return keyToHashVal(value.getValue());
     }
 
     @Override
@@ -47,7 +52,7 @@ public class SchemeSymbolTable extends BaseTable<String, SchemeSymbol> {
     }
 
     @Override
-    protected boolean isSameEntry(SchemeSymbol entryToAdd, SchemeSymbol existingEntry) {
+    protected boolean entriesMatch(SchemeSymbol entryToAdd, SchemeSymbol existingEntry) {
         if (entryToAdd.equals(existingEntry)) {
             return true;
         }

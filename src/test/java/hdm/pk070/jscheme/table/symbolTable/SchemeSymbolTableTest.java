@@ -138,12 +138,12 @@ public class SchemeSymbolTableTest {
 
     @Test
     public void testIsSameEntry() {
-        boolean isSameEntry = (boolean) ReflectionUtils.invokeMethod(schemeSymbolTable, "isSameEntry", new
+        boolean isSameEntry = (boolean) ReflectionUtils.invokeMethod(schemeSymbolTable, "entriesMatch", new
                 ReflectionMethodParam
                 (SchemeSymbol.class,
                         new SchemeSymbol("foobar")), new ReflectionMethodParam(SchemeSymbol.class, new SchemeSymbol
                 ("foobar")));
-        boolean isSameEntry1 = (boolean) ReflectionUtils.invokeMethod(schemeSymbolTable, "isSameEntry", new
+        boolean isSameEntry1 = (boolean) ReflectionUtils.invokeMethod(schemeSymbolTable, "entriesMatch", new
                 ReflectionMethodParam
                 (SchemeSymbol.class,
                         new SchemeSymbol("foobar")), new ReflectionMethodParam(SchemeSymbol.class, new SchemeSymbol

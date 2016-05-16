@@ -1,9 +1,9 @@
 package hdm.pk070.jscheme.table.environment;
 
 import hdm.pk070.jscheme.error.SchemeError;
-import hdm.pk070.jscheme.obj.SchemeObject;
 import hdm.pk070.jscheme.obj.type.SchemeInteger;
 import hdm.pk070.jscheme.obj.type.SchemeSymbol;
+import hdm.pk070.jscheme.util.ReflectionMethodParam;
 import hdm.pk070.jscheme.util.ReflectionUtils;
 import org.junit.After;
 import org.junit.Before;
@@ -13,8 +13,9 @@ import java.util.Arrays;
 import java.util.Objects;
 import java.util.Optional;
 
-import static org.junit.Assert.*;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.notNullValue;
+import static org.junit.Assert.assertThat;
 
 /**
  * Created by patrick on 05.05.16.
@@ -31,7 +32,7 @@ public class GlobalEnvironmentTest {
     @Test
     public void testPutEntryIntoEnvironment() throws SchemeError {
         SchemeSymbol testSymbol = new SchemeSymbol("foo");
-        globalEnvironment.put(testSymbol, new SchemeInteger(42));
+        globalEnvironment.add(EnvironmentEntry.create(testSymbol, new SchemeInteger(42)));
 
         assertThat(ReflectionUtils.getAttributeVal(globalEnvironment, "currentFillSize"), equalTo(1));
         assertThat(globalEnvironmentContains(EnvironmentEntry.create(testSymbol, new SchemeInteger(42))),
@@ -41,43 +42,83 @@ public class GlobalEnvironmentTest {
     @Test
     public void testGetEntryFromEnvironment() throws SchemeError {
         SchemeSymbol keySymbol = new SchemeSymbol("foo");
-        globalEnvironment.put(keySymbol, new SchemeInteger(42));
-        SchemeObject result = globalEnvironment.get(keySymbol);
+        globalEnvironment.add(EnvironmentEntry.create(keySymbol, new SchemeInteger(42)));
+        Optional<EnvironmentEntry> resultOptional = globalEnvironment.get(keySymbol);
 
-        assertThat("result must not be null!", result, notNullValue());
-        assertThat("result must be of type SchemeInteger!", result.typeOf(SchemeInteger.class), equalTo(true));
-        assertThat("result does not match expected value!", result, equalTo(new SchemeInteger(42)));
+        assertThat("result must not be null!", resultOptional, notNullValue());
+        assertThat("result must not be missing!", resultOptional.isPresent(), equalTo(true));
+        assertThat("result must be of type SchemeInteger!", resultOptional.get().getValue().typeOf(SchemeInteger
+                .class), equalTo(true));
+        assertThat("result does not match expected value!", resultOptional.get().getValue(), equalTo(new
+                SchemeInteger(42)));
     }
 
     @Test
-    public void testGetReturnsNullOnMissingEntry() {
-        SchemeObject result = globalEnvironment.get(new SchemeSymbol("bar"));
+    public void testGetReturnsEmptyOptionalOnMissingEntry() {
+        Optional<EnvironmentEntry> resultOptional = globalEnvironment.get(new SchemeSymbol("bar"));
 
-        assertThat(result, nullValue());
+        assertThat(resultOptional, notNullValue());
+        assertThat(resultOptional.isPresent(), equalTo(false));
     }
 
     @Test
     public void testRehash() {
-        ReflectionUtils.invokeMethod(globalEnvironment, "startRehash");
-        EnvironmentEntry[] environmentEntries = (EnvironmentEntry[]) ReflectionUtils.getAttributeVal
-                (globalEnvironment, "currentGlobalEnvironmentEntries");
+        ReflectionUtils.invokeMethod(globalEnvironment, "doRehash");
+        Object[] environmentEntries = (Object[]) ReflectionUtils.getAttributeVal
+                (globalEnvironment, "entries");
 
         assertThat(environmentEntries.length, equalTo((511 + 1) * 2 - 1));
+    }
+
+    @Test
+    public void testKeysMatch() {
+        SchemeSymbol keySymbol = new SchemeSymbol("foo");
+        EnvironmentEntry environmentEntry = EnvironmentEntry.create(keySymbol, new SchemeInteger(42));
+        Boolean keysMatch = (Boolean) ReflectionUtils.invokeMethod(globalEnvironment, "keysMatch", new
+                ReflectionMethodParam(SchemeSymbol.class, keySymbol), new ReflectionMethodParam(EnvironmentEntry
+                .class, environmentEntry));
+
+        assertThat("boolean result must not be null!", keysMatch, notNullValue());
+        assertThat("boolean result must be true!", keysMatch, equalTo(true));
+    }
+
+    @Test
+    public void testDifferentKeysDoNotMatch() {
+        SchemeSymbol keySymbol = new SchemeSymbol("bar");
+        EnvironmentEntry environmentEntry = EnvironmentEntry.create(new SchemeSymbol("foo"), new SchemeInteger(42));
+        Boolean keysMatch = (Boolean) ReflectionUtils.invokeMethod(globalEnvironment, "keysMatch", new
+                ReflectionMethodParam(SchemeSymbol.class, keySymbol), new ReflectionMethodParam(EnvironmentEntry
+                .class, environmentEntry));
+
+        assertThat("boolean result must not be null!", keysMatch, notNullValue());
+        assertThat("boolean result must be false!", keysMatch, equalTo(false));
+    }
+
+    @Test
+    public void testEntriesMatch() {
+        SchemeSymbol key1 = new SchemeSymbol("foo");
+        EnvironmentEntry envEntry1 = EnvironmentEntry.create(key1, new SchemeInteger(42));
+        EnvironmentEntry envEntry2 = EnvironmentEntry.create(key1, new SchemeInteger(99));
+        Boolean entriesMatch = (Boolean) ReflectionUtils.invokeMethod(globalEnvironment, "entriesMatch", new
+                ReflectionMethodParam(EnvironmentEntry
+                .class, envEntry1), new ReflectionMethodParam(EnvironmentEntry.class, envEntry2));
+
+        assertThat("boolean result must not be null!", entriesMatch, notNullValue());
+        assertThat("boolean result must be true!", entriesMatch, equalTo(true));
     }
 
     @After
     public void tearDown() {
         // reset environment for each test since it is a singleton
-        EnvironmentEntry[] environmentEntries = (EnvironmentEntry[]) ReflectionUtils.getAttributeVal
-                (globalEnvironment, "currentGlobalEnvironmentEntries");
-        environmentEntries = new EnvironmentEntry[511];
+        Object[] environmentEntries = (Object[]) ReflectionUtils.getAttributeVal
+                (globalEnvironment, "entries");
+        environmentEntries = new Object[511];
     }
 
     private boolean globalEnvironmentContains(EnvironmentEntry expectedEntry) {
-        EnvironmentEntry[] currentGlobalEnvironmentEntries = (EnvironmentEntry[]) ReflectionUtils.getAttributeVal
-                (globalEnvironment,
-                        "currentGlobalEnvironmentEntries");
-        Optional<EnvironmentEntry> entryOptional = Arrays.asList(currentGlobalEnvironmentEntries).stream()
+        Object[] currentGlobalEnvironmentEntries = (Object[]) ReflectionUtils.getAttributeVal
+                (globalEnvironment, "entries");
+        Optional<Object> entryOptional = Arrays.asList(currentGlobalEnvironmentEntries).stream()
                 .filter(entry -> Objects.nonNull(entry))
                 .filter(envEntry -> envEntry.equals(expectedEntry))
                 .findAny();
