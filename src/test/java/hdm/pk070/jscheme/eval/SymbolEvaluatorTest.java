@@ -1,5 +1,6 @@
 package hdm.pk070.jscheme.eval;
 
+import hdm.pk070.jscheme.table.environment.EnvironmentEntry;
 import hdm.pk070.jscheme.table.environment.GlobalEnvironment;
 import hdm.pk070.jscheme.error.SchemeError;
 import hdm.pk070.jscheme.obj.SchemeObject;
@@ -13,6 +14,8 @@ import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
+
+import java.util.Optional;
 
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.notNullValue;
@@ -35,8 +38,9 @@ public class SymbolEvaluatorTest {
     @Before
     public void setUp() {
         globalEnvironmentMock = Mockito.mock(GlobalEnvironment.class);
-        Mockito.when(globalEnvironmentMock.get(new SchemeSymbol("foo"))).thenReturn(new SchemeInteger(42));
-        Mockito.when(globalEnvironmentMock.get(new SchemeSymbol("bar"))).thenReturn(null);
+        Mockito.when(globalEnvironmentMock.get(new SchemeSymbol("foo"))).thenReturn(Optional.of(EnvironmentEntry
+                .create(new SchemeSymbol("foo"), new SchemeInteger(42))));
+        Mockito.when(globalEnvironmentMock.get(new SchemeSymbol("bar"))).thenReturn(Optional.empty());
 
         PowerMockito.mockStatic(GlobalEnvironment.class);
         PowerMockito.when(GlobalEnvironment.getInstance()).thenReturn(globalEnvironmentMock);
