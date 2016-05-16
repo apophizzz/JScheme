@@ -8,12 +8,12 @@ import java.util.Objects;
 /**
  * Created by patrick on 05.05.16.
  */
-class EnvironmentEntry {
+public class EnvironmentEntry {
 
     private SchemeSymbol key;
     private SchemeObject value;
 
-    static EnvironmentEntry create(SchemeSymbol key, SchemeObject value) {
+    public static EnvironmentEntry create(SchemeSymbol key, SchemeObject value) {
         return new EnvironmentEntry(key, value);
     }
 
@@ -52,11 +52,11 @@ class EnvironmentEntry {
         if (!(key == ((EnvironmentEntry) obj).getKey())) {
             return false;
         }
-        if (!value.equals(((EnvironmentEntry) obj).getValue())) {
-            return false;
-        }
         return true;
     }
 
-    // TODO: Overwrite hashcode method!
+    @Override
+    public int hashCode() {
+        return key.hashCode();
+    }
 }
