@@ -1,12 +1,13 @@
 package hdm.pk070.jscheme.eval;
 
-import hdm.pk070.jscheme.table.environment.GlobalEnvironment;
 import hdm.pk070.jscheme.error.SchemeError;
 import hdm.pk070.jscheme.obj.SchemeObject;
 import hdm.pk070.jscheme.obj.type.SchemeSymbol;
 import hdm.pk070.jscheme.reader.SchemeReader;
+import hdm.pk070.jscheme.table.environment.EnvironmentEntry;
+import hdm.pk070.jscheme.table.environment.GlobalEnvironment;
 
-import java.util.Objects;
+import java.util.Optional;
 
 /**
  * This evaluator is called in case the {@link SchemeReader} returned a {@link SchemeSymbol}
@@ -26,17 +27,17 @@ class SymbolEvaluator extends AbstractEvaluator {
 
     @Override
     public SchemeObject doEval(SchemeSymbol expression) throws SchemeError {
-        // 1. get symbol from global environment
+        // Get symbol from global environment
         LOGGER.debug(String.format("Evaluating symbol %s ...", expression.getValue()));
-        SchemeObject value = GLOBAL_ENVIRONMENT.get(expression);
-        // 2. throw SchemeError if not present in environment
-        if (Objects.isNull(value)) {
+        Optional<EnvironmentEntry> entryOptional = GLOBAL_ENVIRONMENT.get(expression);
+        // Throw SchemeError if not present in environment
+        if (!entryOptional.isPresent()) {
             LOGGER.debug(String.format("Unable to find symbol %s in global environment. Throw SchemeError.",
                     expression.getValue()));
             throw new SchemeError(String.format("undefined variable %s", expression.getValue()));
         }
-        // 3. return existing value
-        LOGGER.debug(String.format("Evaluation of symbol %s yielded: " + value.getValue(), expression.getValue()));
-        return value;
+        // Return existing value
+        LOGGER.debug(String.format("Evaluation of symbol %s yielded: " + entryOptional.get(), expression.getValue()));
+        return entryOptional.get().getValue();
     }
 }
