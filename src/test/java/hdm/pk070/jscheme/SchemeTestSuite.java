@@ -28,8 +28,7 @@ import org.junit.runners.Suite;
         SymbolObjReaderTest.class,
         SchemeCharacterReaderTest.class,
         PushbackReaderLearningTest.class,
-        StandardHashAlgProviderTest.class, SchemeSymbolTableTest.class, GlobalEnvironmentTest.class, SchemeEvalTest
-        .class, SymbolEvaluatorTest
-        .class})
+        StandardHashAlgProviderTest.class, SchemeSymbolTableTest.class, GlobalEnvironmentTest.class,
+        SchemeEvalTest.class, SymbolEvaluatorTest.class})
 public class SchemeTestSuite {
 }
