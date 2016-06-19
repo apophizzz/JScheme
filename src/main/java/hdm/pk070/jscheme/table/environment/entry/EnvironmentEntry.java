@@ -1,4 +1,4 @@
-package hdm.pk070.jscheme.table.environment;
+package hdm.pk070.jscheme.table.environment.entry;
 
 import hdm.pk070.jscheme.obj.SchemeObject;
 import hdm.pk070.jscheme.obj.type.SchemeSymbol;
@@ -35,7 +35,7 @@ public class EnvironmentEntry {
         this.value = value;
     }
 
-    // TODO: Review equals method (value comparison obsolete?)
+
     @Override
     public boolean equals(Object obj) {
         if (Objects.isNull(obj)) {

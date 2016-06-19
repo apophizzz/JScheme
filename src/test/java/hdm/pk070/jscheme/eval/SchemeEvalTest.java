@@ -4,6 +4,8 @@ import hdm.pk070.jscheme.error.SchemeError;
 import hdm.pk070.jscheme.obj.SchemeObject;
 import hdm.pk070.jscheme.obj.type.SchemeInteger;
 import hdm.pk070.jscheme.obj.type.SchemeString;
+import hdm.pk070.jscheme.table.environment.Environment;
+import hdm.pk070.jscheme.table.environment.LocalEnvironment;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -17,15 +19,17 @@ import static org.junit.Assert.assertThat;
 public class SchemeEvalTest {
 
     private SchemeEval schemeEval;
+    private Environment dummyEnvironment;
 
     @Before
     public void setUp() {
         schemeEval = SchemeEval.getInstance();
+        dummyEnvironment = LocalEnvironment.withSize(42);
     }
 
     @Test
     public void testEvalNumber() throws SchemeError {
-        SchemeObject evalResult = schemeEval.eval(new SchemeInteger(1));
+        SchemeObject evalResult = schemeEval.eval(new SchemeInteger(1), dummyEnvironment);
 
         assertThat("evalResult must not be null!", evalResult, notNullValue());
         assertThat(String.format("evalResult does not match expected type %s!", SchemeInteger.class.getSimpleName()),
@@ -37,7 +41,7 @@ public class SchemeEvalTest {
 
     @Test
     public void testEvalString() throws SchemeError {
-        SchemeObject evalResult = schemeEval.eval(new SchemeString("foobar"));
+        SchemeObject evalResult = schemeEval.eval(new SchemeString("foobar"), dummyEnvironment);
 
         assertThat("evalResult must not be null!", evalResult, notNullValue());
         assertThat(String.format("evalResult does not match expected type %s!", SchemeString.class.getSimpleName()),

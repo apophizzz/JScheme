@@ -3,6 +3,7 @@ package hdm.pk070.jscheme.table.environment;
 import hdm.pk070.jscheme.error.SchemeError;
 import hdm.pk070.jscheme.obj.type.SchemeInteger;
 import hdm.pk070.jscheme.obj.type.SchemeSymbol;
+import hdm.pk070.jscheme.table.environment.entry.EnvironmentEntry;
 import hdm.pk070.jscheme.util.ReflectionMethodParam;
 import hdm.pk070.jscheme.util.ReflectionUtils;
 import org.junit.After;

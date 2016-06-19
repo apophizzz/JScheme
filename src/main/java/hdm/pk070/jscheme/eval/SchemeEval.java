@@ -5,6 +5,7 @@ import hdm.pk070.jscheme.obj.SchemeObject;
 import hdm.pk070.jscheme.obj.type.SchemeCons;
 import hdm.pk070.jscheme.obj.type.SchemeSymbol;
 import hdm.pk070.jscheme.reader.SchemeReader;
+import hdm.pk070.jscheme.table.environment.Environment;
 
 /**
  * This class constitutes the JScheme entry point for evaluating the {@link SchemeObject}s returned by
@@ -23,9 +24,9 @@ public class SchemeEval {
     }
 
 
-    public SchemeObject eval(SchemeObject expression) throws SchemeError {
+    public SchemeObject eval(SchemeObject expression, Environment environment) throws SchemeError {
         if (expression.typeOf(SchemeSymbol.class)) {
-            return SymbolEvaluator.getInstance().doEval(((SchemeSymbol) expression));
+            return SymbolEvaluator.getInstance().doEval(((SchemeSymbol) expression), environment);
         } else if (expression.typeOf(SchemeCons.class)) {
             // TODO:
             // invoke evalCons(expression)
