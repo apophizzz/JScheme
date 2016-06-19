@@ -50,4 +50,12 @@ public class LocalEnvironmentTest {
         assertThat(environmentEntry.isPresent(), equalTo(true));
         assertThat(environmentEntry.get().getValue(), equalTo(new SchemeInteger(42)));
     }
+
+    @Test
+    public void testGetNonExistingEntryFromEnvironment() {
+        Optional<EnvironmentEntry> nonExistingEntry = localEnvironment.get(new SchemeSymbol("non-existing-key"));
+
+        assertThat(nonExistingEntry, notNullValue());
+        assertThat(nonExistingEntry.isPresent(), equalTo(false));
+    }
 }
