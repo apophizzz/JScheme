@@ -1,5 +1,6 @@
 package hdm.pk070.jscheme.table.environment;
 
+import hdm.pk070.jscheme.table.environment.entry.EnvironmentEntryTest;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
@@ -8,6 +9,6 @@ import org.junit.runners.Suite;
  */
 
 @RunWith(Suite.class)
-@Suite.SuiteClasses({GlobalEnvironmentTest.class, EnvironmentEntryTest.class})
+@Suite.SuiteClasses({GlobalEnvironmentTest.class, LocalEnvironmentTest.class, EnvironmentEntryTest.class})
 public class SchemeEnvironmentTestSuite {
 }
