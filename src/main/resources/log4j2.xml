@@ -26,6 +26,12 @@
             </PatternLayout>
         </File>
 
+        <File name="LocalEnvAppender" fileName="logs/local_env.log" append="false">
+            <PatternLayout>
+                <Pattern>%d %p [%t]: %m%n</Pattern>
+            </PatternLayout>
+        </File>
+
     </Appenders>
 
     <Loggers>
@@ -40,6 +46,10 @@
 
         <Logger name="hdm.pk070.jscheme.table.environment.GlobalEnvironment" additivity="false">
             <AppenderRef ref="GlobalEnvAppender"/>
+        </Logger>
+
+        <Logger name="hdm.pk070.jscheme.table.environment.LocalEnvironment" additivity="false">
+            <AppenderRef ref="LocalEnvAppender"/>
         </Logger>
 
         <Root level="debug">

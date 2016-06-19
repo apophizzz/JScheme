@@ -17,6 +17,7 @@ public final class GlobalEnvironment extends ResizableTable<SchemeSymbol, Enviro
 
     private static GlobalEnvironment globalEnvironment = null;
 
+    private final int identifier = 0;
 
     public static GlobalEnvironment getInstance() {
         if (Objects.isNull(globalEnvironment)) {
@@ -31,7 +32,8 @@ public final class GlobalEnvironment extends ResizableTable<SchemeSymbol, Enviro
 
 
     @Override
-    protected EnvironmentEntry handleDuplicateEntries(final EnvironmentEntry newEntry, final EnvironmentEntry oldEntry, int
+    protected EnvironmentEntry handleDuplicateEntries(final EnvironmentEntry newEntry, final EnvironmentEntry
+            oldEntry, int
             oldEntryIndex) {
         ((EnvironmentEntry) entries[oldEntryIndex]).setValue(newEntry.getValue());
         return (EnvironmentEntry) entries[oldEntryIndex];
@@ -57,4 +59,7 @@ public final class GlobalEnvironment extends ResizableTable<SchemeSymbol, Enviro
         return existingEntry.equals(entryToAdd);
     }
 
+    public int getIdentifier() {
+        return identifier;
+    }
 }
