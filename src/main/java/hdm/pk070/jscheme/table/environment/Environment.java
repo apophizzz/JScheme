@@ -13,6 +13,4 @@ public interface Environment<KEY, VALUE> {
 
     VALUE add(final VALUE value) throws SchemeError;
 
-    int getIdentifier();
-
 }

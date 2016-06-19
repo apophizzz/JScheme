@@ -1,6 +1,7 @@
 package hdm.pk070.jscheme.table.environment;
 
 import hdm.pk070.jscheme.obj.type.SchemeSymbol;
+import hdm.pk070.jscheme.reader.obj.StringObjReader;
 import hdm.pk070.jscheme.table.ResizableTable;
 import hdm.pk070.jscheme.table.environment.entry.EnvironmentEntry;
 
@@ -17,8 +18,6 @@ public final class GlobalEnvironment extends ResizableTable<SchemeSymbol, Enviro
 
     private static GlobalEnvironment globalEnvironment = null;
 
-    private final int identifier = 0;
-
     public static GlobalEnvironment getInstance() {
         if (Objects.isNull(globalEnvironment)) {
             globalEnvironment = new GlobalEnvironment();
@@ -34,7 +33,7 @@ public final class GlobalEnvironment extends ResizableTable<SchemeSymbol, Enviro
     @Override
     protected EnvironmentEntry handleDuplicateEntries(final EnvironmentEntry newEntry, final EnvironmentEntry
             oldEntry, int
-            oldEntryIndex) {
+                                                              oldEntryIndex) {
         ((EnvironmentEntry) entries[oldEntryIndex]).setValue(newEntry.getValue());
         return (EnvironmentEntry) entries[oldEntryIndex];
     }
@@ -59,7 +58,8 @@ public final class GlobalEnvironment extends ResizableTable<SchemeSymbol, Enviro
         return existingEntry.equals(entryToAdd);
     }
 
-    public int getIdentifier() {
-        return identifier;
+    @Override
+    public String toString() {
+        return String.format("Global Env [id: %d] ", this.hashCode());
     }
 }

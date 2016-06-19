@@ -16,10 +16,8 @@ public final class LocalEnvironment extends FixedSizeTable<SchemeSymbol, Environ
         Environment<SchemeSymbol, EnvironmentEntry> {
 
     private static final Logger LOGGER = LogManager.getLogger(LocalEnvironment.class.getName());
-    private static int instanceCount = 0;
 
     private Environment parentEnvironment;
-    private int identifier;
 
     public static LocalEnvironment withSize(int size) {
         return new LocalEnvironment(size);
@@ -36,40 +34,29 @@ public final class LocalEnvironment extends FixedSizeTable<SchemeSymbol, Environ
     private LocalEnvironment(int size, Environment parentEnvironment) {
         super(size);
         this.parentEnvironment = parentEnvironment;
-        this.identifier = instanceCount + 1;
-        instanceCount++;
     }
 
     @Override
     public Optional<EnvironmentEntry> get(final SchemeSymbol schemeSymbol) {
-        LOGGER.debug(String.format("Searching for entry '%s' in local env [id: %d] -> parent: [%d]", schemeSymbol
-                .toString(), this.identifier, this.getParentIdIfExists()));
+        LOGGER.debug(String.format("Searching for entry '%s' in %s", schemeSymbol
+                .toString(), this));
         Optional<EnvironmentEntry> searchedEnvironmentEntry = super.get(schemeSymbol);
 
         if (!searchedEnvironmentEntry.isPresent() && Objects.nonNull(parentEnvironment)) {
-            LOGGER.debug(String.format("Unable to find entry for key '%s' in local env [id: %d], continue with parent" +
-                    " [id: %d]", schemeSymbol
-                    .toString(), this.identifier, this.getParentIdIfExists()));
+            LOGGER.debug(String.format("Unable to find entry for key '%s' in %s, continue with parent", schemeSymbol
+                    .toString(), this));
             searchedEnvironmentEntry = parentEnvironment.get(schemeSymbol);
         }
         if (!searchedEnvironmentEntry.isPresent()) {
-            LOGGER.debug(String.format("Unable to find entry for key '%s' in local env [id: %d] hierarchy, return " +
+            LOGGER.debug(String.format("Unable to find entry for key '%s' in %s hierarchy, return " +
                     "empty Optional", schemeSymbol
-                    .toString(), this.identifier));
+                    .toString(), this));
         } else {
-            LOGGER.debug(String.format("Found entry for key '%s' in local env [id: %d] hierarchy, return result",
+            LOGGER.debug(String.format("Found entry for key '%s' in %s hierarchy, return result",
                     schemeSymbol
-                    .toString(), this.identifier));
+                            .toString(), this));
         }
         return searchedEnvironmentEntry;
-    }
-
-    private int getParentIdIfExists() {
-        if (Objects.nonNull(parentEnvironment)) {
-            return parentEnvironment.getIdentifier();
-        } else {
-            return -1;
-        }
     }
 
 
@@ -79,13 +66,7 @@ public final class LocalEnvironment extends FixedSizeTable<SchemeSymbol, Environ
     }
 
     @Override
-    public int getIdentifier() {
-        return identifier;
-    }
-
-    @Override
-    protected void finalize() throws Throwable {
-        instanceCount--;
-        super.finalize();
+    public String toString() {
+        return String.format("Local Env [id: %d; parent -> { %s }]", this.hashCode(), this.parentEnvironment);
     }
 }
