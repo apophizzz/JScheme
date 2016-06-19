@@ -1,6 +1,6 @@
 package hdm.pk070.jscheme.eval;
 
-import hdm.pk070.jscheme.table.environment.EnvironmentEntry;
+import hdm.pk070.jscheme.table.environment.entry.EnvironmentEntry;
 import hdm.pk070.jscheme.table.environment.GlobalEnvironment;
 import hdm.pk070.jscheme.error.SchemeError;
 import hdm.pk070.jscheme.obj.SchemeObject;
@@ -51,7 +51,7 @@ public class SymbolEvaluatorTest {
 
     @Test
     public void testEvalDefinedSymbol() throws SchemeError {
-        SchemeObject fooResult = symbolEvaluator.doEval(new SchemeSymbol("foo"));
+        SchemeObject fooResult = symbolEvaluator.doEval(new SchemeSymbol("foo"), globalEnvironmentMock);
 
         assertThat("fooResult must not be null!", fooResult, notNullValue());
         assertThat(String.format("fooResult does not match expected type %s!", SchemeInteger.class.getSimpleName()),
@@ -63,6 +63,6 @@ public class SymbolEvaluatorTest {
 
     @Test(expected = SchemeError.class)
     public void testEvalUndefinedSymbol() throws SchemeError {
-        symbolEvaluator.doEval(new SchemeSymbol("bar"));
+        symbolEvaluator.doEval(new SchemeSymbol("bar"), globalEnvironmentMock);
     }
 }

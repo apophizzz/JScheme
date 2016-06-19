@@ -1,5 +1,6 @@
 package hdm.pk070.jscheme.eval;
 
+import hdm.pk070.jscheme.table.environment.Environment;
 import hdm.pk070.jscheme.table.environment.GlobalEnvironment;
 import hdm.pk070.jscheme.error.SchemeError;
 import hdm.pk070.jscheme.obj.SchemeObject;
@@ -12,11 +13,11 @@ import org.apache.logging.log4j.Logger;
  *
  * @author patrick.kleindienst
  */
-abstract class AbstractEvaluator {
+abstract class AbstractEvaluator<T extends SchemeObject> {
 
     protected static final Logger LOGGER = LogManager.getLogger("hdm.pk070.jscheme.EvalLogger");
 
     protected static final GlobalEnvironment GLOBAL_ENVIRONMENT = GlobalEnvironment.getInstance();
 
-    public abstract SchemeObject doEval(SchemeSymbol expression) throws SchemeError;
+    public abstract SchemeObject doEval(T expression, Environment environment) throws SchemeError;
 }
