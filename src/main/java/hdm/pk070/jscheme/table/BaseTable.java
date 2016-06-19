@@ -13,4 +13,6 @@ abstract class BaseTable<KEY, VALUE> {
 
     public abstract VALUE add(VALUE value) throws SchemeError;
 
+    protected abstract boolean keysMatch(KEY key, VALUE entryFound);
+
 }

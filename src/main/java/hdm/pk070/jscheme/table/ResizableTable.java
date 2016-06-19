@@ -194,8 +194,6 @@ public abstract class ResizableTable<KEY, VALUE> extends BaseTable<KEY, VALUE> {
 
     protected abstract int valueToHashVal(VALUE value);
 
-    protected abstract boolean keysMatch(KEY key, VALUE entryFound);
-
     protected abstract boolean entriesMatch(VALUE entryToAdd, VALUE existingEntry);
 
 }
