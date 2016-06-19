@@ -1,11 +1,8 @@
 package hdm.pk070.jscheme.table.environment;
 
-import hdm.pk070.jscheme.error.SchemeError;
-import hdm.pk070.jscheme.obj.SchemeObject;
 import hdm.pk070.jscheme.obj.type.SchemeSymbol;
 import hdm.pk070.jscheme.table.ResizableTable;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import hdm.pk070.jscheme.table.environment.entry.EnvironmentEntry;
 
 import java.util.Objects;
 
@@ -13,7 +10,8 @@ import java.util.Objects;
  * This class defines the JScheme global environment. The global environment's job is to store bindings between
  * {@link SchemeSymbol}s like 'abc' and their values (of type string, number, ...).
  */
-public class GlobalEnvironment extends ResizableTable<SchemeSymbol, EnvironmentEntry> {
+public class GlobalEnvironment extends ResizableTable<SchemeSymbol, EnvironmentEntry> implements
+        Environment<SchemeSymbol, EnvironmentEntry> {
 
 
     private static GlobalEnvironment globalEnvironment = null;
@@ -58,4 +56,8 @@ public class GlobalEnvironment extends ResizableTable<SchemeSymbol, EnvironmentE
         return existingEntry.equals(entryToAdd);
     }
 
+    @Override
+    public boolean isGlobal() {
+        return true;
+    }
 }
