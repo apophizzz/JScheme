@@ -56,8 +56,4 @@ public class GlobalEnvironment extends ResizableTable<SchemeSymbol, EnvironmentE
         return existingEntry.equals(entryToAdd);
     }
 
-    @Override
-    public boolean isGlobal() {
-        return true;
-    }
 }

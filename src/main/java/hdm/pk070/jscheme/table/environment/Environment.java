@@ -9,8 +9,6 @@ import java.util.Optional;
  */
 public interface Environment<KEY, VALUE> {
 
-    boolean isGlobal();
-
     Optional<VALUE> get(KEY key);
 
     VALUE add(VALUE value) throws SchemeError;

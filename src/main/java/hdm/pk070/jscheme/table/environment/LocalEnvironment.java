@@ -43,10 +43,6 @@ public class LocalEnvironment extends FixedSizeTable<SchemeSymbol, EnvironmentEn
         return searchedEnvironmentEntry;
     }
 
-    @Override
-    public boolean isGlobal() {
-        return false;
-    }
 
     @Override
     protected boolean keysMatch(SchemeSymbol schemeSymbol, EnvironmentEntry entryFound) {
