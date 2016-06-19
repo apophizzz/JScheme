@@ -1,8 +1,13 @@
 package hdm.pk070.jscheme;
 
+import hdm.pk070.jscheme.eval.SchemeEvalTestSuite;
+import hdm.pk070.jscheme.obj.SchemeObjectTestSuite;
+import hdm.pk070.jscheme.reader.SchemeReaderTestSuite;
+import hdm.pk070.jscheme.table.SchemeTableTestSuite;
 import hdm.pk070.jscheme.table.environment.GlobalEnvironmentTest;
 import hdm.pk070.jscheme.eval.SchemeEvalTest;
 import hdm.pk070.jscheme.eval.SymbolEvaluatorTest;
+import hdm.pk070.jscheme.table.environment.SchemeEnvironmentTestSuite;
 import hdm.pk070.jscheme.table.hash.impl.StandardHashAlgProviderTest;
 import hdm.pk070.jscheme.obj.SchemeObjectTest;
 import hdm.pk070.jscheme.obj.type.SchemeConsTest;
@@ -23,12 +28,7 @@ import org.junit.runners.Suite;
  */
 
 @RunWith(Suite.class)
-@Suite.SuiteClasses({SchemeObjectTest.class, SchemeConsTest.class, SchemeReaderTest.class, StringObjReaderTest.class,
-        IntegerObjReaderTest.class,
-        SymbolObjReaderTest.class,
-        SchemeCharacterReaderTest.class,
-        PushbackReaderLearningTest.class,
-        StandardHashAlgProviderTest.class, SchemeSymbolTableTest.class, GlobalEnvironmentTest.class,
-        SchemeEvalTest.class, SymbolEvaluatorTest.class})
+@Suite.SuiteClasses({SchemeObjectTestSuite.class, SchemeReaderTestSuite.class, SchemeEvalTestSuite.class,
+        SchemeEnvironmentTestSuite.class, SchemeTableTestSuite.class})
 public class SchemeTestSuite {
 }
