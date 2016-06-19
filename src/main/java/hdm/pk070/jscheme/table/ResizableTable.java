@@ -25,7 +25,7 @@ public abstract class ResizableTable<KEY, VALUE> extends BaseTable<KEY, VALUE> {
     protected Object[] entries = new Object[INITIAL_TABLE_SIZE];
 
     @Override
-    public Optional<VALUE> get(KEY key) {
+    public Optional<VALUE> get(final KEY key) {
         Objects.requireNonNull(key);
 
         // 1. Extract integer hash out of key param
@@ -68,7 +68,7 @@ public abstract class ResizableTable<KEY, VALUE> extends BaseTable<KEY, VALUE> {
     }
 
     @Override
-    public VALUE add(VALUE value) throws SchemeError {
+    public VALUE add(final VALUE value) throws SchemeError {
         Objects.nonNull(value);
 
         // Compute hash
@@ -188,12 +188,12 @@ public abstract class ResizableTable<KEY, VALUE> extends BaseTable<KEY, VALUE> {
         return Objects.nonNull(entries[index]) ? true : false;
     }
 
-    protected abstract VALUE handleDuplicateEntries(VALUE newEntry, VALUE oldEntry, int oldEntryIndex);
+    protected abstract VALUE handleDuplicateEntries(final VALUE newEntry, final VALUE oldEntry, int oldEntryIndex);
 
-    protected abstract int keyToHashVal(KEY key);
+    protected abstract int keyToHashVal(final KEY key);
 
-    protected abstract int valueToHashVal(VALUE value);
+    protected abstract int valueToHashVal(final VALUE value);
 
-    protected abstract boolean entriesMatch(VALUE entryToAdd, VALUE existingEntry);
+    protected abstract boolean entriesMatch(final VALUE entryToAdd, final VALUE existingEntry);
 
 }

@@ -17,12 +17,11 @@ public abstract class FixedSizeTable<KEY, VALUE> extends BaseTable<KEY, VALUE> {
         this.entries = new Object[fixedSize];
     }
 
-    public Optional<VALUE> get(KEY key) {
+    @Override
+    public Optional<VALUE> get(final KEY key) {
         Objects.requireNonNull(key);
 
-        // Iteration über alle Slots
         for (Object entry : entries) {
-            // extrahiere und vergleiche Key
             if (Objects.nonNull(entry) && keysMatch(key, (VALUE) entry)) {
                 return Optional.of((VALUE) entry);
             }
@@ -30,7 +29,8 @@ public abstract class FixedSizeTable<KEY, VALUE> extends BaseTable<KEY, VALUE> {
         return Optional.empty();
     }
 
-    public VALUE add(VALUE value) throws SchemeError {
+    @Override
+    public VALUE add(final VALUE value) throws SchemeError {
         for (int i = 0; i < entries.length; i++) {
             if (Objects.nonNull(entries[i])) {
                 if ((((EnvironmentEntry) value).getKey() == ((EnvironmentEntry)

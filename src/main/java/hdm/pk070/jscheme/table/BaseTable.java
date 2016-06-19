@@ -9,10 +9,10 @@ import java.util.Optional;
  */
 abstract class BaseTable<KEY, VALUE> {
 
-    public abstract Optional<VALUE> get(KEY key);
+    public abstract Optional<VALUE> get(final KEY key);
 
-    public abstract VALUE add(VALUE value) throws SchemeError;
+    public abstract VALUE add(final VALUE value) throws SchemeError;
 
-    protected abstract boolean keysMatch(KEY key, VALUE entryFound);
+    protected abstract boolean keysMatch(final KEY key, final VALUE entryFound);
 
 }

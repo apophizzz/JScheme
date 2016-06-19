@@ -9,8 +9,8 @@ import java.util.Optional;
  */
 public interface Environment<KEY, VALUE> {
 
-    Optional<VALUE> get(KEY key);
+    Optional<VALUE> get(final KEY key);
 
-    VALUE add(VALUE value) throws SchemeError;
+    VALUE add(final VALUE value) throws SchemeError;
 
 }

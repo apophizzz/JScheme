@@ -1,6 +1,5 @@
 package hdm.pk070.jscheme.table.environment;
 
-import hdm.pk070.jscheme.error.SchemeError;
 import hdm.pk070.jscheme.obj.type.SchemeSymbol;
 import hdm.pk070.jscheme.table.FixedSizeTable;
 import hdm.pk070.jscheme.table.environment.entry.EnvironmentEntry;
@@ -11,7 +10,7 @@ import java.util.Optional;
 /**
  * Created by patrick on 17.06.16.
  */
-public class LocalEnvironment extends FixedSizeTable<SchemeSymbol, EnvironmentEntry> implements
+public final class LocalEnvironment extends FixedSizeTable<SchemeSymbol, EnvironmentEntry> implements
         Environment<SchemeSymbol, EnvironmentEntry> {
 
 
@@ -35,7 +34,7 @@ public class LocalEnvironment extends FixedSizeTable<SchemeSymbol, EnvironmentEn
     }
 
     @Override
-    public Optional<EnvironmentEntry> get(SchemeSymbol schemeSymbol) {
+    public Optional<EnvironmentEntry> get(final SchemeSymbol schemeSymbol) {
         Optional<EnvironmentEntry> searchedEnvironmentEntry = super.get(schemeSymbol);
         if (!searchedEnvironmentEntry.isPresent() && Objects.nonNull(parentEnvironment)) {
             searchedEnvironmentEntry = parentEnvironment.get(schemeSymbol);
@@ -45,7 +44,7 @@ public class LocalEnvironment extends FixedSizeTable<SchemeSymbol, EnvironmentEn
 
 
     @Override
-    protected boolean keysMatch(SchemeSymbol schemeSymbol, EnvironmentEntry entryFound) {
+    protected boolean keysMatch(final SchemeSymbol schemeSymbol, final EnvironmentEntry entryFound) {
         return schemeSymbol == entryFound.getKey();
     }
 }

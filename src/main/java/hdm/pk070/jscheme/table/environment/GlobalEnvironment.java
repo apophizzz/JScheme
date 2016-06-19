@@ -8,9 +8,10 @@ import java.util.Objects;
 
 /**
  * This class defines the JScheme global environment. The global environment's job is to store bindings between
- * {@link SchemeSymbol}s like 'abc' and their values (of type string, number, ...).
+ * {@link SchemeSymbol}s like 'abc' and their values (of type string, number, ...). According to the class' name,
+ * these bindings are always visible and can be accessed by every Scheme function.
  */
-public class GlobalEnvironment extends ResizableTable<SchemeSymbol, EnvironmentEntry> implements
+public final class GlobalEnvironment extends ResizableTable<SchemeSymbol, EnvironmentEntry> implements
         Environment<SchemeSymbol, EnvironmentEntry> {
 
 
@@ -30,29 +31,29 @@ public class GlobalEnvironment extends ResizableTable<SchemeSymbol, EnvironmentE
 
 
     @Override
-    protected EnvironmentEntry handleDuplicateEntries(EnvironmentEntry newEntry, EnvironmentEntry oldEntry, int
+    protected EnvironmentEntry handleDuplicateEntries(final EnvironmentEntry newEntry, final EnvironmentEntry oldEntry, int
             oldEntryIndex) {
         ((EnvironmentEntry) entries[oldEntryIndex]).setValue(newEntry.getValue());
         return (EnvironmentEntry) entries[oldEntryIndex];
     }
 
     @Override
-    protected int keyToHashVal(SchemeSymbol key) {
+    protected int keyToHashVal(final SchemeSymbol key) {
         return key.hashCode();
     }
 
     @Override
-    protected int valueToHashVal(EnvironmentEntry value) {
+    protected int valueToHashVal(final EnvironmentEntry value) {
         return value.hashCode();
     }
 
     @Override
-    protected boolean keysMatch(SchemeSymbol key, EnvironmentEntry entryFound) {
+    protected boolean keysMatch(final SchemeSymbol key, final EnvironmentEntry entryFound) {
         return key == entryFound.getKey();
     }
 
     @Override
-    protected boolean entriesMatch(EnvironmentEntry entryToAdd, EnvironmentEntry existingEntry) {
+    protected boolean entriesMatch(final EnvironmentEntry entryToAdd, final EnvironmentEntry existingEntry) {
         return existingEntry.equals(entryToAdd);
     }
 
