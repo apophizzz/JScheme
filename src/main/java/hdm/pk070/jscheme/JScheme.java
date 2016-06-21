@@ -3,9 +3,10 @@ package hdm.pk070.jscheme;
 import hdm.pk070.jscheme.error.SchemeError;
 import hdm.pk070.jscheme.eval.SchemeEval;
 import hdm.pk070.jscheme.obj.SchemeObject;
-import hdm.pk070.jscheme.obj.function.builtin.SchemeBuiltinMinus;
-import hdm.pk070.jscheme.obj.simple.SchemeSymbol;
-import hdm.pk070.jscheme.obj.function.builtin.SchemeBuiltinPlus;
+import hdm.pk070.jscheme.obj.builtin.function.SchemeBuiltinMinus;
+import hdm.pk070.jscheme.obj.builtin.function.SchemeBuiltinTimes;
+import hdm.pk070.jscheme.obj.builtin.simple.SchemeSymbol;
+import hdm.pk070.jscheme.obj.builtin.function.SchemeBuiltinPlus;
 import hdm.pk070.jscheme.reader.SchemeReader;
 import hdm.pk070.jscheme.table.environment.GlobalEnvironment;
 import hdm.pk070.jscheme.table.environment.entry.EnvironmentEntry;
@@ -29,6 +30,8 @@ public class JScheme {
                 ("+")), SchemeBuiltinPlus.create()));
         GlobalEnvironment.getInstance().add(EnvironmentEntry.create(SchemeSymbolTable.getInstance().add(new SchemeSymbol
                 ("-")), SchemeBuiltinMinus.create()));
+        GlobalEnvironment.getInstance().add(EnvironmentEntry.create(SchemeSymbolTable.getInstance().add(new SchemeSymbol
+                ("*")), SchemeBuiltinTimes.create()));
 
 
         System.out.println("\n### Welcome to Scheme ###\n");
