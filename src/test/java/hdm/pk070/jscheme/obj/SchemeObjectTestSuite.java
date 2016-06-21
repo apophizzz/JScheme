@@ -1,6 +1,9 @@
 package hdm.pk070.jscheme.obj;
 
-import hdm.pk070.jscheme.obj.type.simple.SchemeConsTest;
+import hdm.pk070.jscheme.obj.function.builtin.SchemeBuiltinMinusTest;
+import hdm.pk070.jscheme.obj.function.builtin.SchemeBuiltinPlusTest;
+import hdm.pk070.jscheme.obj.simple.SchemeObjectTest;
+import hdm.pk070.jscheme.obj.simple.SchemeConsTest;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
@@ -9,6 +12,7 @@ import org.junit.runners.Suite;
  */
 
 @RunWith(Suite.class)
-@Suite.SuiteClasses({SchemeObjectTest.class, SchemeConsTest.class})
+@Suite.SuiteClasses({SchemeObjectTest.class, SchemeConsTest.class, SchemeBuiltinPlusTest.class,
+        SchemeBuiltinMinusTest.class})
 public class SchemeObjectTestSuite {
 }
