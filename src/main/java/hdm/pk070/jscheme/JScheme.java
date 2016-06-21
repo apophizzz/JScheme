@@ -3,6 +3,7 @@ package hdm.pk070.jscheme;
 import hdm.pk070.jscheme.error.SchemeError;
 import hdm.pk070.jscheme.eval.SchemeEval;
 import hdm.pk070.jscheme.obj.SchemeObject;
+import hdm.pk070.jscheme.obj.function.builtin.SchemeBuiltinMinus;
 import hdm.pk070.jscheme.obj.simple.SchemeSymbol;
 import hdm.pk070.jscheme.obj.function.builtin.SchemeBuiltinPlus;
 import hdm.pk070.jscheme.reader.SchemeReader;
@@ -26,6 +27,9 @@ public class JScheme {
         // TODO Move this to another class
         GlobalEnvironment.getInstance().add(EnvironmentEntry.create(SchemeSymbolTable.getInstance().add(new SchemeSymbol
                 ("+")), SchemeBuiltinPlus.create()));
+        GlobalEnvironment.getInstance().add(EnvironmentEntry.create(SchemeSymbolTable.getInstance().add(new SchemeSymbol
+                ("-")), SchemeBuiltinMinus.create()));
+
 
         System.out.println("\n### Welcome to Scheme ###\n");
         SchemeReader schemeReader = SchemeReader.withStdin();
