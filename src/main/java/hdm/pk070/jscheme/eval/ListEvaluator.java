@@ -51,7 +51,9 @@ class ListEvaluator extends AbstractEvaluator<SchemeCons> {
             return evaluateBuiltinFunction(((SchemeBuiltinFunction) evaluatedFunctionSlot), argumentList, environment);
         }
 
-        return null;
+        // Reaching this section means we don't have a valid function slot -> throw SchemeError
+        throw new SchemeError(String.format("application: not a procedure [expected: procedure that can be applied to" +
+                " arguments, given: %s]", functionSlot));
     }
 
     /**
