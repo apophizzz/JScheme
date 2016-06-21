@@ -8,6 +8,7 @@ import hdm.pk070.jscheme.stack.SchemeCallStack;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.stubbing.OngoingStubbing;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.powermock.core.classloader.annotations.PrepareForTest;
@@ -43,10 +44,9 @@ public class SchemeBuiltinMinusTest {
     @Test(expected = SchemeError.class)
     public void testThrowErrorIfSingleArgIsNotANumber() throws SchemeError {
         SchemeCallStack mockedCallStack = mock(SchemeCallStack.class);
-        when(mockedCallStack.pop()).thenReturn(new SchemeString("String, no number"));
+        appendPopValues(mockedCallStack, new SchemeString("String, no number"));
 
-        PowerMockito.mockStatic(SchemeCallStack.class);
-        PowerMockito.when(SchemeCallStack.instance()).thenReturn(mockedCallStack);
+        defineSingletonMockInstance(mockedCallStack);
 
         builtinMinus.call(1);
     }
@@ -54,10 +54,9 @@ public class SchemeBuiltinMinusTest {
     @Test
     public void testReturnInverseOnSingleArg() throws SchemeError {
         SchemeCallStack mockedCallStack = mock(SchemeCallStack.class);
-        when(mockedCallStack.pop()).thenReturn(new SchemeInteger(42));
+        appendPopValues(mockedCallStack, new SchemeInteger(42));
 
-        PowerMockito.mockStatic(SchemeCallStack.class);
-        PowerMockito.when(SchemeCallStack.instance()).thenReturn(mockedCallStack);
+        defineSingletonMockInstance(mockedCallStack);
 
         SchemeObject subtractionResult = builtinMinus.call(1);
 
@@ -70,10 +69,9 @@ public class SchemeBuiltinMinusTest {
     @Test(expected = SchemeError.class)
     public void testThrowErrorIfFirstArgIsNotANumber() throws SchemeError {
         SchemeCallStack mockedCallStack = mock(SchemeCallStack.class);
-        when(mockedCallStack.firstElement()).thenReturn(new SchemeString("Not a number"));
+        appendPopValues(mockedCallStack, new SchemeString("Not a number"));
 
-        PowerMockito.mockStatic(SchemeCallStack.class);
-        PowerMockito.when(SchemeCallStack.instance()).thenReturn(mockedCallStack);
+        defineSingletonMockInstance(mockedCallStack);
 
         builtinMinus.call(10);
     }
@@ -81,11 +79,10 @@ public class SchemeBuiltinMinusTest {
     @Test(expected = SchemeError.class)
     public void testThrowErrorIfAnyArgIsNotANumber() throws SchemeError {
         SchemeCallStack mockedCallStack = mock(SchemeCallStack.class);
-        when(mockedCallStack.firstElement()).thenReturn(new SchemeInteger(20)).thenReturn(new SchemeInteger(10))
-                .thenReturn(new SchemeString("Not a number"));
+        appendPopValues(mockedCallStack, new SchemeInteger(20), new SchemeInteger(10), new SchemeString("Not" +
+                " a number"));
 
-        PowerMockito.mockStatic(SchemeCallStack.class);
-        PowerMockito.when(SchemeCallStack.instance()).thenReturn(mockedCallStack);
+        defineSingletonMockInstance(mockedCallStack);
 
         builtinMinus.call(3);
     }
@@ -93,12 +90,11 @@ public class SchemeBuiltinMinusTest {
     @Test
     public void testSubtractionWithValidStack() throws SchemeError {
         SchemeCallStack mockedCallStack = mock(SchemeCallStack.class);
-        when(mockedCallStack.firstElement()).thenReturn(new SchemeInteger(20)).thenReturn(new SchemeInteger(10))
-                .thenReturn(new SchemeInteger(5));
-        when(mockedCallStack.isEmpty()).thenReturn(false).thenReturn(false).thenReturn(true);
+        appendPopValues(mockedCallStack, new SchemeInteger(5), new SchemeInteger
+                (10), new SchemeInteger(20));
+        appendIsEmptyValues(mockedCallStack, false, false, true);
 
-        PowerMockito.mockStatic(SchemeCallStack.class);
-        PowerMockito.when(SchemeCallStack.instance()).thenReturn(mockedCallStack);
+        defineSingletonMockInstance(mockedCallStack);
 
         SchemeObject subtractionResult = builtinMinus.call(3);
 
@@ -106,5 +102,26 @@ public class SchemeBuiltinMinusTest {
         assertThat("Result must be of type SchemeInteger", subtractionResult.typeOf(SchemeInteger.class), equalTo
                 (true));
         assertThat("Result does not match expected value", subtractionResult.getValue().equals(5), equalTo(true));
+    }
+
+
+    private void appendIsEmptyValues(SchemeCallStack callStackMock, Boolean... bools) {
+        OngoingStubbing<Boolean> when = when(callStackMock.isEmpty());
+        for (Boolean bool : bools) {
+            when = when.thenReturn(bool);
+        }
+    }
+
+    private void appendPopValues(SchemeCallStack callStackMock, SchemeObject... schemeObjects) {
+        OngoingStubbing<SchemeObject> when = when(callStackMock.pop());
+        for (SchemeObject schemeObject : schemeObjects) {
+            when = when.thenReturn(schemeObject);
+        }
+
+    }
+
+    private void defineSingletonMockInstance(SchemeCallStack callStackMock) {
+        PowerMockito.mockStatic(SchemeCallStack.class);
+        PowerMockito.when(SchemeCallStack.instance()).thenReturn(callStackMock);
     }
 }
