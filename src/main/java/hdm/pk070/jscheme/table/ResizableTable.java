@@ -1,6 +1,7 @@
 package hdm.pk070.jscheme.table;
 
 import hdm.pk070.jscheme.error.SchemeError;
+import hdm.pk070.jscheme.table.environment.GlobalEnvironment;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -8,7 +9,10 @@ import java.util.Objects;
 import java.util.Optional;
 
 /**
- * Created by patrick on 08.05.16.
+ * An abstract implementation for tables which can grow in size dynamically by rehashing their contents. A concrete
+ * example is {@link GlobalEnvironment}.
+ *
+ * @author patrick.kleindienst
  */
 
 @SuppressWarnings("unchecked")
@@ -185,7 +189,7 @@ public abstract class ResizableTable<KEY, VALUE> extends BaseTable<KEY, VALUE> {
     }
 
     private boolean entryExistsAt(int index) {
-        return Objects.nonNull(entries[index]) ? true : false;
+        return Objects.nonNull(entries[index]);
     }
 
     protected abstract VALUE handleDuplicateEntries(final VALUE newEntry, final VALUE oldEntry, int oldEntryIndex);

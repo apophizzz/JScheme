@@ -111,9 +111,7 @@ public class GlobalEnvironmentTest {
     @After
     public void tearDown() {
         // reset environment for each test since it is a singleton
-        Object[] environmentEntries = (Object[]) ReflectionUtils.getAttributeVal
-                (globalEnvironment, "entries");
-        environmentEntries = new Object[511];
+        ReflectionUtils.setAttributeVal(globalEnvironment, "entries", new Object[511]);
     }
 
     private boolean globalEnvironmentContains(EnvironmentEntry expectedEntry) {

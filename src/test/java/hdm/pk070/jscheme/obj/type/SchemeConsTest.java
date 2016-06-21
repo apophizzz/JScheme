@@ -9,7 +9,9 @@ import static org.junit.Assert.*;
 import static org.hamcrest.Matchers.*;
 
 /**
- * Created by patrick on 05.05.16.
+ * A test class for {@link SchemeCons}
+ *
+ * @author patrick.kleindienst
  */
 public class SchemeConsTest {
 
@@ -41,7 +43,7 @@ public class SchemeConsTest {
 
     @Test
     public void testHashCodeWithHashContainer() {
-        HashSet hashSet = new HashSet();
+        HashSet<SchemeCons> hashSet = new HashSet<>();
         hashSet.add(cons1);
         hashSet.add(cons3);
 

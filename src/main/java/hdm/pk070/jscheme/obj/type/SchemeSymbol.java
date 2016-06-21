@@ -7,10 +7,10 @@ import hdm.pk070.jscheme.obj.SchemeObject;
  */
 public class SchemeSymbol extends SchemeObject {
 
-    private String symbolVal;
+    private final String symbolVal;
 
 
-    public SchemeSymbol(String symbolVal) {
+    public SchemeSymbol(final String symbolVal) {
         this.symbolVal = symbolVal;
     }
 

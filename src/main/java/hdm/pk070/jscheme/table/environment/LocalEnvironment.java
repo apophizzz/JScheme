@@ -10,20 +10,24 @@ import java.util.Objects;
 import java.util.Optional;
 
 /**
- * Created by patrick on 17.06.16.
+ * A local environment exists in the context of a user-defined function or lambda and may or may not have a parent
+ * environment.
+ *
+ * @author patrick.kleindienst
  */
 public final class LocalEnvironment extends FixedSizeTable<SchemeSymbol, EnvironmentEntry> implements
         Environment<SchemeSymbol, EnvironmentEntry> {
 
     private static final Logger LOGGER = LogManager.getLogger(LocalEnvironment.class.getName());
 
-    private Environment parentEnvironment;
+    private final Environment<SchemeSymbol, EnvironmentEntry> parentEnvironment;
 
     public static LocalEnvironment withSize(int size) {
         return new LocalEnvironment(size);
     }
 
-    public static LocalEnvironment withSizeAndParent(int size, final Environment parentEnvironment) {
+    public static LocalEnvironment withSizeAndParent(int size, final Environment<SchemeSymbol, EnvironmentEntry>
+            parentEnvironment) {
         return new LocalEnvironment(size, parentEnvironment);
     }
 
@@ -31,7 +35,7 @@ public final class LocalEnvironment extends FixedSizeTable<SchemeSymbol, Environ
         this(size, null);
     }
 
-    private LocalEnvironment(int size, Environment parentEnvironment) {
+    private LocalEnvironment(int size, final Environment<SchemeSymbol, EnvironmentEntry> parentEnvironment) {
         super(size);
         this.parentEnvironment = parentEnvironment;
     }

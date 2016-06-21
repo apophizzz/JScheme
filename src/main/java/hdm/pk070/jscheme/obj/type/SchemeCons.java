@@ -9,10 +9,10 @@ import java.util.Objects;
  */
 public final class SchemeCons extends SchemeObject {
 
-    private SchemeObject car;
-    private SchemeObject cdr;
+    private final SchemeObject car;
+    private final SchemeObject cdr;
 
-    public SchemeCons(SchemeObject car, SchemeObject cdr) {
+    public SchemeCons(final SchemeObject car, final SchemeObject cdr) {
         Objects.requireNonNull(car);
         Objects.requireNonNull(cdr);
         this.car = car;
@@ -71,10 +71,7 @@ public final class SchemeCons extends SchemeObject {
         if (!this.getCar().equals(((SchemeCons) obj).getCar())) {
             return false;
         }
-        if (!this.getCdr().equals(((SchemeCons) obj).getCdr())) {
-            return false;
-        }
-        return true;
+        return this.getCdr().equals(((SchemeCons) obj).getCdr());
     }
 
     @Override

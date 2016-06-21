@@ -31,8 +31,10 @@ class ListEvaluator extends AbstractEvaluator<SchemeCons> {
      * has to evaluate the function slot, which is accessible as the CAR of the list expression.
      *
      * @param expression
+     *         The list expression to evaluate
      * @param environment
-     * @return
+     *         The evaluation context
+     * @return A {@link SchemeObject} as a list evaluation result
      * @throws SchemeError
      */
     @Override

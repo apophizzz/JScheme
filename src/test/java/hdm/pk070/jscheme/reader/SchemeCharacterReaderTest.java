@@ -17,11 +17,11 @@ public class SchemeCharacterReaderTest {
 
     private SchemeCharacterReader schemeCharacterReader;
 
-    private String testInput = "\t\nfoobar";
-    private String inputWithSpace = " Leading space character";
-    private String inputWithTab = "\tLeading tab character";
-    private String inputWithNewLine = "\nLeading new line character";
-    private String inputWithCarriageReturn = "\rLeading carriage return character";
+    private final String testInput = "\t\nfoobar";
+    private final String inputWithSpace = " Leading space character";
+    private final String inputWithTab = "\tLeading tab character";
+    private final String inputWithNewLine = "\nLeading new line character";
+    private final String inputWithCarriageReturn = "\rLeading carriage return character";
 
 
     @Test

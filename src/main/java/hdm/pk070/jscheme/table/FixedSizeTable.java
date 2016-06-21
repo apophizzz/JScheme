@@ -9,9 +9,11 @@ import java.util.Optional;
 /**
  * Created by patrick on 16.05.16.
  */
+
+@SuppressWarnings("unchecked")
 public abstract class FixedSizeTable<KEY, VALUE> extends BaseTable<KEY, VALUE> {
 
-    private Object[] entries;
+    private final Object[] entries;
 
     protected FixedSizeTable(int fixedSize) {
         this.entries = new Object[fixedSize];

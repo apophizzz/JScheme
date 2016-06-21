@@ -1,7 +1,11 @@
 package hdm.pk070.jscheme.util.exception;
 
+import hdm.pk070.jscheme.util.ReflectionUtils;
+
 /**
- * Created by patrick on 27.04.16.
+ * A custom exception type for {@link ReflectionUtils}
+ *
+ * @author patrick.kleindienst
  */
 public class ReflectionMethodCallException extends RuntimeException {
 

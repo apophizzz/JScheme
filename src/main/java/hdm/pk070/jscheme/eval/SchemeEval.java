@@ -6,6 +6,7 @@ import hdm.pk070.jscheme.obj.type.SchemeCons;
 import hdm.pk070.jscheme.obj.type.SchemeSymbol;
 import hdm.pk070.jscheme.reader.SchemeReader;
 import hdm.pk070.jscheme.table.environment.Environment;
+import hdm.pk070.jscheme.table.environment.entry.EnvironmentEntry;
 
 /**
  * This class constitutes the JScheme entry point for evaluating the {@link SchemeObject}s returned by
@@ -24,7 +25,19 @@ public class SchemeEval {
     }
 
 
-    public SchemeObject eval(SchemeObject expression, Environment environment) throws SchemeError {
+    /**
+     * Gets passed an expression by the {@link SchemeReader} and hands it on to a specialized evaluation class
+     * according to the expression type.
+     *
+     * @param expression
+     *         The expression to evaluate as passed by {@link SchemeReader}
+     * @param environment
+     *         The evaluation context
+     * @return A {@link SchemeObject} as evaluation result
+     * @throws SchemeError
+     */
+    public SchemeObject eval(SchemeObject expression, Environment<SchemeSymbol, EnvironmentEntry> environment) throws
+            SchemeError {
         if (expression.typeOf(SchemeSymbol.class)) {
             return SymbolEvaluator.getInstance().doEval(((SchemeSymbol) expression), environment);
         } else if (expression.typeOf(SchemeCons.class)) {

@@ -49,10 +49,7 @@ public class EnvironmentEntry {
         }
         // CAUTION: Two environment entries can only be considered equal if their keys both
         // point to exactly the same SchemeSymbol from symbol table!
-        if (!(key == ((EnvironmentEntry) obj).getKey())) {
-            return false;
-        }
-        return true;
+        return key == ((EnvironmentEntry) obj).getKey();
     }
 
     @Override

@@ -6,7 +6,9 @@ import hdm.pk070.jscheme.obj.type.SchemeInteger;
 import hdm.pk070.jscheme.stack.SchemeCallStack;
 
 /**
- * Created by patrick on 19.06.16.
+ * Implementing "+" as a built-in function for JScheme
+ *
+ * @author patrick.kleindienst
  */
 public class SchemeBuiltinPlus extends SchemeBuiltinFunction {
 

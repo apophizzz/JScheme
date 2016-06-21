@@ -94,7 +94,6 @@ public class SchemeSymbolTableTest {
     @Test
     public void testEntryExistsAt() {
         entries[50] = new SchemeSymbol("foobar");
-        Object entries = ReflectionUtils.getAttributeVal(schemeSymbolTable, "entries");
         boolean entryExistsAt = (boolean) ReflectionUtils.invokeMethod(schemeSymbolTable, "entryExistsAt", new
                 ReflectionMethodParam(int.class, 50));
         boolean entryNotExistsAt = (boolean) ReflectionUtils.invokeMethod(schemeSymbolTable, "entryExistsAt", new

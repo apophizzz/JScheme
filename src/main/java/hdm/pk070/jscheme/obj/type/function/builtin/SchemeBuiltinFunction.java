@@ -8,9 +8,9 @@ import hdm.pk070.jscheme.obj.SchemeObject;
  */
 public abstract class SchemeBuiltinFunction extends SchemeObject {
 
-    private String internalName;
+    private final String internalName;
 
-    protected SchemeBuiltinFunction(String internalName) {
+    protected SchemeBuiltinFunction(final String internalName) {
         this.internalName = internalName;
     }
 

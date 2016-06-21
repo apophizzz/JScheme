@@ -10,9 +10,9 @@ import java.util.Objects;
 public final class SchemeString extends SchemeObject {
 
 
-    private String stringVal;
+    private final String stringVal;
 
-    public SchemeString(String stringVal) {
+    public SchemeString(final String stringVal) {
         Objects.requireNonNull(stringVal);
         this.stringVal = stringVal;
     }

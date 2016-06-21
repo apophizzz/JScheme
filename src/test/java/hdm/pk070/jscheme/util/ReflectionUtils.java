@@ -28,20 +28,18 @@ public class ReflectionUtils {
     private static Object invoke(Method method, Object caller, Object... paramValues) {
         try {
             return method.invoke(caller, paramValues);
-        } catch (IllegalAccessException e) {
-            throw new ReflectionMethodCallException("An exception was raised during reflection method call.", e);
-        } catch (InvocationTargetException e) {
+        } catch (IllegalAccessException | InvocationTargetException e) {
             throw new ReflectionMethodCallException("An exception was raised during reflection method call.", e);
         }
     }
 
-    private static Method getMethodFromClass(Class clazz, String methodName, Class... paramClasses) {
+    private static Method getMethodFromClass(Class clazz, String methodName, Class<?>... paramClasses) {
         Objects.requireNonNull(clazz);
         Objects.requireNonNull(methodName);
         return checkClassHierarchy(clazz, methodName, paramClasses);
     }
 
-    private static Method checkClassHierarchy(Class clazz, String methodName, Class... paramClasses) {
+    private static Method checkClassHierarchy(Class clazz, String methodName, Class<?>... paramClasses) {
         Class type = clazz;
         while (Objects.nonNull(type)) {
             try {

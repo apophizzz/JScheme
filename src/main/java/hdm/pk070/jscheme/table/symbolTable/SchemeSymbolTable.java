@@ -20,19 +20,20 @@ public class SchemeSymbolTable extends ResizableTable<String, SchemeSymbol> {
         return withHashAlgorithm(new StandardHashAlgProvider());
     }
 
-    public static SchemeSymbolTable withHashAlgorithm(HashAlgProvider hashAlgProvider) {
+    public static SchemeSymbolTable withHashAlgorithm(final HashAlgProvider hashAlgProvider) {
         if (Objects.isNull(schemeSymbolTableInstance)) {
             schemeSymbolTableInstance = new SchemeSymbolTable(hashAlgProvider);
         }
         return schemeSymbolTableInstance;
     }
 
-    private SchemeSymbolTable(HashAlgProvider hashAlgProvider) {
+    private SchemeSymbolTable(final HashAlgProvider hashAlgProvider) {
         this.hashAlgProvider = hashAlgProvider;
     }
 
     @Override
-    protected SchemeSymbol handleDuplicateEntries(SchemeSymbol newEntry, SchemeSymbol oldEntry, int oldEntryIndex) {
+    protected SchemeSymbol handleDuplicateEntries(final SchemeSymbol newEntry, final SchemeSymbol oldEntry, int
+            oldEntryIndex) {
         return oldEntry;
     }
 
@@ -53,9 +54,6 @@ public class SchemeSymbolTable extends ResizableTable<String, SchemeSymbol> {
 
     @Override
     protected boolean entriesMatch(SchemeSymbol entryToAdd, SchemeSymbol existingEntry) {
-        if (entryToAdd.equals(existingEntry)) {
-            return true;
-        }
-        return false;
+        return entryToAdd.equals(existingEntry);
     }
 }

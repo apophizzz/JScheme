@@ -8,9 +8,9 @@ import hdm.pk070.jscheme.obj.SchemeObject;
 public final class SchemeInteger extends SchemeObject {
 
 
-    private int intVal;
+    private final int intVal;
 
-    public SchemeInteger(int intVal) {
+    public SchemeInteger(final int intVal) {
         this.intVal = intVal;
     }
 
