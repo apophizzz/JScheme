@@ -28,9 +28,7 @@ public class SchemeEval {
         if (expression.typeOf(SchemeSymbol.class)) {
             return SymbolEvaluator.getInstance().doEval(((SchemeSymbol) expression), environment);
         } else if (expression.typeOf(SchemeCons.class)) {
-            // TODO:
-            // invoke evalCons(expression)
-            return null;
+            return ListEvaluator.getInstance().doEval(((SchemeCons) expression), environment);
         } else {
             // return expression without further evaluation in all the other cases
             return expression;

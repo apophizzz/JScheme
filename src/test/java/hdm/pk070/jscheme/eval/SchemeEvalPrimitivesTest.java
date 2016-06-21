@@ -16,7 +16,7 @@ import static org.junit.Assert.assertThat;
 /**
  * Created by patrick on 05.05.16.
  */
-public class SchemeEvalTest {
+public class SchemeEvalPrimitivesTest {
 
     private SchemeEval schemeEval;
     private Environment dummyEnvironment;

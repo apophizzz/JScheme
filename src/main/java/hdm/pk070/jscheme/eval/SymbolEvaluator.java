@@ -5,8 +5,8 @@ import hdm.pk070.jscheme.obj.SchemeObject;
 import hdm.pk070.jscheme.obj.type.SchemeSymbol;
 import hdm.pk070.jscheme.reader.SchemeReader;
 import hdm.pk070.jscheme.table.environment.Environment;
-import hdm.pk070.jscheme.table.environment.entry.EnvironmentEntry;
 import hdm.pk070.jscheme.table.environment.GlobalEnvironment;
+import hdm.pk070.jscheme.table.environment.entry.EnvironmentEntry;
 
 import java.util.Optional;
 
@@ -27,7 +27,8 @@ class SymbolEvaluator extends AbstractEvaluator<SchemeSymbol> {
     }
 
     @Override
-    public SchemeObject doEval(SchemeSymbol expression, Environment environment) throws SchemeError {
+    public SchemeObject doEval(SchemeSymbol expression, Environment<SchemeSymbol, EnvironmentEntry> environment)
+            throws SchemeError {
         // Get symbol from global environment
         LOGGER.debug(String.format("Evaluating symbol %s ...", expression.getValue()));
         Optional<EnvironmentEntry> entryOptional = environment.get(expression);

@@ -8,6 +8,6 @@ import org.junit.runners.Suite;
  */
 
 @RunWith(Suite.class)
-@Suite.SuiteClasses({SchemeEvalTest.class, SymbolEvaluatorTest.class})
+@Suite.SuiteClasses({SchemeEvalPrimitivesTest.class, SymbolEvaluatorTest.class, ListEvaluatorTest.class})
 public class SchemeEvalTestSuite {
 }
