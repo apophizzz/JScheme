@@ -20,6 +20,13 @@ public abstract class SchemeObject {
         throw new IllegalArgumentException("Parameter 'clazz' must not be null.");
     }
 
+    public final <T extends SchemeObject> boolean subtypeOf(Class<T> clazz) {
+        if (Objects.nonNull(clazz)) {
+            return clazz.isAssignableFrom(this.getClass());
+        }
+        throw new IllegalArgumentException("Parameter 'clazz' must not be null.");
+    }
+
     public abstract Object getValue();
 
     @Override
