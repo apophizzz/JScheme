@@ -24,4 +24,8 @@ public class SchemeCallStack extends Stack<SchemeObject> {
     private SchemeCallStack() {
     }
 
+    public SchemeObject removeLowermost() {
+        return remove(0);
+    }
+
 }
