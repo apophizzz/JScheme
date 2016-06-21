@@ -23,7 +23,7 @@ public final class LocalEnvironment extends FixedSizeTable<SchemeSymbol, Environ
         return new LocalEnvironment(size);
     }
 
-    public static LocalEnvironment withSizeAndParent(int size, Environment parentEnvironment) {
+    public static LocalEnvironment withSizeAndParent(int size, final Environment parentEnvironment) {
         return new LocalEnvironment(size, parentEnvironment);
     }
 
