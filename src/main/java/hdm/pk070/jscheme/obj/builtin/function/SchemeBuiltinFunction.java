@@ -1,4 +1,4 @@
-package hdm.pk070.jscheme.obj.function.builtin;
+package hdm.pk070.jscheme.obj.builtin.function;
 
 import hdm.pk070.jscheme.error.SchemeError;
 import hdm.pk070.jscheme.obj.SchemeObject;
@@ -20,11 +20,6 @@ public abstract class SchemeBuiltinFunction extends SchemeObject {
 
     public abstract SchemeObject call(int argCount) throws SchemeError;
 
-
-    @Override
-    public String toString() {
-        return super.toString();
-    }
 
     @Override
     public Object getValue() {

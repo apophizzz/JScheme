@@ -1,10 +1,10 @@
 package hdm.pk070.jscheme.reader.obj;
 
 import hdm.pk070.jscheme.error.SchemeError;
-import hdm.pk070.jscheme.obj.simple.SchemeFalse;
-import hdm.pk070.jscheme.obj.simple.SchemeNil;
-import hdm.pk070.jscheme.obj.simple.SchemeSymbol;
-import hdm.pk070.jscheme.obj.simple.SchemeTrue;
+import hdm.pk070.jscheme.obj.builtin.simple.SchemeFalse;
+import hdm.pk070.jscheme.obj.builtin.simple.SchemeNil;
+import hdm.pk070.jscheme.obj.builtin.simple.SchemeSymbol;
+import hdm.pk070.jscheme.obj.builtin.simple.SchemeTrue;
 import hdm.pk070.jscheme.reader.SchemeCharacterReader;
 import hdm.pk070.jscheme.util.ReflectionUtils;
 import org.junit.After;

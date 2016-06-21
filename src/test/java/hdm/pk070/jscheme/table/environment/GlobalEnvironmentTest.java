@@ -1,8 +1,8 @@
 package hdm.pk070.jscheme.table.environment;
 
 import hdm.pk070.jscheme.error.SchemeError;
-import hdm.pk070.jscheme.obj.simple.SchemeInteger;
-import hdm.pk070.jscheme.obj.simple.SchemeSymbol;
+import hdm.pk070.jscheme.obj.builtin.simple.SchemeInteger;
+import hdm.pk070.jscheme.obj.builtin.simple.SchemeSymbol;
 import hdm.pk070.jscheme.table.environment.entry.EnvironmentEntry;
 import hdm.pk070.jscheme.util.ReflectionCallArg;
 import hdm.pk070.jscheme.util.ReflectionUtils;

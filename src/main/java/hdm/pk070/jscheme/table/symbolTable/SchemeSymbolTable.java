@@ -2,7 +2,7 @@ package hdm.pk070.jscheme.table.symbolTable;
 
 import hdm.pk070.jscheme.table.hash.HashAlgProvider;
 import hdm.pk070.jscheme.table.hash.impl.StandardHashAlgProvider;
-import hdm.pk070.jscheme.obj.simple.SchemeSymbol;
+import hdm.pk070.jscheme.obj.builtin.simple.SchemeSymbol;
 import hdm.pk070.jscheme.table.ResizableTable;
 
 import java.util.Objects;

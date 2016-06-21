@@ -1,9 +1,11 @@
-package hdm.pk070.jscheme.obj.function.builtin;
+package hdm.pk070.jscheme.obj.builtin.function;
 
 import hdm.pk070.jscheme.error.SchemeError;
 import hdm.pk070.jscheme.obj.SchemeObject;
-import hdm.pk070.jscheme.obj.simple.SchemeInteger;
-import hdm.pk070.jscheme.obj.simple.SchemeString;
+import hdm.pk070.jscheme.obj.builtin.function.SchemeBuiltinFunction;
+import hdm.pk070.jscheme.obj.builtin.function.SchemeBuiltinMinus;
+import hdm.pk070.jscheme.obj.builtin.simple.SchemeInteger;
+import hdm.pk070.jscheme.obj.builtin.simple.SchemeString;
 import hdm.pk070.jscheme.stack.SchemeCallStack;
 import org.junit.Before;
 import org.junit.Test;

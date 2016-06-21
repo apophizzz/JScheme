@@ -1,4 +1,4 @@
-package hdm.pk070.jscheme.obj.simple;
+package hdm.pk070.jscheme.obj.builtin.simple;
 
 /**
  *

@@ -1,7 +1,7 @@
 package hdm.pk070.jscheme.table.environment.entry;
 
-import hdm.pk070.jscheme.obj.simple.SchemeInteger;
-import hdm.pk070.jscheme.obj.simple.SchemeSymbol;
+import hdm.pk070.jscheme.obj.builtin.simple.SchemeInteger;
+import hdm.pk070.jscheme.obj.builtin.simple.SchemeSymbol;
 import org.junit.Before;
 import org.junit.Test;
 

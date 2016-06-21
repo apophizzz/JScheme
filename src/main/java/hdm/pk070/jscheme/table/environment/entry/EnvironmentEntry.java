@@ -1,7 +1,7 @@
 package hdm.pk070.jscheme.table.environment.entry;
 
 import hdm.pk070.jscheme.obj.SchemeObject;
-import hdm.pk070.jscheme.obj.simple.SchemeSymbol;
+import hdm.pk070.jscheme.obj.builtin.simple.SchemeSymbol;
 import hdm.pk070.jscheme.table.environment.Environment;
 
 import java.util.Objects;
@@ -58,5 +58,10 @@ public class EnvironmentEntry {
     @Override
     public int hashCode() {
         return key.hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return String.format("EnvEntry [key: %s => value: %s]", key, value);
     }
 }
