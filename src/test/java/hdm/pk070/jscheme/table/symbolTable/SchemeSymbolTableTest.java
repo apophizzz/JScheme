@@ -4,7 +4,7 @@ import hdm.pk070.jscheme.error.SchemeError;
 import hdm.pk070.jscheme.table.hash.HashAlgProvider;
 import hdm.pk070.jscheme.table.hash.impl.StandardHashAlgProvider;
 import hdm.pk070.jscheme.obj.type.SchemeSymbol;
-import hdm.pk070.jscheme.util.ReflectionMethodParam;
+import hdm.pk070.jscheme.util.ReflectionCallArg;
 import hdm.pk070.jscheme.util.ReflectionUtils;
 import org.junit.Before;
 import org.junit.Test;
@@ -60,7 +60,7 @@ public class SchemeSymbolTableTest {
 
         assertThat(searchedSymbol, notNullValue());
         assertThat(searchedSymbol.isPresent(), equalTo(true));
-        assertThat(searchedSymbol.get() == schemeSymbol, equalTo(true));
+        assertThat(searchedSymbol.orElse(new SchemeSymbol("invalid")) == schemeSymbol, equalTo(true));
     }
 
     @Test(expected = NullPointerException.class)
@@ -95,9 +95,9 @@ public class SchemeSymbolTableTest {
     public void testEntryExistsAt() {
         entries[50] = new SchemeSymbol("foobar");
         boolean entryExistsAt = (boolean) ReflectionUtils.invokeMethod(schemeSymbolTable, "entryExistsAt", new
-                ReflectionMethodParam(int.class, 50));
+                ReflectionCallArg(int.class, 50));
         boolean entryNotExistsAt = (boolean) ReflectionUtils.invokeMethod(schemeSymbolTable, "entryExistsAt", new
-                ReflectionMethodParam(int.class, 51));
+                ReflectionCallArg(int.class, 51));
 
         assertThat("entry must exist!", entryExistsAt, equalTo(true));
         assertThat("entry must not exist", !entryNotExistsAt, equalTo(true));
@@ -125,11 +125,11 @@ public class SchemeSymbolTableTest {
     @Test
     public void testKeysMatch() {
         boolean isMatchingKeys = (boolean) ReflectionUtils.invokeMethod(schemeSymbolTable, "keysMatch", new
-                ReflectionMethodParam(String.class,
-                "foobar"), new ReflectionMethodParam(SchemeSymbol.class, new SchemeSymbol("foobar")));
+                ReflectionCallArg(String.class,
+                "foobar"), new ReflectionCallArg(SchemeSymbol.class, new SchemeSymbol("foobar")));
         boolean isNotMatchingKeys = (boolean) ReflectionUtils.invokeMethod(schemeSymbolTable, "keysMatch", new
-                ReflectionMethodParam(String.class,
-                "foobar"), new ReflectionMethodParam(SchemeSymbol.class, new SchemeSymbol("barfoo")));
+                ReflectionCallArg(String.class,
+                "foobar"), new ReflectionCallArg(SchemeSymbol.class, new SchemeSymbol("barfoo")));
 
         assertThat("keys must match!", isMatchingKeys, equalTo(true));
         assertThat("keys must not match!", !isNotMatchingKeys, equalTo(true));
@@ -138,14 +138,14 @@ public class SchemeSymbolTableTest {
     @Test
     public void testIsSameEntry() {
         boolean isSameEntry = (boolean) ReflectionUtils.invokeMethod(schemeSymbolTable, "entriesMatch", new
-                ReflectionMethodParam
+                ReflectionCallArg
                 (SchemeSymbol.class,
-                        new SchemeSymbol("foobar")), new ReflectionMethodParam(SchemeSymbol.class, new SchemeSymbol
+                        new SchemeSymbol("foobar")), new ReflectionCallArg(SchemeSymbol.class, new SchemeSymbol
                 ("foobar")));
         boolean isSameEntry1 = (boolean) ReflectionUtils.invokeMethod(schemeSymbolTable, "entriesMatch", new
-                ReflectionMethodParam
+                ReflectionCallArg
                 (SchemeSymbol.class,
-                        new SchemeSymbol("foobar")), new ReflectionMethodParam(SchemeSymbol.class, new SchemeSymbol
+                        new SchemeSymbol("foobar")), new ReflectionCallArg(SchemeSymbol.class, new SchemeSymbol
                 ("barfoo")));
 
         assertThat("entries must be equal!", isSameEntry, equalTo(true));

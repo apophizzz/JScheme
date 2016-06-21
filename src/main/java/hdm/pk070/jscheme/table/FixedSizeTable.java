@@ -1,13 +1,16 @@
 package hdm.pk070.jscheme.table;
 
 import hdm.pk070.jscheme.error.SchemeError;
+import hdm.pk070.jscheme.table.environment.LocalEnvironment;
 import hdm.pk070.jscheme.table.environment.entry.EnvironmentEntry;
 
 import java.util.Objects;
 import java.util.Optional;
 
 /**
- * Created by patrick on 16.05.16.
+ * A basic implementations for tables which are fixed in size. An example is {@link LocalEnvironment}.
+ *
+ * @author patrick.kleindienst
  */
 
 @SuppressWarnings("unchecked")

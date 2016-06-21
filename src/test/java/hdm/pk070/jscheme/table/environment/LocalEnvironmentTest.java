@@ -13,7 +13,9 @@ import static org.junit.Assert.*;
 import static org.hamcrest.Matchers.*;
 
 /**
- * Created by patrick on 17.06.16.
+ * A test class for {@link LocalEnvironment}
+ *
+ * @author patrick.kleindienst
  */
 public class LocalEnvironmentTest {
 
@@ -39,7 +41,8 @@ public class LocalEnvironmentTest {
 
         assertThat(environmentEntry, notNullValue());
         assertThat(environmentEntry.isPresent(), equalTo(true));
-        assertThat(environmentEntry.get().getValue(), equalTo(new SchemeString("foobar")));
+        assertThat(environmentEntry.orElse(getDummyStringEnvironmentEntry()).getValue(), equalTo(new SchemeString
+                ("foobar")));
     }
 
     @Test
@@ -48,7 +51,8 @@ public class LocalEnvironmentTest {
 
         assertThat(environmentEntry, notNullValue());
         assertThat(environmentEntry.isPresent(), equalTo(true));
-        assertThat(environmentEntry.get().getValue(), equalTo(new SchemeInteger(42)));
+        assertThat(environmentEntry.orElse(getDummyStringEnvironmentEntry()).getValue(), equalTo(new SchemeInteger
+                (42)));
     }
 
     @Test
@@ -57,5 +61,9 @@ public class LocalEnvironmentTest {
 
         assertThat(nonExistingEntry, notNullValue());
         assertThat(nonExistingEntry.isPresent(), equalTo(false));
+    }
+
+    private EnvironmentEntry getDummyStringEnvironmentEntry() {
+        return EnvironmentEntry.create(new SchemeSymbol(""), new SchemeSymbol(""));
     }
 }

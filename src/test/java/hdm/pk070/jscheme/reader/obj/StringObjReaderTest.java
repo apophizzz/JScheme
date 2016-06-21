@@ -3,7 +3,7 @@ package hdm.pk070.jscheme.reader.obj;
 import hdm.pk070.jscheme.error.SchemeError;
 import hdm.pk070.jscheme.obj.type.SchemeString;
 import hdm.pk070.jscheme.reader.SchemeCharacterReader;
-import hdm.pk070.jscheme.util.ReflectionMethodParam;
+import hdm.pk070.jscheme.util.ReflectionCallArg;
 import hdm.pk070.jscheme.util.ReflectionUtils;
 import org.junit.After;
 import org.junit.Before;
@@ -43,7 +43,7 @@ public class StringObjReaderTest {
     @Test
     public void testAppendNextChar() {
         StringBuffer testBuffer = new StringBuffer();
-        ReflectionUtils.invokeMethod(stringObjReader, "appendNextChar", new ReflectionMethodParam(StringBuffer.class,
+        ReflectionUtils.invokeMethod(stringObjReader, "appendNextChar", new ReflectionCallArg(StringBuffer.class,
                 testBuffer));
 
         assertThat("testBuffer must not be empty!", testBuffer.length() > 0, equalTo(true));
@@ -88,7 +88,7 @@ public class StringObjReaderTest {
     private StringBuffer writeInputToBuffer(String fakeInput) {
         StringBuffer testBuffer = new StringBuffer();
         prepareStringObjReader(fakeInput);
-        ReflectionUtils.invokeMethod(stringObjReader, "appendWhitespaceChar", new ReflectionMethodParam(StringBuffer
+        ReflectionUtils.invokeMethod(stringObjReader, "appendWhitespaceChar", new ReflectionCallArg(StringBuffer
                 .class, testBuffer));
         return testBuffer;
     }

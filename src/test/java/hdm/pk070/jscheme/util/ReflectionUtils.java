@@ -13,7 +13,7 @@ import java.util.*;
  */
 public class ReflectionUtils {
 
-    public static Object invokeMethod(Object caller, String methodName, ReflectionMethodParam... params) {
+    public static Object invokeMethod(Object caller, String methodName, ReflectionCallArg... params) {
         Method method = getMethodFromClass(caller.getClass(), methodName, toTypeArray(params));
         makeAccessibleIfNecessary(method);
         return invoke(method, caller, toValueArray(params));
@@ -55,7 +55,7 @@ public class ReflectionUtils {
                 methodName, clazz.getSimpleName()));
     }
 
-    private static Class[] toTypeArray(ReflectionMethodParam[] params) {
+    private static Class[] toTypeArray(ReflectionCallArg[] params) {
         if (params.length != 0) {
             Class[] classes = new Class[params.length];
             for (int i = 0; i < params.length; i++) {
@@ -68,7 +68,7 @@ public class ReflectionUtils {
     }
 
 
-    private static Object[] toValueArray(ReflectionMethodParam[] params) {
+    private static Object[] toValueArray(ReflectionCallArg[] params) {
         if (params.length != 0) {
             Object[] paramValues = new Object[params.length];
             for (int i = 0; i < params.length; i++) {

@@ -11,7 +11,9 @@ import hdm.pk070.jscheme.table.environment.entry.EnvironmentEntry;
 import hdm.pk070.jscheme.table.symbolTable.SchemeSymbolTable;
 
 /**
- * Created by patrick on 19.04.16.
+ * JScheme entry point
+ *
+ * @author patrick.kleindienst
  */
 public class JScheme {
 

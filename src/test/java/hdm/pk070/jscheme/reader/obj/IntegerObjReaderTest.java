@@ -3,7 +3,7 @@ package hdm.pk070.jscheme.reader.obj;
 import hdm.pk070.jscheme.error.SchemeError;
 import hdm.pk070.jscheme.obj.type.SchemeInteger;
 import hdm.pk070.jscheme.reader.SchemeCharacterReader;
-import hdm.pk070.jscheme.util.ReflectionMethodParam;
+import hdm.pk070.jscheme.util.ReflectionCallArg;
 import hdm.pk070.jscheme.util.ReflectionUtils;
 import org.junit.After;
 import org.junit.Before;
@@ -42,7 +42,7 @@ public class IntegerObjReaderTest {
     @Test
     public void testNumericCharToInt() {
         Object charAsInt = ReflectionUtils.invokeMethod(integerObjReader, "numericCharToInt", new
-                ReflectionMethodParam(char.class, '1'));
+                ReflectionCallArg(char.class, '1'));
 
         assertThat(charAsInt, notNullValue());
         assertThat(charAsInt.getClass(), equalTo(Integer.class));

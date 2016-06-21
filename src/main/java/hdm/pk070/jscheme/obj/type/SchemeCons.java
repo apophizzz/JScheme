@@ -40,10 +40,10 @@ public final class SchemeCons extends SchemeObject {
 
     @Override
     public String toString() {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("(");
-        stringBuilder.append(prettyPrintList(this));
-        return stringBuilder.toString();
+        StringBuilder stringBuffer = new StringBuilder();
+        stringBuffer.append("(");
+        stringBuffer.append(prettyPrintList(this));
+        return stringBuffer.toString();
     }
 
     private String prettyPrintList(SchemeObject schemeObject) {

@@ -6,7 +6,9 @@ import java.util.Objects;
 import java.util.Stack;
 
 /**
- * Created by patrick on 19.06.16.
+ * Represents the global JScheme stack. Since there's only one instance at runtime, it's implemented as a singleton.
+ *
+ * @author patrick.kleindienst
  */
 public class SchemeCallStack extends Stack<SchemeObject> {
 

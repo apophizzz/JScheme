@@ -10,7 +10,9 @@ import static org.junit.Assert.*;
 import static org.hamcrest.Matchers.*;
 
 /**
- * Created by patrick on 16.05.16.
+ * A test class for {@link EnvironmentEntry}
+ *
+ * @author patrick.kleindienst
  */
 public class EnvironmentEntryTest {
 

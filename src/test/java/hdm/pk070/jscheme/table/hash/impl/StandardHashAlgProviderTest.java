@@ -1,7 +1,7 @@
 package hdm.pk070.jscheme.table.hash.impl;
 
 import hdm.pk070.jscheme.table.hash.HashAlgProvider;
-import hdm.pk070.jscheme.util.ReflectionMethodParam;
+import hdm.pk070.jscheme.util.ReflectionCallArg;
 import hdm.pk070.jscheme.util.ReflectionUtils;
 import org.junit.Before;
 import org.junit.Test;
@@ -39,6 +39,6 @@ public class StandardHashAlgProviderTest {
     }
 
     private Object doHashing(String input) {
-        return ReflectionUtils.invokeMethod(hashAlgProvider, "computeHash", new ReflectionMethodParam(String.class, input));
+        return ReflectionUtils.invokeMethod(hashAlgProvider, "computeHash", new ReflectionCallArg(String.class, input));
     }
 }

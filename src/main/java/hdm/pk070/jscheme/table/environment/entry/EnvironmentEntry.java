@@ -2,11 +2,14 @@ package hdm.pk070.jscheme.table.environment.entry;
 
 import hdm.pk070.jscheme.obj.SchemeObject;
 import hdm.pk070.jscheme.obj.type.SchemeSymbol;
+import hdm.pk070.jscheme.table.environment.Environment;
 
 import java.util.Objects;
 
 /**
- * Created by patrick on 05.05.16.
+ * Represents a single entry of all implementations of {@link Environment}.
+ *
+ * @author patrick.kleindienst
  */
 public class EnvironmentEntry {
 

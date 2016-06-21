@@ -5,7 +5,9 @@ import hdm.pk070.jscheme.error.SchemeError;
 import java.util.Optional;
 
 /**
- * Created by patrick on 17.06.16.
+ * A general interface for all kinds of environments.
+ *
+ * @author patrick.kleindienst
  */
 public interface Environment<KEY, VALUE> {
 

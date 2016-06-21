@@ -4,7 +4,7 @@ import hdm.pk070.jscheme.error.SchemeError;
 import hdm.pk070.jscheme.obj.type.SchemeInteger;
 import hdm.pk070.jscheme.obj.type.SchemeSymbol;
 import hdm.pk070.jscheme.table.environment.entry.EnvironmentEntry;
-import hdm.pk070.jscheme.util.ReflectionMethodParam;
+import hdm.pk070.jscheme.util.ReflectionCallArg;
 import hdm.pk070.jscheme.util.ReflectionUtils;
 import org.junit.After;
 import org.junit.Before;
@@ -19,7 +19,9 @@ import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertThat;
 
 /**
- * Created by patrick on 05.05.16.
+ * A test class for {@link GlobalEnvironment}
+ *
+ * @author patrick.kleindienst
  */
 public class GlobalEnvironmentTest {
 
@@ -48,9 +50,11 @@ public class GlobalEnvironmentTest {
 
         assertThat("result must not be null!", resultOptional, notNullValue());
         assertThat("result must not be missing!", resultOptional.isPresent(), equalTo(true));
-        assertThat("result must be of type SchemeInteger!", resultOptional.get().getValue().typeOf(SchemeInteger
-                .class), equalTo(true));
-        assertThat("result does not match expected value!", resultOptional.get().getValue(), equalTo(new
+        assertThat("result must be of type SchemeInteger!", resultOptional.orElse(getDummyIntegerEnvironmentEntry())
+                .getValue().typeOf(SchemeInteger
+                        .class), equalTo(true));
+        assertThat("result does not match expected value!", resultOptional.orElse(getDummyIntegerEnvironmentEntry())
+                .getValue(), equalTo(new
                 SchemeInteger(42)));
     }
 
@@ -76,7 +80,7 @@ public class GlobalEnvironmentTest {
         SchemeSymbol keySymbol = new SchemeSymbol("foo");
         EnvironmentEntry environmentEntry = EnvironmentEntry.create(keySymbol, new SchemeInteger(42));
         Boolean keysMatch = (Boolean) ReflectionUtils.invokeMethod(globalEnvironment, "keysMatch", new
-                ReflectionMethodParam(SchemeSymbol.class, keySymbol), new ReflectionMethodParam(EnvironmentEntry
+                ReflectionCallArg(SchemeSymbol.class, keySymbol), new ReflectionCallArg(EnvironmentEntry
                 .class, environmentEntry));
 
         assertThat("boolean result must not be null!", keysMatch, notNullValue());
@@ -88,7 +92,7 @@ public class GlobalEnvironmentTest {
         SchemeSymbol keySymbol = new SchemeSymbol("bar");
         EnvironmentEntry environmentEntry = EnvironmentEntry.create(new SchemeSymbol("foo"), new SchemeInteger(42));
         Boolean keysMatch = (Boolean) ReflectionUtils.invokeMethod(globalEnvironment, "keysMatch", new
-                ReflectionMethodParam(SchemeSymbol.class, keySymbol), new ReflectionMethodParam(EnvironmentEntry
+                ReflectionCallArg(SchemeSymbol.class, keySymbol), new ReflectionCallArg(EnvironmentEntry
                 .class, environmentEntry));
 
         assertThat("boolean result must not be null!", keysMatch, notNullValue());
@@ -101,8 +105,8 @@ public class GlobalEnvironmentTest {
         EnvironmentEntry envEntry1 = EnvironmentEntry.create(key1, new SchemeInteger(42));
         EnvironmentEntry envEntry2 = EnvironmentEntry.create(key1, new SchemeInteger(99));
         Boolean entriesMatch = (Boolean) ReflectionUtils.invokeMethod(globalEnvironment, "entriesMatch", new
-                ReflectionMethodParam(EnvironmentEntry
-                .class, envEntry1), new ReflectionMethodParam(EnvironmentEntry.class, envEntry2));
+                ReflectionCallArg(EnvironmentEntry
+                .class, envEntry1), new ReflectionCallArg(EnvironmentEntry.class, envEntry2));
 
         assertThat("boolean result must not be null!", entriesMatch, notNullValue());
         assertThat("boolean result must be true!", entriesMatch, equalTo(true));
@@ -123,5 +127,9 @@ public class GlobalEnvironmentTest {
                 .findAny();
 
         return entryOptional.isPresent();
+    }
+
+    private EnvironmentEntry getDummyIntegerEnvironmentEntry() {
+        return EnvironmentEntry.create(new SchemeSymbol(""), new SchemeInteger(-1));
     }
 }

@@ -1,7 +1,11 @@
 package hdm.pk070.jscheme.util.exception;
 
+import hdm.pk070.jscheme.util.ReflectionUtils;
+
 /**
- * Created by patrick on 08.05.16.
+ * A general-purpose exception for {@link ReflectionUtils}.
+ *
+ * @author patrick.kleindienst
  */
 public class ReflectionUtilsException extends RuntimeException {
 

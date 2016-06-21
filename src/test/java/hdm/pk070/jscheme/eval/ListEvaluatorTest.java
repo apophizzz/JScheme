@@ -11,7 +11,7 @@ import hdm.pk070.jscheme.obj.type.function.builtin.SchemeBuiltinPlus;
 import hdm.pk070.jscheme.stack.SchemeCallStack;
 import hdm.pk070.jscheme.table.environment.Environment;
 import hdm.pk070.jscheme.table.environment.LocalEnvironment;
-import hdm.pk070.jscheme.util.ReflectionMethodParam;
+import hdm.pk070.jscheme.util.ReflectionCallArg;
 import hdm.pk070.jscheme.util.ReflectionUtils;
 import org.junit.Before;
 import org.junit.Test;
@@ -29,7 +29,9 @@ import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.*;
 
 /**
- * Created by patrick on 19.06.16.
+ * A test class for {@link ListEvaluator}
+ *
+ * @author patrick.kleindienst
  */
 
 @RunWith(PowerMockRunner.class)
@@ -65,10 +67,10 @@ public class ListEvaluatorTest {
 
         SchemeObject functionCallResult = (SchemeObject) ReflectionUtils.invokeMethod(listEvaluator,
                 METHOD_EVAL_BUILTIN_FUNC,
-                new ReflectionMethodParam
-                        (SchemeBuiltinFunction.class, schemeBuiltinFunction), new ReflectionMethodParam(SchemeObject
+                new ReflectionCallArg
+                        (SchemeBuiltinFunction.class, schemeBuiltinFunction), new ReflectionCallArg(SchemeObject
                         .class,
-                        additionArgList), new ReflectionMethodParam(Environment.class, LocalEnvironment.withSize(42)));
+                        additionArgList), new ReflectionCallArg(Environment.class, LocalEnvironment.withSize(42)));
 
         assertThat(functionCallResult, notNullValue());
         assertThat(functionCallResult.typeOf(SchemeInteger.class), equalTo(true));

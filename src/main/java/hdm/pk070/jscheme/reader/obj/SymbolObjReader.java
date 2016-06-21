@@ -31,31 +31,31 @@ public class SymbolObjReader extends SchemeObjReader {
 
     @Override
     public SchemeSymbol read() throws SchemeError {
-        StringBuffer symbolBuffer = new StringBuffer();
+        StringBuilder symbolBuilder = new StringBuilder();
 
         while (nextCharIsValid()) {
             char ch = schemeCharacterReader.nextChar();
-            symbolBuffer.append(ch);
+            symbolBuilder.append(ch);
             LOGGER.debug(String.format("Added character %c (%d) to symbol buffer", ch, (int) ch));
         }
 
-        if (symbolBuffer.toString().equals(SchemeConstants.NIL_VAL)) {
+        if (symbolBuilder.toString().equals(SchemeConstants.NIL_VAL)) {
             return new SchemeNil();
         }
 
-        if (symbolBuffer.toString().startsWith("#")) {
-            if (symbolBuffer.toString().equals(SchemeConstants.BOOL_TRUE_VAL)) {
+        if (symbolBuilder.toString().startsWith("#")) {
+            if (symbolBuilder.toString().equals(SchemeConstants.BOOL_TRUE_VAL)) {
                 return new SchemeTrue();
-            } else if (symbolBuffer.toString().equals(SchemeConstants.BOOL_FALSE_VAL)) {
+            } else if (symbolBuilder.toString().equals(SchemeConstants.BOOL_FALSE_VAL)) {
                 return new SchemeFalse();
             }
         }
 
-        if (symbolBuffer.toString().length() > 0) {
+        if (symbolBuilder.toString().length() > 0) {
             Optional<SchemeSymbol> searchedSymbolOptional = SchemeSymbolTable.getInstance().
-                    get(symbolBuffer.toString());
+                    get(symbolBuilder.toString());
             return searchedSymbolOptional.orElse(SchemeSymbolTable.getInstance().
-                    add(new SchemeSymbol(symbolBuffer.toString())));
+                    add(new SchemeSymbol(symbolBuilder.toString())));
         } else {
             throw new SchemeError("Cannot process empty symbol name!");
         }
