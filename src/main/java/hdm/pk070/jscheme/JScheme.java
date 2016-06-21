@@ -3,8 +3,12 @@ package hdm.pk070.jscheme;
 import hdm.pk070.jscheme.error.SchemeError;
 import hdm.pk070.jscheme.eval.SchemeEval;
 import hdm.pk070.jscheme.obj.SchemeObject;
+import hdm.pk070.jscheme.obj.type.SchemeSymbol;
+import hdm.pk070.jscheme.obj.type.function.builtin.SchemeBuiltinPlus;
 import hdm.pk070.jscheme.reader.SchemeReader;
 import hdm.pk070.jscheme.table.environment.GlobalEnvironment;
+import hdm.pk070.jscheme.table.environment.entry.EnvironmentEntry;
+import hdm.pk070.jscheme.table.symbolTable.SchemeSymbolTable;
 
 /**
  * Created by patrick on 19.04.16.
@@ -15,7 +19,12 @@ public class JScheme {
     private static final String ANSI_RESET = "\u001B[0m";
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SchemeError {
+
+        // TODO Move this to another class
+        GlobalEnvironment.getInstance().add(EnvironmentEntry.create(SchemeSymbolTable.getInstance().add(new SchemeSymbol
+                ("+")), SchemeBuiltinPlus.create()));
+
         System.out.println("\n### Welcome to Scheme ###\n");
         SchemeReader schemeReader = SchemeReader.withStdin();
         for (; ; ) {
