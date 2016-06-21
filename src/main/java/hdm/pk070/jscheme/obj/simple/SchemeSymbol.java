@@ -1,4 +1,4 @@
-package hdm.pk070.jscheme.obj.type;
+package hdm.pk070.jscheme.obj.simple;
 
 import hdm.pk070.jscheme.obj.SchemeObject;
 

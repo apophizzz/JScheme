@@ -3,7 +3,7 @@ package hdm.pk070.jscheme.table.symbolTable;
 import hdm.pk070.jscheme.error.SchemeError;
 import hdm.pk070.jscheme.table.hash.HashAlgProvider;
 import hdm.pk070.jscheme.table.hash.impl.StandardHashAlgProvider;
-import hdm.pk070.jscheme.obj.type.SchemeSymbol;
+import hdm.pk070.jscheme.obj.simple.SchemeSymbol;
 import hdm.pk070.jscheme.util.ReflectionCallArg;
 import hdm.pk070.jscheme.util.ReflectionUtils;
 import org.junit.Before;

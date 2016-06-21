@@ -2,7 +2,7 @@ package hdm.pk070.jscheme.reader;
 
 import hdm.pk070.jscheme.error.SchemeError;
 import hdm.pk070.jscheme.obj.SchemeObject;
-import hdm.pk070.jscheme.obj.type.*;
+import hdm.pk070.jscheme.obj.simple.*;
 import hdm.pk070.jscheme.table.symbolTable.SchemeSymbolTable;
 import org.junit.AfterClass;
 import org.junit.Before;

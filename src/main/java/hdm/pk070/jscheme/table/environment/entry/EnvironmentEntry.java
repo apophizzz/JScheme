@@ -1,7 +1,7 @@
 package hdm.pk070.jscheme.table.environment.entry;
 
 import hdm.pk070.jscheme.obj.SchemeObject;
-import hdm.pk070.jscheme.obj.type.SchemeSymbol;
+import hdm.pk070.jscheme.obj.simple.SchemeSymbol;
 import hdm.pk070.jscheme.table.environment.Environment;
 
 import java.util.Objects;

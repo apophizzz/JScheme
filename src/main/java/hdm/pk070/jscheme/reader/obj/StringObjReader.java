@@ -2,7 +2,7 @@ package hdm.pk070.jscheme.reader.obj;
 
 import hdm.pk070.jscheme.SchemeConstants;
 import hdm.pk070.jscheme.error.SchemeError;
-import hdm.pk070.jscheme.obj.type.SchemeString;
+import hdm.pk070.jscheme.obj.simple.SchemeString;
 import hdm.pk070.jscheme.reader.SchemeCharacterReader;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

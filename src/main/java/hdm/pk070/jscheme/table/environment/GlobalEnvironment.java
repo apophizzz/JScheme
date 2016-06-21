@@ -1,6 +1,6 @@
 package hdm.pk070.jscheme.table.environment;
 
-import hdm.pk070.jscheme.obj.type.SchemeSymbol;
+import hdm.pk070.jscheme.obj.simple.SchemeSymbol;
 import hdm.pk070.jscheme.table.ResizableTable;
 import hdm.pk070.jscheme.table.environment.entry.EnvironmentEntry;
 

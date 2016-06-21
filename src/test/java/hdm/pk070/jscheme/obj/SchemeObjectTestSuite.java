@@ -1,6 +1,6 @@
 package hdm.pk070.jscheme.obj;
 
-import hdm.pk070.jscheme.obj.type.SchemeConsTest;
+import hdm.pk070.jscheme.obj.type.simple.SchemeConsTest;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 

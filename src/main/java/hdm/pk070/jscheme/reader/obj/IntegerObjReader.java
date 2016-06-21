@@ -1,7 +1,7 @@
 package hdm.pk070.jscheme.reader.obj;
 
 import hdm.pk070.jscheme.error.SchemeError;
-import hdm.pk070.jscheme.obj.type.SchemeInteger;
+import hdm.pk070.jscheme.obj.simple.SchemeInteger;
 import hdm.pk070.jscheme.reader.SchemeCharacterReader;
 
 /**

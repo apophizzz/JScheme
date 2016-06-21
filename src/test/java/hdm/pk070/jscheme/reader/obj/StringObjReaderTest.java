@@ -1,7 +1,7 @@
 package hdm.pk070.jscheme.reader.obj;
 
 import hdm.pk070.jscheme.error.SchemeError;
-import hdm.pk070.jscheme.obj.type.SchemeString;
+import hdm.pk070.jscheme.obj.simple.SchemeString;
 import hdm.pk070.jscheme.reader.SchemeCharacterReader;
 import hdm.pk070.jscheme.util.ReflectionCallArg;
 import hdm.pk070.jscheme.util.ReflectionUtils;

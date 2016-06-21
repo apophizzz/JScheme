@@ -2,9 +2,9 @@ package hdm.pk070.jscheme.eval;
 
 import hdm.pk070.jscheme.error.SchemeError;
 import hdm.pk070.jscheme.obj.SchemeObject;
-import hdm.pk070.jscheme.obj.type.SchemeInteger;
-import hdm.pk070.jscheme.obj.type.SchemeString;
-import hdm.pk070.jscheme.obj.type.SchemeSymbol;
+import hdm.pk070.jscheme.obj.simple.SchemeInteger;
+import hdm.pk070.jscheme.obj.simple.SchemeString;
+import hdm.pk070.jscheme.obj.simple.SchemeSymbol;
 import hdm.pk070.jscheme.table.environment.Environment;
 import hdm.pk070.jscheme.table.environment.LocalEnvironment;
 import hdm.pk070.jscheme.table.environment.entry.EnvironmentEntry;

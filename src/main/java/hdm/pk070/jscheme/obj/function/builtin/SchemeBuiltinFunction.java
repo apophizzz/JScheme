@@ -1,4 +1,4 @@
-package hdm.pk070.jscheme.obj.type.function.builtin;
+package hdm.pk070.jscheme.obj.function.builtin;
 
 import hdm.pk070.jscheme.error.SchemeError;
 import hdm.pk070.jscheme.obj.SchemeObject;

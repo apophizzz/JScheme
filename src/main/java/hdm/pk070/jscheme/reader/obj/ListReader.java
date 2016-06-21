@@ -2,8 +2,8 @@ package hdm.pk070.jscheme.reader.obj;
 
 import hdm.pk070.jscheme.error.SchemeError;
 import hdm.pk070.jscheme.obj.SchemeObject;
-import hdm.pk070.jscheme.obj.type.SchemeCons;
-import hdm.pk070.jscheme.obj.type.SchemeNil;
+import hdm.pk070.jscheme.obj.simple.SchemeCons;
+import hdm.pk070.jscheme.obj.simple.SchemeNil;
 import hdm.pk070.jscheme.reader.SchemeCharacterReader;
 import hdm.pk070.jscheme.reader.SchemeReader;
 

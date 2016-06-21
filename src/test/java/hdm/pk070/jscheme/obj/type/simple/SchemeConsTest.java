@@ -1,5 +1,9 @@
-package hdm.pk070.jscheme.obj.type;
+package hdm.pk070.jscheme.obj.type.simple;
 
+import hdm.pk070.jscheme.obj.simple.SchemeCons;
+import hdm.pk070.jscheme.obj.simple.SchemeInteger;
+import hdm.pk070.jscheme.obj.simple.SchemeNil;
+import hdm.pk070.jscheme.obj.simple.SchemeString;
 import org.junit.Before;
 import org.junit.Test;
 
