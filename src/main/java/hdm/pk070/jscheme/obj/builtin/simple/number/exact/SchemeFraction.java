@@ -1,5 +1,6 @@
-package hdm.pk070.jscheme.obj.builtin.simple.number;
+package hdm.pk070.jscheme.obj.builtin.simple.number.exact;
 
+import hdm.pk070.jscheme.obj.builtin.simple.number.exact.SchemeExactNumber;
 import org.apache.commons.math3.fraction.Fraction;
 
 /**

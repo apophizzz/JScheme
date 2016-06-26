@@ -1,6 +1,6 @@
 package hdm.pk070.jscheme.reader;
 
-import hdm.pk070.jscheme.reader.obj.IntegerObjReaderTest;
+import hdm.pk070.jscheme.reader.obj.NumberObjReaderTest;
 import hdm.pk070.jscheme.reader.obj.StringObjReaderTest;
 import hdm.pk070.jscheme.reader.obj.SymbolObjReaderTest;
 import org.junit.runner.RunWith;
@@ -11,7 +11,7 @@ import org.junit.runners.Suite;
  */
 
 @RunWith(Suite.class)
-@Suite.SuiteClasses({IntegerObjReaderTest.class, StringObjReaderTest.class, SymbolObjReaderTest.class,
+@Suite.SuiteClasses({NumberObjReaderTest.class, StringObjReaderTest.class, SymbolObjReaderTest.class,
         PushbackReaderLearningTest.class, SchemeCharacterReaderTest.class, SchemeReaderTest.class})
 public class SchemeReaderTestSuite {
 }

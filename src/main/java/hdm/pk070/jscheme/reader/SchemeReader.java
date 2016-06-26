@@ -2,7 +2,7 @@ package hdm.pk070.jscheme.reader;
 
 import hdm.pk070.jscheme.error.SchemeError;
 import hdm.pk070.jscheme.obj.SchemeObject;
-import hdm.pk070.jscheme.reader.obj.IntegerObjReader;
+import hdm.pk070.jscheme.reader.obj.NumberObjReader;
 import hdm.pk070.jscheme.reader.obj.ListReader;
 import hdm.pk070.jscheme.reader.obj.StringObjReader;
 import hdm.pk070.jscheme.reader.obj.SymbolObjReader;
@@ -54,10 +54,8 @@ public class SchemeReader {
         if (schemeCharacterReader.nextCharIs('"')) {
             return StringObjReader.createInstance(schemeCharacterReader).read();
         }
-        // TODO ISSUE: input '123abc' must be evaluated as a symbol. Right now
-        // '123' is read as a number and 'abc' as a symbol.
         if (schemeCharacterReader.inputIsNumber()) {
-            return IntegerObjReader.createInstance(schemeCharacterReader).read();
+            return NumberObjReader.createInstance(schemeCharacterReader).read();
         }
         return SymbolObjReader.createInstance(schemeCharacterReader).read();
     }

@@ -1,4 +1,6 @@
-package hdm.pk070.jscheme.obj.builtin.simple.number;
+package hdm.pk070.jscheme.obj.builtin.simple.number.exact;
+
+import hdm.pk070.jscheme.obj.builtin.simple.number.exact.SchemeExactNumber;
 
 /**
  * @author patrick.kleindienst
