@@ -1,6 +1,6 @@
 package hdm.pk070.jscheme.table.environment;
 
-import hdm.pk070.jscheme.obj.builtin.simple.SchemeInteger;
+import hdm.pk070.jscheme.obj.builtin.simple.number.SchemeInteger;
 import hdm.pk070.jscheme.obj.builtin.simple.SchemeString;
 import hdm.pk070.jscheme.obj.builtin.simple.SchemeSymbol;
 import hdm.pk070.jscheme.table.environment.entry.EnvironmentEntry;

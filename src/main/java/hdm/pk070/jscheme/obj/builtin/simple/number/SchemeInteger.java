@@ -1,11 +1,9 @@
-package hdm.pk070.jscheme.obj.builtin.simple;
-
-import hdm.pk070.jscheme.obj.SchemeObject;
+package hdm.pk070.jscheme.obj.builtin.simple.number;
 
 /**
  * @author patrick.kleindienst
  */
-public final class SchemeInteger extends SchemeObject {
+public final class SchemeInteger extends SchemeExactNumber {
 
 
     private final int intVal;

@@ -1,6 +1,7 @@
 package hdm.pk070.jscheme.obj.builtin.simple;
 
 import hdm.pk070.jscheme.obj.SchemeObject;
+import hdm.pk070.jscheme.obj.builtin.simple.number.SchemeInteger;
 import org.junit.Before;
 import org.junit.Test;
 
