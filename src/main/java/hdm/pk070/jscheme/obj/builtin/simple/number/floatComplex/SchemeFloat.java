@@ -1,6 +1,7 @@
 package hdm.pk070.jscheme.obj.builtin.simple.number.floatComplex;
 
 import hdm.pk070.jscheme.obj.builtin.simple.number.SchemeNumber;
+import hdm.pk070.jscheme.obj.builtin.simple.number.exact.SchemeExactNumber;
 import hdm.pk070.jscheme.obj.builtin.simple.number.exact.SchemeInteger;
 
 /**
@@ -15,6 +16,11 @@ public final class SchemeFloat extends SchemeFloatComplex {
     }
 
     @Override
+    public Float getValue() {
+        return floatVal;
+    }
+
+    @Override
     public SchemeNumber add(SchemeNumber number) {
         if (number.typeOf(SchemeInteger.class)) {
             return new SchemeFloat(this.getValue() + ((SchemeInteger) number).getValue());
@@ -24,12 +30,18 @@ public final class SchemeFloat extends SchemeFloatComplex {
 
     @Override
     public SchemeNumber subtract(SchemeNumber number) {
-        return null;
+        if (number.typeOf(SchemeInteger.class)) {
+            return new SchemeFloat(this.getValue() - ((SchemeInteger) number).getValue());
+        }
+        return new SchemeFloat(this.getValue() - ((SchemeFloat) number).getValue());
     }
 
     @Override
-    public Float getValue() {
-        return floatVal;
+    public SchemeNumber multiply(SchemeNumber number) {
+        if (number.typeOf(SchemeInteger.class)) {
+            return new SchemeFloat(this.getValue() * ((SchemeInteger) number).getValue());
+        }
+        return new SchemeFloat(this.getValue() * ((SchemeFloat) number).getValue());
     }
 
     @Override

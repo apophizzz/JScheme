@@ -4,6 +4,7 @@ import hdm.pk070.jscheme.error.SchemeError;
 import hdm.pk070.jscheme.obj.SchemeObject;
 import hdm.pk070.jscheme.obj.builtin.simple.number.exact.SchemeInteger;
 import hdm.pk070.jscheme.obj.builtin.simple.SchemeString;
+import hdm.pk070.jscheme.obj.builtin.simple.number.floatComplex.SchemeFloat;
 import hdm.pk070.jscheme.stack.SchemeCallStack;
 import org.junit.Before;
 import org.junit.Test;
@@ -45,19 +46,16 @@ public class SchemeBuiltinMinusTest {
     public void testThrowErrorIfSingleArgIsNotANumber() throws SchemeError {
         SchemeCallStack mockedCallStack = mock(SchemeCallStack.class);
         appendPopValues(mockedCallStack, new SchemeString("String, no number"));
-
         defineSingletonMockInstance(mockedCallStack);
 
         builtinMinus.call(1);
     }
 
     @Test
-    public void testReturnInverseOnSingleArg() throws SchemeError {
+    public void testReturnInverseOnSingleIntegerArg() throws SchemeError {
         SchemeCallStack mockedCallStack = mock(SchemeCallStack.class);
         appendPopValues(mockedCallStack, new SchemeInteger(42));
-
         defineSingletonMockInstance(mockedCallStack);
-
         SchemeObject subtractionResult = builtinMinus.call(1);
 
         assertThat("Result must not be null", subtractionResult, notNullValue());
@@ -66,11 +64,23 @@ public class SchemeBuiltinMinusTest {
         assertThat("Result does not match expected value", subtractionResult.getValue().equals(-42), equalTo(true));
     }
 
+    @Test
+    public void testReturnInverseOnSingleFloatArg() throws SchemeError {
+        SchemeCallStack mockedCallStack = mock(SchemeCallStack.class);
+        appendPopValues(mockedCallStack, new SchemeFloat(42.0f));
+        defineSingletonMockInstance(mockedCallStack);
+
+        SchemeObject subtractionResult = builtinMinus.call(1);
+
+        assertThat("Result must not be null!", subtractionResult, notNullValue());
+        assertThat("Result does not match expected type!", subtractionResult.typeOf(SchemeFloat.class), equalTo(true));
+        assertThat("Result does not match expected value!", subtractionResult.getValue(), equalTo(-42.0f));
+    }
+
     @Test(expected = SchemeError.class)
     public void testThrowErrorIfFirstArgIsNotANumber() throws SchemeError {
         SchemeCallStack mockedCallStack = mock(SchemeCallStack.class);
         appendPopValues(mockedCallStack, new SchemeString("Not a number"));
-
         defineSingletonMockInstance(mockedCallStack);
 
         builtinMinus.call(10);
@@ -81,7 +91,6 @@ public class SchemeBuiltinMinusTest {
         SchemeCallStack mockedCallStack = mock(SchemeCallStack.class);
         appendPopValues(mockedCallStack, new SchemeInteger(20), new SchemeInteger(10), new SchemeString("Not" +
                 " a number"));
-
         defineSingletonMockInstance(mockedCallStack);
 
         builtinMinus.call(3);
@@ -92,8 +101,6 @@ public class SchemeBuiltinMinusTest {
         SchemeCallStack mockedCallStack = mock(SchemeCallStack.class);
         appendPopValues(mockedCallStack, new SchemeInteger(5), new SchemeInteger
                 (10), new SchemeInteger(20));
-        appendIsEmptyValues(mockedCallStack, false, false, true);
-
         defineSingletonMockInstance(mockedCallStack);
 
         SchemeObject subtractionResult = builtinMinus.call(3);
@@ -104,13 +111,20 @@ public class SchemeBuiltinMinusTest {
         assertThat("Result does not match expected value", subtractionResult.getValue().equals(5), equalTo(true));
     }
 
+    @Test
+    public void testFloatSubtractionWithValidStack() throws SchemeError {
+        SchemeCallStack mockedCallStack = mock(SchemeCallStack.class);
+        appendPopValues(mockedCallStack, new SchemeFloat(2.0f), new SchemeFloat(3.0f), new SchemeInteger(10));
+        defineSingletonMockInstance(mockedCallStack);
 
-    private void appendIsEmptyValues(SchemeCallStack callStackMock, Boolean... bools) {
-        OngoingStubbing<Boolean> when = when(callStackMock.isEmpty());
-        for (Boolean bool : bools) {
-            when = when.thenReturn(bool);
-        }
+        SchemeObject subtractionResult = this.builtinMinus.call(3);
+
+        assertThat("Result must not be null", subtractionResult, notNullValue());
+        assertThat("Result must be of type SchemeInteger", subtractionResult.typeOf(SchemeFloat.class), equalTo
+                (true));
+        assertThat("Result does not match expected value", subtractionResult.getValue().equals(5.0f), equalTo(true));
     }
+
 
     private void appendPopValues(SchemeCallStack callStackMock, SchemeObject... schemeObjects) {
         OngoingStubbing<SchemeObject> when = when(callStackMock.pop());

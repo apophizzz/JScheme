@@ -2,6 +2,7 @@ package hdm.pk070.jscheme.obj.builtin.function;
 
 import hdm.pk070.jscheme.error.SchemeError;
 import hdm.pk070.jscheme.obj.SchemeObject;
+import hdm.pk070.jscheme.obj.builtin.simple.number.SchemeNumber;
 import hdm.pk070.jscheme.obj.builtin.simple.number.exact.SchemeInteger;
 import hdm.pk070.jscheme.stack.SchemeCallStack;
 
@@ -23,8 +24,8 @@ public class SchemeBuiltinMinus extends SchemeBuiltinFunction {
     }
 
     @Override
-    public SchemeObject call(int argCount) throws SchemeError {
-        int difference;
+    public SchemeNumber call(int argCount) throws SchemeError {
+        SchemeNumber difference;
 
         // throw SchemeError if argCount == 0
         if (argCount == 0) {
@@ -36,26 +37,26 @@ public class SchemeBuiltinMinus extends SchemeBuiltinFunction {
         else if (argCount == 1) {
             SchemeObject singleArg = SchemeCallStack.instance().pop();
             // throw SchemeError if popped arg is not a number
-            if (!singleArg.typeOf(SchemeInteger.class)) {
+            if (!singleArg.subtypeOf(SchemeNumber.class)) {
                 throw new SchemeError(String.format("(-): contract violation [expected: number, given: %s]",
                         singleArg));
             }
             // if the single arg is a number, return inverse
-            return new SchemeInteger(((SchemeInteger) singleArg).getValue() * -1);
+            return ((SchemeNumber) singleArg).multiply(new SchemeInteger(-1));
         }
 
         // in all the other cases: argCount is valid
         else {
 
             // collect argCount pushed arguments in a list (pop from stack)
-            List<SchemeObject> argsList = new LinkedList<>();
+            List<SchemeNumber> argsList = new LinkedList<>();
             for (int i = 0; i < argCount; i++) {
                 SchemeObject nextArg = SchemeCallStack.instance().pop();
-                if (!nextArg.typeOf(SchemeInteger.class)) {
+                if (!nextArg.subtypeOf(SchemeNumber.class)) {
                     throw new SchemeError(String.format("(-): contract violation [expected: number, given: %s]",
                             nextArg));
                 }
-                argsList.add(nextArg);
+                argsList.add(((SchemeNumber) nextArg));
             }
 
             // reverse list, since we need the arguments in reversed order for subtraction (args have been pushed
@@ -63,14 +64,15 @@ public class SchemeBuiltinMinus extends SchemeBuiltinFunction {
             Collections.reverse(argsList);
             // Start with the minuend (first argument that has been pushed and last which has been popped, now at
             // beginning of reversed list)
-            difference = ((SchemeInteger) argsList.remove(0)).getValue();
+            difference = argsList.remove(0);
 
             // apply the subtrahends on the minuend
-            for (SchemeObject schemeObject : argsList) {
-                difference -= ((SchemeInteger) schemeObject).getValue();
+            for (SchemeNumber schemeNumber : argsList) {
+//                difference -= ((SchemeInteger) schemeNumber).getValue();
+                difference = difference.subtract(schemeNumber);
             }
         }
-        return new SchemeInteger(difference);
+        return difference;
     }
 
     @Override

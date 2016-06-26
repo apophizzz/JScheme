@@ -11,4 +11,5 @@ public abstract class SchemeNumber extends SchemeObject {
 
     public abstract SchemeNumber subtract(SchemeNumber number);
 
+    public abstract SchemeNumber multiply(SchemeNumber number);
 }

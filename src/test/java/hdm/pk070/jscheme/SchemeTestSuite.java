@@ -9,7 +9,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
 /**
- * A test suite for collecting all the single test classes of the JScheme project.
+ * A test suite for collecting all the test classes of the JScheme project in a single test suite.
  *
  * @author patrick.kleindienst
  */

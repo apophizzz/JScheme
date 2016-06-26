@@ -51,4 +51,40 @@ public class SchemeFloatTest {
         assertThat("Result does not match expected type!", result.typeOf(SchemeFloat.class), equalTo(true));
         assertThat("Result does not match expected value!", result.getValue(), equalTo(84.0f));
     }
+
+    @Test
+    public void testMultiplyFloatByFloat() {
+        SchemeNumber result = this.schemeFloat.multiply(new SchemeFloat(5.0f));
+
+        assertThat("Result must not be null!", result, notNullValue());
+        assertThat("Result does not match expected type!", result.typeOf(SchemeFloat.class), equalTo(true));
+        assertThat("Result does not match expected value!", result.getValue(), equalTo(210.0f));
+    }
+
+    @Test
+    public void testMultiplyFloatByInteger() {
+        SchemeNumber result = this.schemeFloat.multiply(new SchemeInteger(3));
+
+        assertThat("Result must not be null!", result, notNullValue());
+        assertThat("Result does not match expected type!", result.typeOf(SchemeFloat.class), equalTo(true));
+        assertThat("Result does not match expected value!", result.getValue(), equalTo(126.0f));
+    }
+
+    @Test
+    public void testSubtractFloatFromFloat() {
+        SchemeNumber result = this.schemeFloat.subtract(new SchemeFloat(12.0f));
+
+        assertThat("Result must not be null!", result, notNullValue());
+        assertThat("Result does not match expected type!", result.typeOf(SchemeFloat.class), equalTo(true));
+        assertThat("Result does not match expected value!", result.getValue(), equalTo(30.0f));
+    }
+
+    @Test
+    public void testSubtractIntegerFromFloat() {
+        SchemeNumber result = this.schemeFloat.subtract(new SchemeInteger(12));
+
+        assertThat("Result must not be null!", result, notNullValue());
+        assertThat("Result does not match expected type!", result.typeOf(SchemeFloat.class), equalTo(true));
+        assertThat("Result does not match expected value!", result.getValue(), equalTo(30.0f));
+    }
 }

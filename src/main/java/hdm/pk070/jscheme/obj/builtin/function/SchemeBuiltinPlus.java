@@ -23,7 +23,7 @@ public class SchemeBuiltinPlus extends SchemeBuiltinFunction {
     }
 
     @Override
-    public SchemeObject call(int argCount) throws SchemeError {
+    public SchemeNumber call(int argCount) throws SchemeError {
         SchemeNumber result = new SchemeInteger(0);
 
         for (int i = 0; i < argCount; i++) {

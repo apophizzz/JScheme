@@ -4,6 +4,7 @@ import hdm.pk070.jscheme.error.SchemeError;
 import hdm.pk070.jscheme.obj.SchemeObject;
 import hdm.pk070.jscheme.obj.builtin.simple.number.exact.SchemeInteger;
 import hdm.pk070.jscheme.obj.builtin.simple.SchemeString;
+import hdm.pk070.jscheme.obj.builtin.simple.number.floatComplex.SchemeFloat;
 import hdm.pk070.jscheme.stack.SchemeCallStack;
 import org.junit.Before;
 import org.junit.Test;
@@ -56,6 +57,26 @@ public class SchemeBuiltinTimesTest {
     public void testThrowErrorOnInvalidArgument() throws SchemeError {
         appendArgToMockedStackPopSequence(new SchemeString("invalid argument"));
         this.builtinTimes.call(4);
+    }
+
+    @Test
+    public void testResultIsSchemeInteger() throws SchemeError {
+        SchemeObject result = this.builtinTimes.call(3);
+
+        assertThat("Result must not be null!", result, notNullValue());
+        assertThat("Result does not match expected type!", result.typeOf(SchemeInteger.class), equalTo(true));
+        assertThat("Result does not match expected value!", result.getValue(), equalTo(20));
+    }
+
+    @Test
+    public void testResultIsSchemeFloat() throws SchemeError {
+        appendArgToMockedStackPopSequence(new SchemeFloat(2.0f));
+        appendArgToMockedStackPopSequence(new SchemeFloat(3.0f));
+        SchemeObject result = this.builtinTimes.call(5);
+
+        assertThat("Result must not be null!", result, notNullValue());
+        assertThat("Result does not match expected type!", result.typeOf(SchemeFloat.class), equalTo(true));
+        assertThat("Result does not match expected value!", result.getValue(), equalTo(120.0f));
     }
 
     private void assertMultiplicationResult(SchemeObject actualResult, SchemeInteger expectedResult) {
