@@ -1,5 +1,8 @@
 package hdm.pk070.jscheme.obj.builtin.simple.number.floatComplex;
 
+import hdm.pk070.jscheme.obj.builtin.simple.number.SchemeNumber;
+import hdm.pk070.jscheme.obj.builtin.simple.number.exact.SchemeInteger;
+import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -9,6 +12,13 @@ import static org.hamcrest.Matchers.*;
  * @author patrick.kleindienst
  */
 public class SchemeFloatTest {
+
+    private SchemeFloat schemeFloat;
+
+    @Before
+    public void setUp() {
+        this.schemeFloat = new SchemeFloat(42.0f);
+    }
 
     @Test
     public void testValueWithoutLeadingZero() {
@@ -22,5 +32,23 @@ public class SchemeFloatTest {
         SchemeFloat schemeFloat = new SchemeFloat(5.f);
 
         assertThat(schemeFloat.getValue(), equalTo(5.0f));
+    }
+
+    @Test
+    public void testAddFloatToFloat() {
+        SchemeNumber result = this.schemeFloat.add(new SchemeFloat(42.0f));
+
+        assertThat("Result must not be null!", result, notNullValue());
+        assertThat("Result does not match expected type!", result.typeOf(SchemeFloat.class), equalTo(true));
+        assertThat("Result does not match expected value!", result.getValue(), equalTo(84.0f));
+    }
+
+    @Test
+    public void testAddIntegerToFloat() {
+        SchemeNumber result = this.schemeFloat.add(new SchemeInteger(42));
+
+        assertThat("Result must not be null!", result, notNullValue());
+        assertThat("Result does not match expected type!", result.typeOf(SchemeFloat.class), equalTo(true));
+        assertThat("Result does not match expected value!", result.getValue(), equalTo(84.0f));
     }
 }

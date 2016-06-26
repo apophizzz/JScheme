@@ -2,6 +2,7 @@ package hdm.pk070.jscheme.obj.builtin.function;
 
 import hdm.pk070.jscheme.error.SchemeError;
 import hdm.pk070.jscheme.obj.SchemeObject;
+import hdm.pk070.jscheme.obj.builtin.simple.number.SchemeNumber;
 import hdm.pk070.jscheme.obj.builtin.simple.number.exact.SchemeInteger;
 import hdm.pk070.jscheme.stack.SchemeCallStack;
 
@@ -23,17 +24,17 @@ public class SchemeBuiltinPlus extends SchemeBuiltinFunction {
 
     @Override
     public SchemeObject call(int argCount) throws SchemeError {
-        int sum = 0;
-        // pop argCount values from stack
+        SchemeNumber result = new SchemeInteger(0);
+
         for (int i = 0; i < argCount; i++) {
             SchemeObject poppedArg = SchemeCallStack.instance().pop();
-            // each arg must be of type SchemeInteger
-            if (!poppedArg.typeOf(SchemeInteger.class)) {
-                throw new SchemeError(String.format("(+): non-integer argument %s!", poppedArg.toString()));
+            if (!poppedArg.subtypeOf(SchemeNumber.class)) {
+                throw new SchemeError(String.format("(+): contract violation [expected: number, given: %s]",
+                        poppedArg));
             }
-            sum += ((SchemeInteger) poppedArg).getValue();
+            result = result.add(((SchemeNumber) poppedArg));
         }
-        return new SchemeInteger(sum);
+        return result;
     }
 
     @Override
