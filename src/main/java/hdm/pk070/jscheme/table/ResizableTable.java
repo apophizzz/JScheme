@@ -36,7 +36,7 @@ public abstract class ResizableTable<KEY, VALUE> extends BaseTable<KEY, VALUE> {
         int hash = keyToHashVal(key);
 
         // 2. Compute start index with hash
-        int startIndex = hash % currentTableSize;
+        int startIndex = (hash & 0x7FFFFFFF) % currentTableSize;
 
         // 3. Start searching value at startIndex
         int nextIndex = startIndex;
@@ -79,7 +79,7 @@ public abstract class ResizableTable<KEY, VALUE> extends BaseTable<KEY, VALUE> {
         int hash = valueToHashVal(value);
 
         // Compute start index
-        int startIndex = hash % currentTableSize;
+        int startIndex = (hash & 0x7FFFFFFF) % currentTableSize;
 
         // We search at nextIndex, starting with startIndex
         int nextIndex = startIndex;
