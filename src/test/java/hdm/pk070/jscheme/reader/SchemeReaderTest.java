@@ -3,7 +3,7 @@ package hdm.pk070.jscheme.reader;
 import hdm.pk070.jscheme.error.SchemeError;
 import hdm.pk070.jscheme.obj.SchemeObject;
 import hdm.pk070.jscheme.obj.builtin.simple.*;
-import hdm.pk070.jscheme.obj.builtin.simple.number.SchemeInteger;
+import hdm.pk070.jscheme.obj.builtin.simple.number.exact.SchemeInteger;
 import hdm.pk070.jscheme.table.symbolTable.SchemeSymbolTable;
 import org.junit.AfterClass;
 import org.junit.Before;

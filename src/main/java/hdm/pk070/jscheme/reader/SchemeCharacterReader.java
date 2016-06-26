@@ -41,7 +41,8 @@ public class SchemeCharacterReader {
      * This method allows to perform a lookahead on the next non-whitespace character
      * without accidentally consuming it.
      *
-     * @param ch The character we guess to be the next one
+     * @param ch
+     *         The character we guess to be the next one
      * @return true, when ch equals the next char available at the stream, false otherwise
      */
     public boolean nextNonWhitespaceCharIs(char ch) {
@@ -56,11 +57,6 @@ public class SchemeCharacterReader {
         return nextChar == ch;
     }
 
-    public boolean nextNonWhitespaceCharIsDigit() {
-        char nextChar = nextNonWhitespaceChar();
-        unreadCharacter(nextChar);
-        return Character.isDigit(nextChar);
-    }
 
     public char nextChar() {
         char ch = readFromPushbackReader();
@@ -70,7 +66,7 @@ public class SchemeCharacterReader {
 
     public boolean inputIsNumber() throws SchemeError {
         List<Character> charBuffer = new LinkedList<>();
-        while (nextCharIsDigit()) {
+        while (nextCharIsDigit() || nextCharIsDecimalSeparator()) {
             charBuffer.add(readFromPushbackReader());
         }
 
@@ -95,6 +91,7 @@ public class SchemeCharacterReader {
         return false;
     }
 
+
     private boolean isBeginningOrEndOfList(char ch) {
         return ((ch == '(') || (ch == ')'));
     }
@@ -108,6 +105,12 @@ public class SchemeCharacterReader {
         char nextChar = readFromPushbackReader();
         unreadCharacter(nextChar);
         return Character.isDigit(nextChar);
+    }
+
+    public boolean nextCharIsDecimalSeparator() {
+        char nextChar = readFromPushbackReader();
+        unreadCharacter(nextChar);
+        return nextChar == '.';
     }
 
     public boolean nextCharIsWhiteSpace() {
@@ -137,7 +140,8 @@ public class SchemeCharacterReader {
      * the character ch is returned when {@link SchemeCharacterReader#readFromPushbackReader}
      * is called next time.
      *
-     * @param ch the character to 'unread'
+     * @param ch
+     *         the character to 'unread'
      */
     private void unreadCharacter(char ch) {
         try {

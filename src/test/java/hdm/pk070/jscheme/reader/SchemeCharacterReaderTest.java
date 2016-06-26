@@ -75,6 +75,22 @@ public class SchemeCharacterReaderTest {
         assertThat(isNumber, equalTo(false));
     }
 
+    @Test
+    public void testValidFloatInputIsNumber() throws SchemeError {
+        schemeCharacterReader = SchemeCharacterReader.withInputStream(new ByteArrayInputStream("42.4242".getBytes()));
+        boolean isNumber = schemeCharacterReader.inputIsNumber();
+
+        assertThat(isNumber, equalTo(true));
+    }
+
+    @Test
+    public void testInvalidFloatInputIsNotNumber() throws SchemeError {
+        schemeCharacterReader = SchemeCharacterReader.withInputStream(new ByteArrayInputStream("42.foobar".getBytes()));
+        boolean isNumber = schemeCharacterReader.inputIsNumber();
+
+        assertThat(isNumber, equalTo(false));
+    }
+
     @After
     public void tearDown() {
         if (Objects.nonNull(schemeCharacterReader)) {
