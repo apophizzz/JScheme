@@ -1,6 +1,7 @@
 package hdm.pk070.jscheme.obj.builtin.simple.number.exact;
 
 import hdm.pk070.jscheme.obj.builtin.simple.number.SchemeNumber;
+import hdm.pk070.jscheme.obj.builtin.simple.number.floatComplex.SchemeFloat;
 import org.apache.commons.math3.fraction.Fraction;
 
 /**
@@ -12,6 +13,10 @@ public final class SchemeFraction extends SchemeExactNumber {
 
     public SchemeFraction(int numerator, int denominator) {
         this.fraction = new Fraction(numerator, denominator);
+    }
+
+    public SchemeFraction(Fraction fraction) {
+        this.fraction = fraction;
     }
 
     public SchemeFraction(int numerator) {
@@ -32,7 +37,12 @@ public final class SchemeFraction extends SchemeExactNumber {
 
     @Override
     public SchemeNumber add(SchemeNumber number) {
-        return null;
+        if (number.typeOf(SchemeFloat.class)) {
+            return new SchemeFloat(this.fraction.floatValue() + ((SchemeFloat) number).getValue());
+        } else if (number.typeOf(SchemeFraction.class)) {
+            return new SchemeFraction(this.fraction.add(((SchemeFraction) number).getValue()));
+        }
+        return new SchemeFraction(this.fraction.add(((SchemeInteger) number).getValue()));
     }
 
     @Override
@@ -46,8 +56,8 @@ public final class SchemeFraction extends SchemeExactNumber {
     }
 
     @Override
-    public Object getValue() {
-        return null;
+    public Fraction getValue() {
+        return this.fraction;
     }
 
     @Override

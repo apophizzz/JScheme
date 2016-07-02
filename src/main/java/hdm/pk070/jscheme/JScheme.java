@@ -3,6 +3,7 @@ package hdm.pk070.jscheme;
 import hdm.pk070.jscheme.error.SchemeError;
 import hdm.pk070.jscheme.eval.SchemeEval;
 import hdm.pk070.jscheme.obj.SchemeObject;
+import hdm.pk070.jscheme.obj.builtin.function.SchemeBuiltinDivide;
 import hdm.pk070.jscheme.obj.builtin.function.SchemeBuiltinMinus;
 import hdm.pk070.jscheme.obj.builtin.function.SchemeBuiltinTimes;
 import hdm.pk070.jscheme.obj.builtin.simple.SchemeSymbol;
@@ -32,6 +33,8 @@ public class JScheme {
                 ("-")), SchemeBuiltinMinus.create()));
         GlobalEnvironment.getInstance().add(EnvironmentEntry.create(SchemeSymbolTable.getInstance().add(new SchemeSymbol
                 ("*")), SchemeBuiltinTimes.create()));
+        GlobalEnvironment.getInstance().add(EnvironmentEntry.create(SchemeSymbolTable.getInstance().add(new SchemeSymbol
+                ("/")), SchemeBuiltinDivide.create()));
 
 
         System.out.println("\n### Welcome to Scheme ###\n");
