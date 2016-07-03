@@ -10,3 +10,6 @@ This is my implementation of a Scheme interpreter which is also my examination p
 
 ### 1) Clone repository:
 ```git clone https://github.com/PaddySmalls/JScheme```
+
+### 2) Start JScheme:
+``` mvn exec:java```
