@@ -3,16 +3,9 @@ package hdm.pk070.jscheme;
 import hdm.pk070.jscheme.error.SchemeError;
 import hdm.pk070.jscheme.eval.SchemeEval;
 import hdm.pk070.jscheme.obj.SchemeObject;
-import hdm.pk070.jscheme.obj.builtin.function.SchemeBuiltinDivide;
-import hdm.pk070.jscheme.obj.builtin.function.SchemeBuiltinMinus;
-import hdm.pk070.jscheme.obj.builtin.function.SchemeBuiltinTimes;
-import hdm.pk070.jscheme.obj.builtin.simple.SchemeSymbol;
-import hdm.pk070.jscheme.obj.builtin.function.SchemeBuiltinPlus;
 import hdm.pk070.jscheme.reader.SchemeReader;
 import hdm.pk070.jscheme.setup.JSchemeSetup;
 import hdm.pk070.jscheme.table.environment.GlobalEnvironment;
-import hdm.pk070.jscheme.table.environment.entry.EnvironmentEntry;
-import hdm.pk070.jscheme.table.symbolTable.SchemeSymbolTable;
 
 /**
  * JScheme starting point
