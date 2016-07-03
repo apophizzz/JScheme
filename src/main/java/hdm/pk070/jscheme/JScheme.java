@@ -9,12 +9,13 @@ import hdm.pk070.jscheme.obj.builtin.function.SchemeBuiltinTimes;
 import hdm.pk070.jscheme.obj.builtin.simple.SchemeSymbol;
 import hdm.pk070.jscheme.obj.builtin.function.SchemeBuiltinPlus;
 import hdm.pk070.jscheme.reader.SchemeReader;
+import hdm.pk070.jscheme.setup.JSchemeSetup;
 import hdm.pk070.jscheme.table.environment.GlobalEnvironment;
 import hdm.pk070.jscheme.table.environment.entry.EnvironmentEntry;
 import hdm.pk070.jscheme.table.symbolTable.SchemeSymbolTable;
 
 /**
- * JScheme entry point
+ * JScheme starting point
  *
  * @author patrick.kleindienst
  */
@@ -26,18 +27,8 @@ public class JScheme {
 
     public static void main(String[] args) throws SchemeError {
 
-        // TODO Move this to another class
-        GlobalEnvironment.getInstance().add(EnvironmentEntry.create(SchemeSymbolTable.getInstance().add(new SchemeSymbol
-                ("+")), SchemeBuiltinPlus.create()));
-        GlobalEnvironment.getInstance().add(EnvironmentEntry.create(SchemeSymbolTable.getInstance().add(new SchemeSymbol
-                ("-")), SchemeBuiltinMinus.create()));
-        GlobalEnvironment.getInstance().add(EnvironmentEntry.create(SchemeSymbolTable.getInstance().add(new SchemeSymbol
-                ("*")), SchemeBuiltinTimes.create()));
-        GlobalEnvironment.getInstance().add(EnvironmentEntry.create(SchemeSymbolTable.getInstance().add(new SchemeSymbol
-                ("/")), SchemeBuiltinDivide.create()));
+        JSchemeSetup.init();
 
-
-        System.out.println("\n### Welcome to Scheme ###\n");
         SchemeReader schemeReader = SchemeReader.withStdin();
         for (; ; ) {
             System.out.print(">> ");
