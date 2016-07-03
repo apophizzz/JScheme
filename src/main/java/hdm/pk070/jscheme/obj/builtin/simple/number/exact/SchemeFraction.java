@@ -89,6 +89,15 @@ public final class SchemeFraction extends SchemeExactNumber {
     }
 
     @Override
+    public SchemeNumber absolute() {
+        if (this.getValue().compareTo(new Fraction(0)) == 1) {
+            return new SchemeFraction(this.getValue());
+        } else {
+            return this.multiply(new SchemeInteger(-1));
+        }
+    }
+
+    @Override
     public Fraction getValue() {
         return this.fraction;
     }

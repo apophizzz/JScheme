@@ -68,6 +68,15 @@ public final class SchemeFloat extends SchemeFloatComplex {
     }
 
     @Override
+    public SchemeNumber absolute() {
+        if (this.getValue() > 0) {
+            return new SchemeFloat(this.getValue());
+        } else {
+            return this.multiply(new SchemeInteger(-1));
+        }
+    }
+
+    @Override
     public String toString() {
         return String.valueOf(floatVal);
     }

@@ -131,4 +131,22 @@ public class SchemeIntegerTest {
         assertThat("Result does not match expected type!", result.typeOf(SchemeFraction.class), equalTo(true));
         assertThat("Result does not match expected value!", result.getValue(), equalTo(new Fraction(42, 5)));
     }
+
+    @Test
+    public void testReturnAbsoluteOnPositiveValue() {
+        SchemeNumber result = this.integer.absolute();
+
+        assertThat("Result must not be null!", result, notNullValue());
+        assertThat("Result does not match expected type!", result.typeOf(SchemeInteger.class), equalTo(true));
+        assertThat("Result does not match expected value!", result.getValue(), equalTo(42));
+    }
+
+    @Test
+    public void testReturnAbsoluteOnNegativeValue() {
+        SchemeNumber result = this.integer.multiply(new SchemeInteger(-1)).absolute();
+
+        assertThat("Result must not be null!", result, notNullValue());
+        assertThat("Result does not match expected type!", result.typeOf(SchemeInteger.class), equalTo(true));
+        assertThat("Result does not match expected value!", result.getValue(), equalTo(42));
+    }
 }

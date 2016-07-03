@@ -142,4 +142,22 @@ public class SchemeFloatTest {
         assertThat("Result does not match expected type!", result.typeOf(SchemeFloat.class), equalTo(true));
         assertThat("Result does not match expected value!", result.getValue(), equalTo(21.0f));
     }
+
+    @Test
+    public void testReturnAbsoluteOnPositiveValue() {
+        SchemeNumber result = this.schemeFloat.absolute();
+
+        assertThat("Result must not be null!", result, notNullValue());
+        assertThat("Result does not match expected type!", result.typeOf(SchemeFloat.class), equalTo(true));
+        assertThat("Result does not match expected value!", result.getValue(), equalTo(42.0f));
+    }
+
+    @Test
+    public void testReturnAbsoluteOnNegativeValue() {
+        SchemeNumber result = this.schemeFloat.multiply(new SchemeInteger(-1)).absolute();
+
+        assertThat("Result must not be null!", result, notNullValue());
+        assertThat("Result does not match expected type!", result.typeOf(SchemeFloat.class), equalTo(true));
+        assertThat("Result does not match expected value!", result.getValue(), equalTo(42.0f));
+    }
 }

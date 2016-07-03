@@ -71,6 +71,15 @@ public final class SchemeInteger extends SchemeExactNumber {
     }
 
     @Override
+    public SchemeNumber absolute() {
+        if (this.getValue() > 0) {
+            return new SchemeInteger(this.getValue());
+        } else {
+            return this.multiply(new SchemeInteger(-1));
+        }
+    }
+
+    @Override
     public String toString() {
         return String.valueOf(intVal);
     }
