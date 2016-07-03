@@ -95,6 +95,38 @@ public class NumberObjReaderTest {
         assertThat("Result does not match expected value!", result.getValue(), equalTo(0.5f));
     }
 
+    @Test
+    public void testReadNumberWithPlusPrefix() {
+        List<Character> numericCharBuffer = new LinkedList<>();
+        numericCharBuffer.add('+');
+        numericCharBuffer.add('4');
+        numericCharBuffer.add('2');
+        SchemeNumber result = (SchemeNumber) ReflectionUtils.invokeMethod(numberObjReader, "toSchemeNumber", new
+                ReflectionCallArg
+                (List.class,
+                        numericCharBuffer));
+
+        assertThat("Result must not be null!", result, notNullValue());
+        assertThat("Result does not match expected type!", result.getClass(), equalTo(SchemeInteger.class));
+        assertThat("Result does not match expected value!", result, equalTo(new SchemeInteger(42)));
+    }
+
+    @Test
+    public void testReadNumberWithMinusPrefix() {
+        List<Character> numericCharBuffer = new LinkedList<>();
+        numericCharBuffer.add('-');
+        numericCharBuffer.add('4');
+        numericCharBuffer.add('2');
+        SchemeNumber result = (SchemeNumber) ReflectionUtils.invokeMethod(numberObjReader, "toSchemeNumber", new
+                ReflectionCallArg
+                (List.class,
+                        numericCharBuffer));
+
+        assertThat("Result must not be null!", result, notNullValue());
+        assertThat("Result does not match expected type!", result.getClass(), equalTo(SchemeInteger.class));
+        assertThat("Result does not match expected value!", result, equalTo(new SchemeInteger(-42)));
+    }
+
     @After
     public void tearDown() {
         if (Objects.nonNull(schemeCharacterReader)) {

@@ -66,7 +66,7 @@ public class SchemeCharacterReader {
 
     public boolean inputIsNumber() throws SchemeError {
         List<Character> charBuffer = new LinkedList<>();
-        while (nextCharIsDigit() || nextCharIsDecimalSeparator()) {
+        while (nextCharIsDigit() || nextCharIsDecimalSeparator() || nextCharIsPrefix()) {
             charBuffer.add(readFromPushbackReader());
         }
 
@@ -91,6 +91,13 @@ public class SchemeCharacterReader {
         return false;
     }
 
+    public boolean nextCharIsPrefix() {
+        char nextChar = readFromPushbackReader();
+        boolean isPrefix = (nextChar == '-' || nextChar == '+') && nextCharIsDigit();
+        unreadCharacter(nextChar);
+        return isPrefix;
+    }
+
 
     private boolean isBeginningOrEndOfList(char ch) {
         return ((ch == '(') || (ch == ')'));
@@ -112,6 +119,7 @@ public class SchemeCharacterReader {
         unreadCharacter(nextChar);
         return nextChar == '.';
     }
+
 
     public boolean nextCharIsWhiteSpace() {
         char ch = readFromPushbackReader();

@@ -26,7 +26,8 @@ public class NumberObjReader extends SchemeObjReader {
     @Override
     public SchemeNumber read() throws SchemeError {
         List<Character> numericCharBuffer = new LinkedList<>();
-        while (schemeCharacterReader.nextCharIsDigit() || schemeCharacterReader.nextCharIsDecimalSeparator()) {
+        while (schemeCharacterReader.nextCharIsDigit() || schemeCharacterReader.nextCharIsDecimalSeparator() ||
+                schemeCharacterReader.nextCharIsPrefix()) {
             numericCharBuffer.add(schemeCharacterReader.nextChar());
         }
 
@@ -34,18 +35,35 @@ public class NumberObjReader extends SchemeObjReader {
     }
 
     private SchemeNumber toSchemeNumber(List<Character> numericCharBuffer) {
+
+        boolean isNegativeNum = false;
+        if (numericCharBuffer.get(0) == '-') {
+            isNegativeNum = true;
+            numericCharBuffer.remove(0);
+        } else if (numericCharBuffer.get(0) == '+') {
+            numericCharBuffer.remove(0);
+        }
+
         if (numericCharBuffer.contains('.')) {
             String floatValString = "";
             for (Character character : numericCharBuffer) {
                 floatValString += character;
             }
-            return new SchemeFloat(Float.valueOf(floatValString));
+            if (isNegativeNum) {
+                return new SchemeFloat(Float.valueOf(floatValString) * -1);
+            } else {
+                return new SchemeFloat(Float.valueOf(floatValString));
+            }
         } else {
             int intVal = 0;
             for (Character character : numericCharBuffer) {
                 intVal = intVal * 10 + numericCharToInt(character);
             }
-            return new SchemeInteger(intVal);
+            if (isNegativeNum) {
+                return new SchemeInteger(intVal * -1);
+            } else {
+                return new SchemeInteger(intVal);
+            }
         }
     }
 

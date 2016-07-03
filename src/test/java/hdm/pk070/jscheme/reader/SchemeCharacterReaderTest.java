@@ -91,6 +91,22 @@ public class SchemeCharacterReaderTest {
         assertThat(isNumber, equalTo(false));
     }
 
+    @Test
+    public void testReadPlusPrefixedNumberCorrectly() throws SchemeError {
+        schemeCharacterReader = SchemeCharacterReader.withInputStream(new ByteArrayInputStream("+42.0".getBytes()));
+        boolean isNumber = schemeCharacterReader.inputIsNumber();
+
+        assertThat(isNumber, equalTo(true));
+    }
+
+    @Test
+    public void testReadMinusPrefixedNumberCorrectly() throws SchemeError {
+        schemeCharacterReader = SchemeCharacterReader.withInputStream(new ByteArrayInputStream("-42.0".getBytes()));
+        boolean isNumber = schemeCharacterReader.inputIsNumber();
+
+        assertThat(isNumber, equalTo(true));
+    }
+
     @After
     public void tearDown() {
         if (Objects.nonNull(schemeCharacterReader)) {
