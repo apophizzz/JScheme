@@ -5,8 +5,8 @@ import hdm.pk070.jscheme.obj.SchemeObject;
 import hdm.pk070.jscheme.obj.builtin.simple.SchemeString;
 import hdm.pk070.jscheme.obj.builtin.simple.number.exact.SchemeFraction;
 import hdm.pk070.jscheme.obj.builtin.simple.number.exact.SchemeInteger;
+import hdm.pk070.jscheme.obj.builtin.simple.number.floatComplex.SchemeFloat;
 import hdm.pk070.jscheme.stack.SchemeCallStack;
-import org.apache.commons.math3.fraction.Fraction;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -43,8 +43,19 @@ public class SchemeBuiltinDivideTest {
         this.builtinDivide.call(0);
     }
 
+    @Test(expected = SchemeError.class)
+    public void testThrowSchemeErrorIfSingleArgIsNotANumber() throws SchemeError {
+        SchemeCallStack mockedCallStack = mock(SchemeCallStack.class);
+        when(mockedCallStack.pop()).thenReturn(new SchemeString("Not a number"));
+
+        PowerMockito.mockStatic(SchemeCallStack.class);
+        PowerMockito.when(SchemeCallStack.instance()).thenReturn(mockedCallStack);
+
+        this.builtinDivide.call(1);
+    }
+
     @Test
-    public void testReturnReciprocalOnSingleArgument() throws SchemeError {
+    public void testReturnReciprocalOnSingleIntegerArgument() throws SchemeError {
         SchemeCallStack mockedCallStack = mock(SchemeCallStack.class);
         when(mockedCallStack.pop()).thenReturn(new SchemeInteger(2));
 
@@ -55,17 +66,50 @@ public class SchemeBuiltinDivideTest {
 
         assertThat("Result must not be null!", result, notNullValue());
         assertThat("Result does not match expected type!", result.typeOf(SchemeFraction.class), equalTo(true));
-        assertThat("Result does not match expected value!", result, equalTo(new SchemeFraction(new Fraction(1, 2))));
+        assertThat("Result does not match expected value!", result, equalTo(new SchemeFraction(1, 2)));
     }
 
-    @Test(expected = SchemeError.class)
-    public void testThrowSchemeErrorIfSingleArgIsNotANumber() throws SchemeError {
+    @Test
+    public void testReturnReciprocalOnSingleFloatArgument() throws SchemeError {
         SchemeCallStack mockedCallStack = mock(SchemeCallStack.class);
-        when(mockedCallStack.pop()).thenReturn(new SchemeString("Not a number"));
+        when(mockedCallStack.pop()).thenReturn(new SchemeFloat(2.0f));
 
         PowerMockito.mockStatic(SchemeCallStack.class);
         PowerMockito.when(SchemeCallStack.instance()).thenReturn(mockedCallStack);
 
-        this.builtinDivide.call(1);
+        SchemeObject result = this.builtinDivide.call(1);
+
+        assertThat("Result must not be null!", result, notNullValue());
+        assertThat("Result does not match expected type!", result.typeOf(SchemeFloat.class), equalTo(true));
+        assertThat("Result does not match expected value!", result, equalTo(new SchemeFloat(0.5f)));
+    }
+
+    @Test(expected = SchemeError.class)
+    public void testThrowSchemeErrorOnInvalidArgumentOnStack() throws SchemeError {
+        SchemeCallStack mockedCallStack = mock(SchemeCallStack.class);
+        when(mockedCallStack.pop()).thenReturn(new SchemeString("Not a number")).thenReturn(new SchemeInteger(2))
+                .thenReturn(new
+                        SchemeInteger(4));
+
+        PowerMockito.mockStatic(SchemeCallStack.class);
+        PowerMockito.when(SchemeCallStack.instance()).thenReturn(mockedCallStack);
+
+        this.builtinDivide.call(3);
+    }
+
+    @Test
+    public void testDivideMultipleValidIntegerArgumentsFromStack() throws SchemeError {
+        SchemeCallStack mockedCallStack = mock(SchemeCallStack.class);
+        when(mockedCallStack.pop()).thenReturn(new SchemeInteger(8)).thenReturn(new SchemeInteger(4)).thenReturn(new
+                SchemeInteger(16));
+
+        PowerMockito.mockStatic(SchemeCallStack.class);
+        PowerMockito.when(SchemeCallStack.instance()).thenReturn(mockedCallStack);
+
+        SchemeObject result = this.builtinDivide.call(3);
+
+        assertThat("Result must not be null!", result, notNullValue());
+        assertThat("Result does not match expected type!", result.typeOf(SchemeFraction.class), equalTo(true));
+        assertThat("Result does not match expected value!", result, equalTo(new SchemeFraction(1, 2)));
     }
 }

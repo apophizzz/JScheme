@@ -48,4 +48,87 @@ public class SchemeFractionTest {
         assertThat("Result does not match expected type!", result.typeOf(SchemeFraction.class), equalTo(true));
         assertThat("Result does not match expected value!", result, equalTo(new SchemeFraction(5, 6)));
     }
+
+    @Test
+    public void testMultiplySchemeFractionByInteger() {
+        SchemeNumber result = this.schemeFraction.multiply(new SchemeInteger(2));
+
+        assertThat("Result must not be null!", result, notNullValue());
+        assertThat("Result does not match expected type!", result.typeOf(SchemeFraction.class), equalTo(true));
+        assertThat("Result does not match expected value!", result, equalTo(new SchemeFraction(2, 3)));
+    }
+
+    @Test
+    public void testMultiplySchemeFractionByFloat() {
+        SchemeNumber result = this.schemeFraction.multiply(new SchemeFloat(3.0f));
+
+        assertThat("Result must not be null!", result, notNullValue());
+        assertThat("Result does not match expected type!", result.typeOf(SchemeFloat.class), equalTo(true));
+        assertThat("Result does not match expected value!", result, equalTo(new SchemeFloat(1.0f)));
+    }
+
+    @Test
+    public void testMultiplySchemeFractionByFraction() {
+        SchemeNumber result = this.schemeFraction.multiply(new SchemeFraction(1, 3));
+
+        assertThat("Result must not be null!", result, notNullValue());
+        assertThat("Result does not match expected type!", result.typeOf(SchemeFraction.class), equalTo(true));
+        assertThat("Result does not match expected value!", result, equalTo(new SchemeFraction(1, 9)));
+    }
+
+    @Test
+    public void testDivideSchemeSchemeFractionByInteger() {
+        SchemeNumber result = this.schemeFraction.divide(new SchemeInteger(2));
+
+        assertThat("Result must not be null!", result, notNullValue());
+        assertThat("Result does not match expected type!", result.typeOf(SchemeFraction.class), equalTo(true));
+        assertThat("Result does not match expected value!", result, equalTo(new SchemeFraction(1, 6)));
+    }
+
+    @Test
+    public void testDivideSchemeFractionByFloat() {
+        SchemeNumber result = this.schemeFraction.divide(new SchemeFloat(0.5f));
+
+        assertThat("Result must not be null!", result, notNullValue());
+        assertThat("Result does not match expected type!", result.typeOf(SchemeFloat.class), equalTo(true));
+        assertThat("Result does not match expected value!", result, equalTo(new SchemeFloat(new Fraction(2, 3)
+                .floatValue())));
+    }
+
+    @Test
+    public void testDivideSchemeFractionByFraction() {
+        SchemeNumber result = this.schemeFraction.divide(new SchemeFraction(3, 4));
+
+        assertThat("Result must not be null!", result, notNullValue());
+        assertThat("Result does not match expected type!", result.typeOf(SchemeFraction.class), equalTo(true));
+        assertThat("Result does not match expected value!", result, equalTo(new SchemeFraction(4, 9)));
+    }
+
+    @Test
+    public void testSubtractIntegerFromSchemeFraction() {
+        SchemeNumber result = this.schemeFraction.subtract(new SchemeInteger(1));
+
+        assertThat("Result must not be null!", result, notNullValue());
+        assertThat("Result does not match expected type!", result.typeOf(SchemeFraction.class), equalTo(true));
+        assertThat("Result does not match expected value!", result, equalTo(new SchemeFraction(-2, 3)));
+    }
+
+    @Test
+    public void testSubtractFloatFromSchemeFraction() {
+        SchemeNumber result = this.schemeFraction.subtract(new SchemeFloat(new Fraction(2, 3).floatValue()));
+
+        assertThat("Result must not be null!", result, notNullValue());
+        assertThat("Result does not match expected type!", result.typeOf(SchemeFloat.class), equalTo(true));
+        assertThat("Result does not match expected value!", result, equalTo(new SchemeFloat(new Fraction(-1, 3)
+                .floatValue())));
+    }
+
+    @Test
+    public void testSubtractFractionFromSchemeFraction() {
+        SchemeNumber result = this.schemeFraction.subtract(new SchemeFraction(2, 3));
+
+        assertThat("Result must not be null!", result, notNullValue());
+        assertThat("Result does not match expected type!", result.typeOf(SchemeFraction.class), equalTo(true));
+        assertThat("Result does not match expected value!", result, equalTo(new SchemeFraction(-1, 3)));
+    }
 }

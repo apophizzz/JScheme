@@ -21,7 +21,6 @@ public final class SchemeBuiltinTimes extends SchemeBuiltinFunction {
 
     @Override
     public SchemeNumber call(int argCount) throws SchemeError {
-        //        int product = 1;
         SchemeNumber product = new SchemeInteger(1);
 
         // pop argCount arguments from stack and multiply them

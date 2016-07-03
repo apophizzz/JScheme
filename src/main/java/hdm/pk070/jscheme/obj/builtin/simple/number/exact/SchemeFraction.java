@@ -19,6 +19,16 @@ public final class SchemeFraction extends SchemeExactNumber {
         this.fraction = fraction;
     }
 
+    public SchemeFraction(SchemeNumber schemeNumber) {
+        if (schemeNumber.typeOf(SchemeInteger.class)) {
+            this.fraction = new Fraction(((SchemeInteger) schemeNumber).getValue());
+        } else if (schemeNumber.typeOf(SchemeFloat.class)) {
+            this.fraction = new Fraction(((SchemeFloat) schemeNumber).getValue());
+        } else {
+            throw new IllegalArgumentException("Invalid argument type!");
+        }
+    }
+
     public SchemeFraction(int numerator) {
         this(numerator, 1);
     }
@@ -27,12 +37,14 @@ public final class SchemeFraction extends SchemeExactNumber {
         this.fraction = new Fraction(numerator);
     }
 
-    public SchemeFraction(double numerator, double denominator) {
-        this.fraction = new Fraction(numerator, denominator, 100);
-    }
 
     public SchemeFraction(double numerator, int denominator) {
         this.fraction = new Fraction(numerator, denominator);
+    }
+
+
+    public SchemeFloat toSchemeFloat() {
+        return new SchemeFloat(this.getValue().floatValue());
     }
 
     @Override
@@ -47,12 +59,33 @@ public final class SchemeFraction extends SchemeExactNumber {
 
     @Override
     public SchemeNumber subtract(SchemeNumber number) {
-        return null;
+        if (number.typeOf(SchemeInteger.class)) {
+            return new SchemeFraction(this.getValue().subtract(((SchemeInteger) number).getValue()));
+        } else if (number.typeOf(SchemeFloat.class)) {
+            return this.toSchemeFloat().subtract(number);
+        }
+        return new SchemeFraction(this.getValue().subtract(((SchemeFraction) number).getValue()));
     }
 
     @Override
     public SchemeNumber multiply(SchemeNumber number) {
-        return null;
+        if (number.typeOf(SchemeInteger.class)) {
+            return new SchemeFraction(this.getValue().multiply(((SchemeInteger) number).getValue()));
+        } else if (number.typeOf(SchemeFloat.class)) {
+            return this.toSchemeFloat().multiply(number);
+        }
+        return new SchemeFraction(this.getValue().multiply(((SchemeFraction) number).getValue()));
+    }
+
+    @Override
+    public SchemeNumber divide(SchemeNumber number) {
+        if (number.typeOf(SchemeInteger.class)) {
+            return new SchemeFraction(this.getValue().divide(((SchemeInteger) number).getValue()));
+        } else if (number.typeOf(SchemeFraction.class)) {
+            return new SchemeFraction(this.getValue().divide(((SchemeFraction) number).getValue()));
+        } else {
+            return this.toSchemeFloat().divide(number);
+        }
     }
 
     @Override

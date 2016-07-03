@@ -6,6 +6,11 @@ import hdm.pk070.jscheme.obj.builtin.simple.number.SchemeNumber;
 import hdm.pk070.jscheme.obj.builtin.simple.number.exact.SchemeFraction;
 import hdm.pk070.jscheme.obj.builtin.simple.number.exact.SchemeInteger;
 import hdm.pk070.jscheme.stack.SchemeCallStack;
+import org.apache.commons.math3.fraction.Fraction;
+
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Created by patrick on 24.06.16.
@@ -23,7 +28,7 @@ public final class SchemeBuiltinDivide extends SchemeBuiltinFunction {
 
     @Override
     public SchemeNumber call(int argCount) throws SchemeError {
-        int quotient;
+        SchemeNumber divisionResult;
 
         // Division expects at least one argument
         if (argCount == 0) {
@@ -37,11 +42,31 @@ public final class SchemeBuiltinDivide extends SchemeBuiltinFunction {
                 throw new SchemeError(String.format("(/): contract violation [expected: number, given: %s]",
                         poppedArg));
             }
+            return new SchemeInteger(1).divide(((SchemeNumber) poppedArg));
+        } else {
 
-            return new SchemeFraction(1, ((SchemeInteger) poppedArg).getValue());
+            List<SchemeNumber> argList = new LinkedList<>();
+            for (int i = 0; i < argCount; i++) {
+                SchemeObject poppedArg = SchemeCallStack.instance().pop();
+                if (!poppedArg.subtypeOf(SchemeNumber.class)) {
+                    throw new SchemeError(String.format("(/): contract violation [expected: number, given: %s]",
+                            SchemeCallStack.instance().pop()));
+                }
+                argList.add((SchemeNumber) poppedArg);
+            }
+
+            // Invert order of arguments from stack since we need them in reverse order for division
+            Collections.reverse(argList);
+
+            // Start with first argument
+            divisionResult = argList.remove(0);
+
+            for (SchemeNumber currentArg : argList) {
+                divisionResult = divisionResult.divide(currentArg);
+            }
+
+            return divisionResult;
         }
-
-        return null;
     }
 
     @Override

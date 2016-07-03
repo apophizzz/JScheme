@@ -68,7 +68,6 @@ public class SchemeBuiltinMinus extends SchemeBuiltinFunction {
 
             // apply the subtrahends on the minuend
             for (SchemeNumber schemeNumber : argsList) {
-//                difference -= ((SchemeInteger) schemeNumber).getValue();
                 difference = difference.subtract(schemeNumber);
             }
         }
