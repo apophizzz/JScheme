@@ -35,4 +35,13 @@ public class ApacheCommonsFractionLearningTest {
 
         assertThat(result.toString().replace(" ", ""), equalTo("1/4"));
     }
+
+    @Test
+    public void testCompareFractions() {
+        Fraction fraction1 = new Fraction(0);
+        Fraction fraction2 = new Fraction(1);
+
+        assertThat(fraction1.compareTo(fraction2), equalTo(-1));
+        assertThat(fraction2.compareTo(fraction1), equalTo(1));
+    }
 }
