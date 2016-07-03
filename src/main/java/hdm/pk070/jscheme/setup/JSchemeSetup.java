@@ -1,10 +1,7 @@
 package hdm.pk070.jscheme.setup;
 
 import hdm.pk070.jscheme.error.SchemeError;
-import hdm.pk070.jscheme.obj.builtin.function.SchemeBuiltinDivide;
-import hdm.pk070.jscheme.obj.builtin.function.SchemeBuiltinMinus;
-import hdm.pk070.jscheme.obj.builtin.function.SchemeBuiltinPlus;
-import hdm.pk070.jscheme.obj.builtin.function.SchemeBuiltinTimes;
+import hdm.pk070.jscheme.obj.builtin.function.*;
 import hdm.pk070.jscheme.obj.builtin.simple.SchemeSymbol;
 import hdm.pk070.jscheme.table.environment.GlobalEnvironment;
 import hdm.pk070.jscheme.table.environment.entry.EnvironmentEntry;
@@ -26,6 +23,8 @@ public final class JSchemeSetup {
                 ("*")), SchemeBuiltinTimes.create()));
         GlobalEnvironment.getInstance().add(EnvironmentEntry.create(SchemeSymbolTable.getInstance().add(new SchemeSymbol
                 ("/")), SchemeBuiltinDivide.create()));
+        GlobalEnvironment.getInstance().add(EnvironmentEntry.create(SchemeSymbolTable.getInstance().add(new SchemeSymbol
+                ("abs")), SchemeBuiltinAbsolute.create()));
     }
 
 
