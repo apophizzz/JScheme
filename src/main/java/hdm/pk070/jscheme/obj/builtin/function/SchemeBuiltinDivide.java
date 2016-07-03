@@ -50,7 +50,7 @@ public final class SchemeBuiltinDivide extends SchemeBuiltinFunction {
                 SchemeObject poppedArg = SchemeCallStack.instance().pop();
                 if (!poppedArg.subtypeOf(SchemeNumber.class)) {
                     throw new SchemeError(String.format("(/): contract violation [expected: number, given: %s]",
-                            SchemeCallStack.instance().pop()));
+                            poppedArg));
                 }
                 argList.add((SchemeNumber) poppedArg);
             }
