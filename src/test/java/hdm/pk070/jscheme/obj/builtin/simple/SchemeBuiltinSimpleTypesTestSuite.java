@@ -11,7 +11,8 @@ import org.junit.runners.Suite;
  */
 
 @RunWith(Suite.class)
-@Suite.SuiteClasses({SchemeObjectTest.class, SchemeIntegerTest.class, SchemeFractionTest.class, SchemeFloatTest
+@Suite.SuiteClasses({SchemeObjectTest.class, SchemeIntegerTest.class, SchemeFractionTest.class,
+        ApacheCommonsFractionLearningTest.class, SchemeFloatTest
         .class, SchemeConsTest.class})
 public class SchemeBuiltinSimpleTypesTestSuite {
 }
