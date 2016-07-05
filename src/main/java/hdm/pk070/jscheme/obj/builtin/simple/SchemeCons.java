@@ -16,12 +16,7 @@ public final class SchemeCons extends SchemeObject {
         Objects.requireNonNull(car);
         Objects.requireNonNull(cdr);
         this.car = car;
-
-        if (cdr.getClass().equals(SchemeCons.class) || cdr.getClass().equals(SchemeNil.class)) {
-            this.cdr = cdr;
-        } else {
-            throw new IllegalArgumentException("Cdr of SchemeCons must be SchemeCons or SchemeNil!");
-        }
+        this.cdr = cdr;
     }
 
     @Override
@@ -41,7 +36,7 @@ public final class SchemeCons extends SchemeObject {
     @Override
     public String toString() {
         StringBuilder stringBuffer = new StringBuilder();
-        stringBuffer.append("(");
+        stringBuffer.append("'(");
         stringBuffer.append(prettyPrintList(this));
         return stringBuffer.toString();
     }

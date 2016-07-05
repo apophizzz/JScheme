@@ -25,6 +25,8 @@ public final class JSchemeSetup {
                 ("/")), SchemeBuiltinDivide.create()));
         GlobalEnvironment.getInstance().add(EnvironmentEntry.create(SchemeSymbolTable.getInstance().add(new SchemeSymbol
                 ("abs")), SchemeBuiltinAbsolute.create()));
+        GlobalEnvironment.getInstance().add(EnvironmentEntry.create(SchemeSymbolTable.getInstance().add(new SchemeSymbol
+                ("cons")), SchemeBuiltinCons.create()));
     }
 
 
