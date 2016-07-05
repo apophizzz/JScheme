@@ -10,6 +10,6 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({SchemeBuiltinPlusTest.class, SchemeBuiltinMinusTest.class, SchemeBuiltinTimesTest.class,
         SchemeBuiltinDivideTest.class, SchemeBuiltinAbsoluteTest.class, SchemeBuiltinConsTest.class,
-        SchemeBuiltinGetCarTest.class, SchemeBuiltinGetCdrTest.class})
+        SchemeBuiltinGetCarTest.class, SchemeBuiltinGetCdrTest.class, SchemeBuiltinIsConsTest.class})
 public class SchemeBuiltinFunctionTestSuite {
 }
