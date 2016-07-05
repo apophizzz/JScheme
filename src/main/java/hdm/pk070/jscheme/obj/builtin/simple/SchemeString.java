@@ -25,6 +25,6 @@ public final class SchemeString extends SchemeObject {
 
     @Override
     public String toString() {
-        return stringVal;
+        return "\"" + stringVal + "\"";
     }
 }

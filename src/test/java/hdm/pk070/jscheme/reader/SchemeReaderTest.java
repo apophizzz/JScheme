@@ -84,11 +84,11 @@ public class SchemeReaderTest {
 
     @Test
     public void testReadString() throws SchemeError {
-        assertStringInput("\"This is just a test\"");
-        assertStringInput("\n\"This is just a test\"");
-        assertStringInput("\t\"This is just a test\"");
-        assertStringInput("\r\"This is just a test\"");
-        assertStringInput("       \"This is just a test\"      ");
+        assertStringInput("This is just a test", "", "");
+        assertStringInput("This is just a test", "\n", "");
+        assertStringInput("This is just a test", "\t", "");
+        assertStringInput("This is just a test", "\r", "");
+        assertStringInput("This is just a test", "     ", "     ");
     }
 
 
@@ -162,8 +162,10 @@ public class SchemeReaderTest {
                 .valueOf(numberInput.trim())));
     }
 
-    private void assertStringInput(String stringInput) throws SchemeError {
-        schemeReader.switchInputStream(new ByteArrayInputStream(stringInput.getBytes()));
+    private void assertStringInput(String stringInput, String leadingWhitespace, String subsequentWhitespace) throws
+            SchemeError {
+        schemeReader.switchInputStream(new ByteArrayInputStream((leadingWhitespace + "\"" + stringInput + "\"" +
+                subsequentWhitespace).getBytes()));
         SchemeObject schemeObject = schemeReader.read();
 
         assertThat(schemeObject, notNullValue());

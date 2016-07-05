@@ -27,7 +27,7 @@ public class StringObjReaderTest {
 
     @Before
     public void setUp() {
-        testInput = "\"This is just a simple test\"";
+        testInput = "This is just a simple test";
         schemeCharacterReader = SchemeCharacterReader.withInputStream(createFakeInputStreamFrom(testInput));
         stringObjReader = StringObjReader.createInstance(schemeCharacterReader);
     }
@@ -37,7 +37,7 @@ public class StringObjReaderTest {
         SchemeString stringObj = stringObjReader.read();
 
         assertThat("stringObj must not be null!", stringObj, notNullValue());
-        assertThat("stringObj value does not match expected value!", stringObj.getValue(), equalTo(testInput));
+        assertThat("stringObj value does not match expected value!", stringObj, equalTo(new SchemeString(testInput)));
     }
 
     @Test
@@ -47,7 +47,7 @@ public class StringObjReaderTest {
                 testBuffer));
 
         assertThat("testBuffer must not be empty!", testBuffer.length() > 0, equalTo(true));
-        assertThat(testBuffer.toString(), equalTo(testInput.substring(0, 1)));
+        assertThat(testBuffer.toString(), equalTo("\""));
     }
 
     @Test
@@ -76,7 +76,7 @@ public class StringObjReaderTest {
     }
 
     private ByteArrayInputStream createFakeInputStreamFrom(String testString) {
-        return new ByteArrayInputStream(testString.getBytes());
+        return new ByteArrayInputStream(("\"" + testString + "\"").getBytes());
     }
 
     private void prepareStringObjReader(String fakeInput) {

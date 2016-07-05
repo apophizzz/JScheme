@@ -26,8 +26,8 @@ public class StringObjReader extends SchemeObjReader {
     public SchemeString read() throws SchemeError {
         StringBuffer stringBuffer = new StringBuffer();
 
-        // add '"' to string buffer (beginning of string)
-        appendNextChar(stringBuffer);
+        // skip leading '"' (beginning of string)
+        schemeCharacterReader.skipNext();
 
         while ((!schemeCharacterReader.nextCharIs('"')) && (!schemeCharacterReader
                 .nextCharIs((char) SchemeConstants.EOF))) {
@@ -39,8 +39,8 @@ public class StringObjReader extends SchemeObjReader {
         }
 
         if (!schemeCharacterReader.nextCharIs((char) SchemeConstants.EOF)) {
-            // add '"' to buffer (end of string)
-            appendNextChar(stringBuffer);
+            // skipp subsequent '"' (end of string)
+            schemeCharacterReader.skipNext();
         } else {
             throw new SchemeError("Unexpected EOF: String must end with '\"'");
         }
