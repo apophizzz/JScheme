@@ -27,6 +27,10 @@ public final class JSchemeSetup {
                 ("abs")), SchemeBuiltinAbsolute.create()));
         GlobalEnvironment.getInstance().add(EnvironmentEntry.create(SchemeSymbolTable.getInstance().add(new SchemeSymbol
                 ("cons")), SchemeBuiltinCons.create()));
+        GlobalEnvironment.getInstance().add(EnvironmentEntry.create(SchemeSymbolTable.getInstance().add(new SchemeSymbol
+                ("car")), SchemeBuiltinGetCar.create()));
+        GlobalEnvironment.getInstance().add(EnvironmentEntry.create(SchemeSymbolTable.getInstance().add(new SchemeSymbol
+                ("cdr")), SchemeBuiltinGetCdr.create()));
     }
 
 
