@@ -22,7 +22,7 @@ public final class SchemeBuiltinAbsolute extends SchemeBuiltinFunction {
     public SchemeObject call(int argCount) throws SchemeError {
         if (argCount != 1) {
             throw new SchemeError(String.format("(abs): arity mismatch, expected number of arguments does not match " +
-                    "given number [expected: at least 1, given %d]", argCount));
+                    "given number [expected: 1, given: %d]", argCount));
         } else {
             SchemeObject poppedArg = SchemeCallStack.instance().pop();
             if (!poppedArg.subtypeOf(SchemeNumber.class)) {
