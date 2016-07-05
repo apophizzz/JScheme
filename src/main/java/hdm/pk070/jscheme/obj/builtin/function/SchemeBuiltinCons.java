@@ -23,7 +23,7 @@ public final class SchemeBuiltinCons extends SchemeBuiltinFunction {
     @Override
     public SchemeObject call(int argCount) throws SchemeError {
         if (argCount != 2) {
-            throw new SchemeError(String.format(": arity mismatch, expected number of arguments does not match " +
+            throw new SchemeError(String.format("(cons): arity mismatch, expected number of arguments does not match " +
                     "given number [expected: 2, given: %d]", argCount));
         }
 
@@ -34,8 +34,4 @@ public final class SchemeBuiltinCons extends SchemeBuiltinFunction {
         return new SchemeCons(arg1, arg2);
     }
 
-    @Override
-    public String toString() {
-        return "<procedure:cons>";
-    }
 }

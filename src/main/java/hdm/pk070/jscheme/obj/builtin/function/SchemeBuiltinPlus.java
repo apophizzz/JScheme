@@ -36,9 +36,4 @@ public class SchemeBuiltinPlus extends SchemeBuiltinFunction {
         }
         return result;
     }
-
-    @Override
-    public String toString() {
-        return "<procedure:+>";
-    }
 }

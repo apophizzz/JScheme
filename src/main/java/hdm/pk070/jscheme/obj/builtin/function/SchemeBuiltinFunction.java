@@ -25,4 +25,9 @@ public abstract class SchemeBuiltinFunction extends SchemeObject {
     public Object getValue() {
         throw new UnsupportedOperationException();
     }
+
+    @Override
+    public String toString() {
+        return "<procedure:" + this.getInternalName() + ">";
+    }
 }

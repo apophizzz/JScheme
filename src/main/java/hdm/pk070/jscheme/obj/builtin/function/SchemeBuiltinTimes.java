@@ -36,9 +36,4 @@ public final class SchemeBuiltinTimes extends SchemeBuiltinFunction {
         }
         return product;
     }
-
-    @Override
-    public String toString() {
-        return "<procedure:*>";
-    }
 }

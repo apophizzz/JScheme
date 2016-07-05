@@ -33,9 +33,4 @@ public final class SchemeBuiltinAbsolute extends SchemeBuiltinFunction {
             }
         }
     }
-
-    @Override
-    public String toString() {
-        return "<procedure:abs>";
-    }
 }

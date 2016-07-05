@@ -74,8 +74,4 @@ public class SchemeBuiltinMinus extends SchemeBuiltinFunction {
         return difference;
     }
 
-    @Override
-    public String toString() {
-        return "<procedure:->";
-    }
 }
