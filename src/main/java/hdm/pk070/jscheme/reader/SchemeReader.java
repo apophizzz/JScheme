@@ -66,7 +66,7 @@ public class SchemeReader {
         schemeCharacterReader.shutdown();
     }
 
-    public void clearReaderOnError() {
+    public void clear() {
         schemeCharacterReader.clearInputStream();
     }
 

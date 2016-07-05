@@ -30,7 +30,7 @@ public class JScheme {
                 SchemeObject evalResult = SchemeEval.getInstance().eval(readResult, GlobalEnvironment.getInstance());
                 System.out.println("=> " + evalResult);
             } catch (SchemeError schemeError) {
-                schemeReader.clearReaderOnError();
+                schemeReader.clear();
                 System.out.println(ANSI_RED + "### ERROR: " + schemeError.getMessage() + ANSI_RESET);
             }
         }
