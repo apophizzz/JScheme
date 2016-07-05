@@ -1,9 +1,7 @@
 package hdm.pk070.jscheme.obj.builtin;
 
-import hdm.pk070.jscheme.obj.builtin.function.SchemeBuiltinDivideTest;
-import hdm.pk070.jscheme.obj.builtin.function.SchemeBuiltinMinusTest;
-import hdm.pk070.jscheme.obj.builtin.function.SchemeBuiltinPlusTest;
-import hdm.pk070.jscheme.obj.builtin.function.SchemeBuiltinTimesTest;
+import hdm.pk070.jscheme.obj.builtin.function.*;
+import hdm.pk070.jscheme.obj.builtin.simple.SchemeBuiltinSimpleTypesTestSuite;
 import hdm.pk070.jscheme.obj.builtin.simple.SchemeConsTest;
 import hdm.pk070.jscheme.obj.builtin.simple.SchemeObjectTest;
 import hdm.pk070.jscheme.obj.builtin.simple.number.exact.SchemeFractionTest;
@@ -18,8 +16,6 @@ import org.junit.runners.Suite;
  */
 
 @RunWith(Suite.class)
-@Suite.SuiteClasses({SchemeObjectTest.class, SchemeIntegerTest.class, SchemeFloatTest.class, SchemeConsTest.class,
-        SchemeFractionTest.class, SchemeBuiltinPlusTest.class, SchemeBuiltinMinusTest.class,
-        SchemeBuiltinTimesTest.class, SchemeBuiltinDivideTest.class})
+@Suite.SuiteClasses({SchemeBuiltinSimpleTypesTestSuite.class, SchemeBuiltinFunctionTestSuite.class})
 public class SchemeBuiltinTestSuite {
 }
