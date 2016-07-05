@@ -6,6 +6,7 @@ import hdm.pk070.jscheme.obj.builtin.simple.SchemeCons;
 import hdm.pk070.jscheme.obj.builtin.simple.SchemeNil;
 import hdm.pk070.jscheme.obj.builtin.simple.SchemeSymbol;
 import hdm.pk070.jscheme.obj.builtin.function.SchemeBuiltinFunction;
+import hdm.pk070.jscheme.obj.builtin.syntax.SchemeBuiltinSyntax;
 import hdm.pk070.jscheme.reader.SchemeReader;
 import hdm.pk070.jscheme.stack.SchemeCallStack;
 import hdm.pk070.jscheme.table.environment.Environment;
@@ -47,13 +48,24 @@ class ListEvaluator extends AbstractEvaluator<SchemeCons> {
         // Extract arg list (cdr of expression)
         SchemeObject argumentList = expression.getCdr();
 
+        // Check if function slot is built-in function
         if (evaluatedFunctionSlot.subtypeOf(SchemeBuiltinFunction.class)) {
             return evaluateBuiltinFunction(((SchemeBuiltinFunction) evaluatedFunctionSlot), argumentList, environment);
+
+            // Check if function slot is built-in syntax (e.g. define)
+        } else if (evaluatedFunctionSlot.subtypeOf(SchemeBuiltinSyntax.class)) {
+            return evaluateBuiltinSyntax(((SchemeBuiltinSyntax) evaluatedFunctionSlot), argumentList, environment);
         }
 
         // Reaching this section means we don't have a valid function slot -> throw SchemeError
         throw new SchemeError(String.format("application: not a procedure [expected: procedure that can be applied to" +
                 " arguments, given: %s]", functionSlot));
+    }
+
+    private SchemeObject evaluateBuiltinSyntax(SchemeBuiltinSyntax builtinSyntax, SchemeObject argumentList,
+                                               Environment<SchemeSymbol, EnvironmentEntry> environment) {
+
+        return builtinSyntax.apply(argumentList, environment);
     }
 
     /**
