@@ -12,4 +12,4 @@ This is my implementation of a Scheme interpreter which is also my examination p
 ```$ git clone https://github.com/PaddySmalls/JScheme```
 
 ### 2) Start JScheme:
-```$ mvn exec:java```
+```$ mvn compile exec:java```
