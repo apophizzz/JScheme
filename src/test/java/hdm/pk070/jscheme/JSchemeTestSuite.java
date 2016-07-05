@@ -17,5 +17,5 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({SchemeObjectTestSuite.class, SchemeReaderTestSuite.class, SchemeEvalTestSuite.class,
         SchemeEnvironmentTestSuite.class, SchemeTableTestSuite.class})
-public class SchemeTestSuite {
+public class JSchemeTestSuite {
 }
