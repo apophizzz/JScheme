@@ -19,6 +19,7 @@ public class SchemeConsTest {
     private SchemeCons cons1;
     private SchemeCons cons2;
     private SchemeCons cons3;
+    private SchemeCons degeneratedCons;
 
     @Before
     public void setUp() {
@@ -27,6 +28,8 @@ public class SchemeConsTest {
         cons2 = new SchemeCons(new SchemeInteger(42), new SchemeCons(new SchemeInteger(43), new SchemeNil
                 ()));
         cons3 = new SchemeCons(new SchemeString("foobar"), new SchemeNil());
+        degeneratedCons = new SchemeCons(new SchemeString("foobar"), new SchemeCons(new SchemeString("fizzbuzz"), new
+                SchemeInteger(42)));
     }
 
     @Test
@@ -55,5 +58,20 @@ public class SchemeConsTest {
         assertThat(containsCons1, equalTo(true));
         assertThat(containsCons3, equalTo(true));
         assertThat(hashSet.add(cons2), equalTo(false));
+    }
+
+    @Test
+    public void testPrintRegularCons() {
+        String regularConsString = cons1.toString();
+
+        assertThat("List does not have expected formatting!", regularConsString, equalTo("'(42 43)"));
+    }
+
+    @Test
+    public void testPrintDegeneratedCons() {
+        String degeneratedConsString = degeneratedCons.toString();
+
+        assertThat("List does not have expected formatting!", degeneratedConsString, equalTo("\'(\"foobar\" " +
+                "\"fizzbuzz\" . 42)"));
     }
 }

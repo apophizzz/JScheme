@@ -38,18 +38,22 @@ public final class SchemeCons extends SchemeObject {
         StringBuilder stringBuffer = new StringBuilder();
         stringBuffer.append("'(");
         stringBuffer.append(prettyPrintList(this));
+        stringBuffer.append(")");
         return stringBuffer.toString();
     }
 
     private String prettyPrintList(SchemeObject schemeObject) {
         String listPrint = "";
-        listPrint += ((SchemeCons) schemeObject).getCar().toString();
-        if (((SchemeCons) schemeObject).getCdr().typeOf(SchemeNil.class)) {
-            listPrint += ")";
+
+        if (schemeObject.typeOf(SchemeCons.class)) {
+            listPrint += ((SchemeCons) schemeObject).getCar().toString();
+            listPrint += " ";
+            return (listPrint + prettyPrintList(((SchemeCons) schemeObject).getCdr())).trim();
+        } else if (schemeObject.typeOf(SchemeNil.class)) {
             return listPrint;
+        } else {
+            return (listPrint + ". " + schemeObject.toString());
         }
-        listPrint += " ";
-        return listPrint + prettyPrintList(((SchemeCons) schemeObject).getCdr());
     }
 
     @Override
