@@ -63,7 +63,8 @@ class ListEvaluator extends AbstractEvaluator<SchemeCons> {
     }
 
     private SchemeObject evaluateBuiltinSyntax(SchemeBuiltinSyntax builtinSyntax, SchemeObject argumentList,
-                                               Environment<SchemeSymbol, EnvironmentEntry> environment) {
+                                               Environment<SchemeSymbol, EnvironmentEntry> environment) throws
+            SchemeError {
 
         return builtinSyntax.apply(argumentList, environment);
     }
