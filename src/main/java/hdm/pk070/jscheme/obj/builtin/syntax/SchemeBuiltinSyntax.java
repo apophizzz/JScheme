@@ -1,5 +1,6 @@
 package hdm.pk070.jscheme.obj.builtin.syntax;
 
+import hdm.pk070.jscheme.error.SchemeError;
 import hdm.pk070.jscheme.obj.SchemeObject;
 import hdm.pk070.jscheme.obj.builtin.simple.SchemeSymbol;
 import hdm.pk070.jscheme.table.environment.Environment;
@@ -10,7 +11,22 @@ import hdm.pk070.jscheme.table.environment.entry.EnvironmentEntry;
  */
 public abstract class SchemeBuiltinSyntax extends SchemeObject {
 
-    public abstract SchemeObject apply(SchemeObject argumentList, Environment<SchemeSymbol, EnvironmentEntry>
-            environment);
+    private String internalName;
 
+    protected SchemeBuiltinSyntax(String internalName) {
+        this.internalName = internalName;
+    }
+
+    public abstract SchemeObject apply(SchemeObject argumentList, Environment<SchemeSymbol, EnvironmentEntry>
+            environment) throws SchemeError;
+
+    @Override
+    public Object getValue() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public String toString() {
+        return "<syntax:" + this.internalName + ">";
+    }
 }
