@@ -1,7 +1,11 @@
 package hdm.pk070.jscheme.setup;
 
 import hdm.pk070.jscheme.error.SchemeError;
-import hdm.pk070.jscheme.obj.builtin.function.*;
+import hdm.pk070.jscheme.obj.builtin.function.list.SchemeBuiltinCons;
+import hdm.pk070.jscheme.obj.builtin.function.list.SchemeBuiltinGetCar;
+import hdm.pk070.jscheme.obj.builtin.function.list.SchemeBuiltinGetCdr;
+import hdm.pk070.jscheme.obj.builtin.function.list.SchemeBuiltinIsCons;
+import hdm.pk070.jscheme.obj.builtin.function.math.*;
 import hdm.pk070.jscheme.obj.builtin.simple.SchemeSymbol;
 import hdm.pk070.jscheme.table.environment.GlobalEnvironment;
 import hdm.pk070.jscheme.table.environment.entry.EnvironmentEntry;

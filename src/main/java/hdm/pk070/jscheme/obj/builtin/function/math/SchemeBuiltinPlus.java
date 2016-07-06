@@ -1,7 +1,8 @@
-package hdm.pk070.jscheme.obj.builtin.function;
+package hdm.pk070.jscheme.obj.builtin.function.math;
 
 import hdm.pk070.jscheme.error.SchemeError;
 import hdm.pk070.jscheme.obj.SchemeObject;
+import hdm.pk070.jscheme.obj.builtin.function.SchemeBuiltinFunction;
 import hdm.pk070.jscheme.obj.builtin.simple.number.SchemeNumber;
 import hdm.pk070.jscheme.obj.builtin.simple.number.exact.SchemeInteger;
 import hdm.pk070.jscheme.stack.SchemeCallStack;
