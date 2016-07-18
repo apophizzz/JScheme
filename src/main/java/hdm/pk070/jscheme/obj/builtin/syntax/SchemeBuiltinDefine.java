@@ -7,6 +7,7 @@ import hdm.pk070.jscheme.obj.builtin.simple.SchemeCons;
 import hdm.pk070.jscheme.obj.builtin.simple.SchemeNil;
 import hdm.pk070.jscheme.obj.builtin.simple.SchemeSymbol;
 import hdm.pk070.jscheme.obj.builtin.simple.SchemeVoid;
+import hdm.pk070.jscheme.obj.custom.SchemeCustomUserFunction;
 import hdm.pk070.jscheme.table.environment.Environment;
 import hdm.pk070.jscheme.table.environment.entry.EnvironmentEntry;
 
@@ -33,7 +34,8 @@ public final class SchemeBuiltinDefine extends SchemeBuiltinSyntax {
         Objects.requireNonNull(environment);
 
         // (define abc 123)
-        // (define (add1to x) (+ 1 x))
+        // (define abc (+ 42 1))
+        // (define (add1 x) (+ 1 x))
         // Argument list must be a cons
         if (!argumentList.typeOf(SchemeCons.class) || !((SchemeCons) argumentList).getCdr().typeOf(SchemeCons.class)) {
             throw new SchemeError("(define): bad syntax (requires exactly 2 arguments)");
@@ -50,7 +52,7 @@ public final class SchemeBuiltinDefine extends SchemeBuiltinSyntax {
             return this.createVariableBinding(((SchemeSymbol) argListCar), argListCdr, environment);
         } else if (argListCar.typeOf(SchemeCons.class)) {
             // We have a function binding
-            return null;
+            return this.createFunctionBinding((SchemeCons) argListCar, argListCdr, environment);
         }
 
         throw new SchemeError("(define): bad syntax");
@@ -69,4 +71,31 @@ public final class SchemeBuiltinDefine extends SchemeBuiltinSyntax {
                 environment)));
         return new SchemeVoid();
     }
+
+    private SchemeVoid createFunctionBinding(SchemeCons functionSignature, SchemeCons functionBodyList,
+                                             Environment<SchemeSymbol,
+                                                     EnvironmentEntry> environment) throws SchemeError {
+
+        if (!functionSignature.getCar().typeOf(SchemeSymbol.class)) {
+            throw new SchemeError(String.format("(define): bad syntax (not an identifier for procedure name: %s)",
+                    functionSignature.getCar()));
+        }
+
+        // Extract function name from signature after having ensured that the signature's CAR is actually a symbol
+        SchemeSymbol functionName = (SchemeSymbol) functionSignature.getCar();
+
+        // Extract param list from signature
+        SchemeObject functionParamList = functionSignature.getCdr();
+
+        // Create user-defined function
+        SchemeCustomUserFunction customUserFunction = SchemeCustomUserFunction.create(functionName.getValue(),
+                functionParamList, functionBodyList, environment);
+
+        // Add new function to environment
+        environment.add(EnvironmentEntry.create(functionName, customUserFunction));
+
+        return new SchemeVoid();
+    }
+
+
 }

@@ -4,6 +4,7 @@ import hdm.pk070.jscheme.error.SchemeError;
 import hdm.pk070.jscheme.eval.SchemeEval;
 import hdm.pk070.jscheme.obj.builtin.simple.*;
 import hdm.pk070.jscheme.obj.builtin.simple.number.exact.SchemeInteger;
+import hdm.pk070.jscheme.obj.custom.SchemeCustomUserFunction;
 import hdm.pk070.jscheme.table.environment.Environment;
 import hdm.pk070.jscheme.table.environment.LocalEnvironment;
 import hdm.pk070.jscheme.table.environment.entry.EnvironmentEntry;
@@ -11,17 +12,17 @@ import hdm.pk070.jscheme.util.ReflectionCallArg;
 import hdm.pk070.jscheme.util.ReflectionUtils;
 import hdm.pk070.jscheme.util.exception.ReflectionMethodCallException;
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
-import static org.junit.Assert.*;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.notNullValue;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
 import static org.mockito.Mockito.*;
 
 /**
@@ -30,7 +31,7 @@ import static org.mockito.Mockito.*;
 
 @RunWith(PowerMockRunner.class)
 @PowerMockIgnore("javax.management.*")
-@PrepareForTest({SchemeEval.class})
+@PrepareForTest({SchemeEval.class, EnvironmentEntry.class, SchemeCustomUserFunction.class})
 public class SchemeBuiltinDefineTest {
 
     private SchemeBuiltinSyntax builtinDefine;
@@ -113,12 +114,68 @@ public class SchemeBuiltinDefineTest {
 
         // Call method
         SchemeVoid result = (SchemeVoid) ReflectionUtils.invokeMethod(this.builtinDefine, "createVariableBinding", new
-                ReflectionCallArg(SchemeSymbol
-                .class, variableName), new ReflectionCallArg(SchemeCons.class, valueCons), new ReflectionCallArg
-                (Environment.class, environmentMock));
+                ReflectionCallArg(SchemeSymbol.class, variableName), new ReflectionCallArg(SchemeCons.class,
+                valueCons), new ReflectionCallArg(Environment.class, environmentMock));
 
         // Verify outcome
         verify(environmentMock, times(1)).add(EnvironmentEntry.create(variableName, new SchemeInteger(42)));
         assertThat(result, notNullValue());
+    }
+
+    @Test
+    public void testCreateFunctionBindingThrowsErrorOnInvalidName() {
+        SchemeCons invalidSignature = new SchemeCons(new SchemeString("Invalid name"), new SchemeCons(new
+                SchemeSymbol("x"), new SchemeNil()));
+
+        try {
+            ReflectionUtils.invokeMethod(this.builtinDefine, "createFunctionBinding", new ReflectionCallArg(SchemeCons
+                    .class, invalidSignature), new ReflectionCallArg(SchemeCons.class, null), new ReflectionCallArg
+                    (Environment.class, null));
+        } catch (ReflectionMethodCallException e) {
+            assertThat(e.getCause().getCause().getClass(), equalTo(SchemeError.class));
+            assertThat(e.getCause().getCause().getMessage(), equalTo("(define): bad syntax (not an identifier for " +
+                    "procedure name: \"Invalid name\")"));
+        }
+    }
+
+
+    @Test
+    public void testCreateFunctionBindingReturnsVoidOnValidName() throws SchemeError {
+        Environment environmentMock = mock(Environment.class);
+        when(environmentMock.add(null)).thenReturn(null);
+
+        PowerMockito.mockStatic(EnvironmentEntry.class);
+        PowerMockito.when(EnvironmentEntry.create(any(), any(SchemeCustomUserFunction.class))).thenReturn(null);
+
+        SchemeCons functionSignatureDummy = new SchemeCons(new SchemeSymbol("functionName"), new SchemeSymbol("x"));
+
+        Object result = ReflectionUtils.invokeMethod(this.builtinDefine, "createFunctionBinding", new
+                ReflectionCallArg(SchemeCons.class, functionSignatureDummy), new ReflectionCallArg(SchemeCons.class,
+                null), new ReflectionCallArg(Environment.class, environmentMock));
+
+        assertThat("Result must not be null!", result, notNullValue());
+        assertThat("Result does not match expected type!", result.getClass(), equalTo(SchemeVoid.class));
+    }
+
+    @Test
+    public void testCreateFunctionBindingInvokesEnvironmentCorrectly() throws SchemeError {
+        Environment environmentMock = mock(Environment.class);
+
+        SchemeCons functionSignatureDummy = new SchemeCons(new SchemeSymbol("myFunc"), new SchemeSymbol("x"));
+
+        SchemeCustomUserFunction customUserFunctionDummy = SchemeCustomUserFunction.create(((SchemeSymbol)
+                functionSignatureDummy.getCar()).getValue(), functionSignatureDummy
+                .getCdr(), null, environmentMock);
+        PowerMockito.mockStatic(SchemeCustomUserFunction.class);
+        PowerMockito.when(SchemeCustomUserFunction.create(((SchemeSymbol) functionSignatureDummy.getCar()).getValue(),
+                functionSignatureDummy.getCdr(), null, environmentMock))
+                .thenReturn(customUserFunctionDummy);
+
+        ReflectionUtils.invokeMethod(this.builtinDefine, "createFunctionBinding", new
+                ReflectionCallArg(functionSignatureDummy), new ReflectionCallArg(SchemeCons.class,
+                null), new ReflectionCallArg(Environment.class, environmentMock));
+
+        verify(environmentMock, times(1)).add(EnvironmentEntry.create((SchemeSymbol) functionSignatureDummy.getCar(),
+                customUserFunctionDummy));
     }
 }
