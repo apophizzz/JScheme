@@ -16,6 +16,12 @@ public class ReflectionCallArg {
         this.value = value;
     }
 
+    public ReflectionCallArg(Object value) {
+        Objects.requireNonNull(value);
+        this.value = value;
+        this.clazz = value.getClass();
+    }
+
     public Class getClazz() {
         return clazz;
     }
