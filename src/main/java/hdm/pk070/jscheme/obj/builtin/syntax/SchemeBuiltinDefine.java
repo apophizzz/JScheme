@@ -81,6 +81,10 @@ public final class SchemeBuiltinDefine extends SchemeBuiltinSyntax {
                     functionSignature.getCar()));
         }
 
+        if (functionBodyList.getCar().equals(new SchemeNil())) {
+            throw new SchemeError("(define): missing procedure expression");
+        }
+
         // Extract function name from signature after having ensured that the signature's CAR is actually a symbol
         SchemeSymbol functionName = (SchemeSymbol) functionSignature.getCar();
 

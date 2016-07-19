@@ -36,12 +36,25 @@ public class SchemeBuiltinDefineTest {
 
     private SchemeBuiltinSyntax builtinDefine;
     private Environment dummyEnvironment;
+    private Environment environmentMock;
+
+    private SchemeCons validFunctionSignature;
+    private SchemeCons invalidFunctionSignature;
+    private SchemeCons validFunctionBody;
+    private SchemeCons invalidFunctionBody;
 
 
     @Before
     public void setUp() {
         this.builtinDefine = SchemeBuiltinDefine.create();
         this.dummyEnvironment = LocalEnvironment.withSize(42);
+        this.environmentMock = mock(Environment.class);
+
+        this.invalidFunctionSignature = new SchemeCons(new SchemeString("Invalid name"), new SchemeCons(new
+                SchemeSymbol("x"), new SchemeNil()));
+        this.validFunctionSignature = new SchemeCons(new SchemeSymbol("functionName"), new SchemeSymbol("x"));
+        this.invalidFunctionBody = new SchemeCons(new SchemeNil(), new SchemeNil());
+        this.validFunctionBody = new SchemeCons(new SchemeInteger(42), new SchemeNil());
     }
 
     @Test(expected = NullPointerException.class)
@@ -89,7 +102,7 @@ public class SchemeBuiltinDefineTest {
             ReflectionUtils.invokeMethod(this.builtinDefine, "createVariableBinding", new ReflectionCallArg(SchemeSymbol
                     .class, variableName), new ReflectionCallArg(SchemeCons.class, invalidValueList), new
                     ReflectionCallArg(Environment.class, dummyEnvironment));
-            fail("Expected exception has not been thrown!");
+            failOnMissingException();
         } catch (ReflectionMethodCallException e) {
 
             // Verify outcome by climbing up the exception chain
@@ -104,33 +117,31 @@ public class SchemeBuiltinDefineTest {
         // Prepare invocation arguments
         SchemeSymbol variableName = new SchemeSymbol("foobar");
         SchemeCons valueCons = new SchemeCons(new SchemeInteger(42), new SchemeNil());
-        Environment environmentMock = mock(Environment.class);
 
         // Prepare SchemeEval mock
         SchemeEval schemeEvalMock = mock(SchemeEval.class);
-        when(schemeEvalMock.eval(new SchemeInteger(42), environmentMock)).thenReturn(new SchemeInteger(42));
+        when(schemeEvalMock.eval(new SchemeInteger(42), this.environmentMock)).thenReturn(new SchemeInteger(42));
         PowerMockito.mockStatic(SchemeEval.class);
         PowerMockito.when(SchemeEval.getInstance()).thenReturn(schemeEvalMock);
 
         // Call method
         SchemeVoid result = (SchemeVoid) ReflectionUtils.invokeMethod(this.builtinDefine, "createVariableBinding", new
                 ReflectionCallArg(SchemeSymbol.class, variableName), new ReflectionCallArg(SchemeCons.class,
-                valueCons), new ReflectionCallArg(Environment.class, environmentMock));
+                valueCons), new ReflectionCallArg(Environment.class, this.environmentMock));
 
         // Verify outcome
-        verify(environmentMock, times(1)).add(EnvironmentEntry.create(variableName, new SchemeInteger(42)));
+        verify(this.environmentMock, times(1)).add(EnvironmentEntry.create(variableName, new SchemeInteger(42)));
         assertThat(result, notNullValue());
     }
 
     @Test
     public void testCreateFunctionBindingThrowsErrorOnInvalidName() {
-        SchemeCons invalidSignature = new SchemeCons(new SchemeString("Invalid name"), new SchemeCons(new
-                SchemeSymbol("x"), new SchemeNil()));
-
         try {
             ReflectionUtils.invokeMethod(this.builtinDefine, "createFunctionBinding", new ReflectionCallArg(SchemeCons
-                    .class, invalidSignature), new ReflectionCallArg(SchemeCons.class, null), new ReflectionCallArg
+                    .class, this.invalidFunctionSignature), new ReflectionCallArg(SchemeCons.class, null), new
+                    ReflectionCallArg
                     (Environment.class, null));
+            failOnMissingException();
         } catch (ReflectionMethodCallException e) {
             assertThat(e.getCause().getCause().getClass(), equalTo(SchemeError.class));
             assertThat(e.getCause().getCause().getMessage(), equalTo("(define): bad syntax (not an identifier for " +
@@ -141,17 +152,14 @@ public class SchemeBuiltinDefineTest {
 
     @Test
     public void testCreateFunctionBindingReturnsVoidOnValidName() throws SchemeError {
-        Environment environmentMock = mock(Environment.class);
-        when(environmentMock.add(null)).thenReturn(null);
+        when(this.environmentMock.add(null)).thenReturn(null);
 
         PowerMockito.mockStatic(EnvironmentEntry.class);
         PowerMockito.when(EnvironmentEntry.create(any(), any(SchemeCustomUserFunction.class))).thenReturn(null);
 
-        SchemeCons functionSignatureDummy = new SchemeCons(new SchemeSymbol("functionName"), new SchemeSymbol("x"));
-
         Object result = ReflectionUtils.invokeMethod(this.builtinDefine, "createFunctionBinding", new
-                ReflectionCallArg(SchemeCons.class, functionSignatureDummy), new ReflectionCallArg(SchemeCons.class,
-                null), new ReflectionCallArg(Environment.class, environmentMock));
+                ReflectionCallArg(SchemeCons.class, this.validFunctionSignature), new ReflectionCallArg(SchemeCons
+                .class, this.validFunctionBody), new ReflectionCallArg(Environment.class, this.environmentMock));
 
         assertThat("Result must not be null!", result, notNullValue());
         assertThat("Result does not match expected type!", result.getClass(), equalTo(SchemeVoid.class));
@@ -159,23 +167,36 @@ public class SchemeBuiltinDefineTest {
 
     @Test
     public void testCreateFunctionBindingInvokesEnvironmentCorrectly() throws SchemeError {
-        Environment environmentMock = mock(Environment.class);
-
-        SchemeCons functionSignatureDummy = new SchemeCons(new SchemeSymbol("myFunc"), new SchemeSymbol("x"));
-
         SchemeCustomUserFunction customUserFunctionDummy = SchemeCustomUserFunction.create(((SchemeSymbol)
-                functionSignatureDummy.getCar()).getValue(), functionSignatureDummy
-                .getCdr(), null, environmentMock);
+                        this.validFunctionSignature.getCar()).getValue(), this.validFunctionSignature.getCdr(), null,
+                this.environmentMock);
         PowerMockito.mockStatic(SchemeCustomUserFunction.class);
-        PowerMockito.when(SchemeCustomUserFunction.create(((SchemeSymbol) functionSignatureDummy.getCar()).getValue(),
-                functionSignatureDummy.getCdr(), null, environmentMock))
+        PowerMockito.when(SchemeCustomUserFunction.create(((SchemeSymbol) this.validFunctionSignature.getCar())
+                .getValue(), this.validFunctionSignature.getCdr(), null, this.environmentMock))
                 .thenReturn(customUserFunctionDummy);
 
         ReflectionUtils.invokeMethod(this.builtinDefine, "createFunctionBinding", new
-                ReflectionCallArg(functionSignatureDummy), new ReflectionCallArg(SchemeCons.class,
-                null), new ReflectionCallArg(Environment.class, environmentMock));
+                ReflectionCallArg(this.validFunctionSignature), new ReflectionCallArg(SchemeCons.class,
+                this.validFunctionBody), new ReflectionCallArg(Environment.class, this.environmentMock));
 
-        verify(environmentMock, times(1)).add(EnvironmentEntry.create((SchemeSymbol) functionSignatureDummy.getCar(),
-                customUserFunctionDummy));
+        verify(this.environmentMock, times(1)).add(EnvironmentEntry.create((SchemeSymbol) this.validFunctionSignature
+                .getCar(), customUserFunctionDummy));
+    }
+
+    @Test
+    public void testThrowErrorOnEmptyFunctionBodyList() {
+        try {
+            ReflectionUtils.invokeMethod(this.builtinDefine, "createFunctionBinding", new ReflectionCallArg
+                    (this.validFunctionSignature), new ReflectionCallArg(this.invalidFunctionBody), new
+                    ReflectionCallArg(Environment.class, this.dummyEnvironment));
+            failOnMissingException();
+        } catch (ReflectionMethodCallException e) {
+            assertThat(e.getCause().getCause().getClass(), equalTo(SchemeError.class));
+            assertThat(e.getCause().getCause().getMessage(), equalTo("(define): missing procedure expression"));
+        }
+    }
+
+    private void failOnMissingException() {
+        fail("Expected exception has not been thrown!");
     }
 }
