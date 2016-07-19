@@ -10,7 +10,11 @@ public class SchemeVoid extends SchemeObject {
 
     @Override
     public Object getValue() {
-        //        throw new UnsupportedOperationException();
+        return "";
+    }
+
+    @Override
+    public String toString() {
         return "";
     }
 }

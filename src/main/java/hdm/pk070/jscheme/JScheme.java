@@ -3,6 +3,7 @@ package hdm.pk070.jscheme;
 import hdm.pk070.jscheme.error.SchemeError;
 import hdm.pk070.jscheme.eval.SchemeEval;
 import hdm.pk070.jscheme.obj.SchemeObject;
+import hdm.pk070.jscheme.print.SchemePrint;
 import hdm.pk070.jscheme.reader.SchemeReader;
 import hdm.pk070.jscheme.setup.JSchemeSetup;
 import hdm.pk070.jscheme.table.environment.GlobalEnvironment;
@@ -14,24 +15,20 @@ import hdm.pk070.jscheme.table.environment.GlobalEnvironment;
  */
 public class JScheme {
 
-    private static final String ANSI_RED = "\u001B[31m";
-    private static final String ANSI_RESET = "\u001B[0m";
-
-
     public static void main(String[] args) throws SchemeError {
 
         JSchemeSetup.init();
 
         SchemeReader schemeReader = SchemeReader.withStdin();
         for (; ; ) {
-            System.out.print(">> ");
+            SchemePrint.showPrompt();
             try {
                 SchemeObject readResult = schemeReader.read();
                 SchemeObject evalResult = SchemeEval.getInstance().eval(readResult, GlobalEnvironment.getInstance());
-                System.out.println("=> " + evalResult);
+                SchemePrint.printEvalResult(evalResult);
             } catch (SchemeError schemeError) {
                 schemeReader.clear();
-                System.out.println(ANSI_RED + "### ERROR: " + schemeError.getMessage() + ANSI_RESET);
+                SchemePrint.showError(schemeError);
             }
         }
     }
