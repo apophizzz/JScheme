@@ -93,7 +93,7 @@ public final class SchemeBuiltinDefine extends SchemeBuiltinSyntax {
 
         // Create user-defined function
         SchemeCustomUserFunction customUserFunction = SchemeCustomUserFunction.create(functionName.getValue(),
-                functionParamList, functionBodyList, environment);
+                functionParamList, functionBodyList, environment).prepare();
 
         // Add new function to environment
         environment.add(EnvironmentEntry.create(functionName, customUserFunction));

@@ -168,11 +168,11 @@ public class SchemeBuiltinDefineTest {
     @Test
     public void testCreateFunctionBindingInvokesEnvironmentCorrectly() throws SchemeError {
         SchemeCustomUserFunction customUserFunctionDummy = SchemeCustomUserFunction.create(((SchemeSymbol)
-                        this.validFunctionSignature.getCar()).getValue(), this.validFunctionSignature.getCdr(), null,
-                this.environmentMock);
+                this.validFunctionSignature.getCar()).getValue(), this.validFunctionSignature.getCdr(), this
+                .validFunctionBody, this.environmentMock);
         PowerMockito.mockStatic(SchemeCustomUserFunction.class);
         PowerMockito.when(SchemeCustomUserFunction.create(((SchemeSymbol) this.validFunctionSignature.getCar())
-                .getValue(), this.validFunctionSignature.getCdr(), null, this.environmentMock))
+                .getValue(), this.validFunctionSignature.getCdr(), this.validFunctionBody, this.environmentMock))
                 .thenReturn(customUserFunctionDummy);
 
         ReflectionUtils.invokeMethod(this.builtinDefine, "createFunctionBinding", new
