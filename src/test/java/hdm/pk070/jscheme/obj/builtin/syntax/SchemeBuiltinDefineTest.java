@@ -196,6 +196,23 @@ public class SchemeBuiltinDefineTest {
         }
     }
 
+    @Test
+    public void testThrowErrorOnLastPartOfBodyListIsNoExpression() {
+        SchemeCons bodyWithoutExpression = new SchemeCons(new SchemeCons(new SchemeSymbol("define"), new SchemeCons
+                (new SchemeSymbol("x"), new SchemeCons(new SchemeInteger(42), new SchemeNil()))), new SchemeNil());
+
+        try {
+            ReflectionUtils.invokeMethod(this.builtinDefine, "createFunctionBinding", new ReflectionCallArg
+                    (this.validFunctionSignature), new ReflectionCallArg(bodyWithoutExpression), new
+                    ReflectionCallArg(Environment.class, this.dummyEnvironment));
+            failOnMissingException();
+        } catch (ReflectionMethodCallException e) {
+            assertThat(e.getCause().getCause().getClass(), equalTo(SchemeError.class));
+            assertThat(e.getCause().getCause().getMessage(), equalTo("(define): no expression after sequence of " +
+                    "internal definitions"));
+        }
+    }
+
     private void failOnMissingException() {
         fail("Expected exception has not been thrown!");
     }

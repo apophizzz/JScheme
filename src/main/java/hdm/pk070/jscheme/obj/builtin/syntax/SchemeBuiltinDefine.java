@@ -85,6 +85,8 @@ public final class SchemeBuiltinDefine extends SchemeBuiltinSyntax {
             throw new SchemeError("(define): missing procedure expression");
         }
 
+        ensureLastBodyListIsExpression(functionBodyList);
+
         // Extract function name from signature after having ensured that the signature's CAR is actually a symbol
         SchemeSymbol functionName = (SchemeSymbol) functionSignature.getCar();
 
@@ -99,6 +101,28 @@ public final class SchemeBuiltinDefine extends SchemeBuiltinSyntax {
         environment.add(EnvironmentEntry.create(functionName, customUserFunction));
 
         return new SchemeVoid();
+    }
+
+    /**
+     * Inspect function body and make sure that the last partial body list is an expression. If it's a define
+     * statement instead, a {@link SchemeError} is thrown.
+     *
+     * @param functionBody
+     *         The function body that shall be checked
+     * @throws SchemeError
+     */
+    private void ensureLastBodyListIsExpression(SchemeCons functionBody) throws SchemeError {
+        SchemeObject lastBodyList = functionBody;
+        while (lastBodyList.typeOf(SchemeCons.class) && !((SchemeCons) lastBodyList).getCdr().typeOf(SchemeNil.class)) {
+            lastBodyList = ((SchemeCons) lastBodyList).getCdr();
+        }
+        if (lastBodyList.typeOf(SchemeCons.class) && ((SchemeCons) lastBodyList).getCar().typeOf(SchemeCons.class)) {
+            SchemeCons lastList = (SchemeCons) ((SchemeCons) lastBodyList).getCar();
+            if (lastList.getCar().equals(new SchemeSymbol("define"))) {
+                throw new SchemeError("(define): no expression after sequence of " +
+                        "internal definitions");
+            }
+        }
     }
 
 
