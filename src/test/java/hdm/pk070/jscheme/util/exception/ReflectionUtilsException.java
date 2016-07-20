@@ -9,6 +9,10 @@ import hdm.pk070.jscheme.util.ReflectionUtils;
  */
 public class ReflectionUtilsException extends RuntimeException {
 
+    public ReflectionUtilsException(String message, Throwable throwable) {
+        super(message, throwable);
+    }
+
     public ReflectionUtilsException(String message) {
         super(message);
     }

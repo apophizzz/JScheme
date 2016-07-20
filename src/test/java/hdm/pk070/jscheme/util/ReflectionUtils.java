@@ -3,10 +3,12 @@ package hdm.pk070.jscheme.util;
 import hdm.pk070.jscheme.util.exception.ReflectionMethodCallException;
 import hdm.pk070.jscheme.util.exception.ReflectionUtilsException;
 
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author patrick.kleindienst
@@ -135,6 +137,33 @@ public class ReflectionUtils {
             e.printStackTrace();
         }
         return result;
+    }
+
+    private static Constructor getConstructorWithArgs(Class clazz, ReflectionCallArg... callArgs) {
+        Constructor targetConstructor;
+        List<Class> collectedTypes = Arrays.asList(callArgs).stream().map(element -> element.getClazz())
+                .collect(Collectors.toList());
+
+        try {
+            targetConstructor = clazz.getDeclaredConstructor(collectedTypes.toArray(new Class[collectedTypes.size()]));
+        } catch (NoSuchMethodException e) {
+            throw new ReflectionUtilsException("Unable to find matching constructor!", e);
+        }
+        return targetConstructor;
+    }
+
+
+    public static Object createInstance(Class clazz, ReflectionCallArg... callArgs) {
+        Object instance;
+        Constructor targetConstructor = getConstructorWithArgs(clazz, callArgs);
+        List<Object> collectedArgs = Arrays.asList(callArgs).stream().map(element -> element.getValue())
+                .collect(Collectors.toList());
+        try {
+            instance = targetConstructor.newInstance(collectedArgs.toArray());
+        } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
+            throw new ReflectionUtilsException("Something went wrong while invoking a constructor!", e);
+        }
+        return instance;
     }
 
 }
