@@ -16,4 +16,6 @@ public abstract class SchemeNumber extends SchemeObject {
     public abstract SchemeNumber divide(SchemeNumber number);
 
     public abstract SchemeNumber absolute();
+
+    public abstract Number getValue();
 }
