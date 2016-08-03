@@ -52,7 +52,8 @@ public class SchemeBuiltinDefineTest {
 
         this.invalidFunctionSignature = new SchemeCons(new SchemeString("Invalid name"), new SchemeCons(new
                 SchemeSymbol("x"), new SchemeNil()));
-        this.validFunctionSignature = new SchemeCons(new SchemeSymbol("functionName"), new SchemeSymbol("x"));
+        this.validFunctionSignature = new SchemeCons(new SchemeSymbol("functionName"), new SchemeCons(new
+                SchemeSymbol("x"), new SchemeNil()));
         this.invalidFunctionBody = new SchemeCons(new SchemeNil(), new SchemeNil());
         this.validFunctionBody = new SchemeCons(new SchemeInteger(42), new SchemeNil());
     }

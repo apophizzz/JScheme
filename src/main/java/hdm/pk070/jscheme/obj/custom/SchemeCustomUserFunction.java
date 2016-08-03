@@ -1,5 +1,6 @@
 package hdm.pk070.jscheme.obj.custom;
 
+import hdm.pk070.jscheme.error.SchemeError;
 import hdm.pk070.jscheme.obj.SchemeFunction;
 import hdm.pk070.jscheme.obj.SchemeObject;
 import hdm.pk070.jscheme.obj.builtin.simple.SchemeCons;
@@ -8,6 +9,8 @@ import hdm.pk070.jscheme.obj.builtin.simple.SchemeSymbol;
 import hdm.pk070.jscheme.table.environment.Environment;
 
 /**
+ * This class represents a custom Scheme function defined by the user.
+ *
  * @author patrick.kleindienst
  */
 public final class SchemeCustomUserFunction extends SchemeFunction {
@@ -17,6 +20,7 @@ public final class SchemeCustomUserFunction extends SchemeFunction {
     private final SchemeCons functionBodyList;
     private final Environment homeEnvironment;
     private int localVariableCount;
+    private int paramCount;
 
     public static SchemeCustomUserFunction create(String internalName, SchemeObject parameterList, SchemeCons
             functionBodyList, Environment homeEnvironment) {
@@ -31,13 +35,62 @@ public final class SchemeCustomUserFunction extends SchemeFunction {
         this.homeEnvironment = homeEnvironment;
     }
 
-    public SchemeCustomUserFunction prepare() {
+    /**
+     * Triggering the function to finish its own setup.
+     *
+     * @return The calling function object
+     * @throws SchemeError
+     *         re-thrown from {@link #countParams()}
+     */
+    public SchemeCustomUserFunction prepare() throws SchemeError {
         this.localVariableCount = countDefinitions();
+        this.paramCount = countParams();
         return this;
     }
 
     /**
-     * Iterate through the function's body list and count all present define statements.
+     * Counting the number of parameters specified in the function's parameter list.
+     *
+     * @return The parameter count
+     * @throws SchemeError
+     *         re-thrown from {@link #isValidParam(SchemeObject)}
+     */
+    private int countParams() throws SchemeError {
+        int count = 0;
+        SchemeObject paramList = this.parameterList;
+        while (!paramList.typeOf(SchemeNil.class)) {
+            if (isValidParam(paramList)) {
+                if (paramList.typeOf(SchemeSymbol.class)) {
+                    return count + 1;
+                }
+            }
+            count++;
+            paramList = ((SchemeCons) paramList).getCdr();
+        }
+        return count;
+    }
+
+    /**
+     * Check if a single parameter of the list is valid. A parameter is considered valid if it's a cons cell and it's
+     * car is symbol.
+     *
+     * @param parameterList
+     *         The parameter to examine
+     * @return True if valid
+     * @throws SchemeError
+     *         if parameter is invalid
+     */
+    private boolean isValidParam(SchemeObject parameterList) throws SchemeError {
+        if (parameterList.typeOf(SchemeCons.class) && ((SchemeCons) parameterList).getCar()
+                .typeOf(SchemeSymbol.class)) {
+            return true;
+        }
+        throw new SchemeError(String.format("(define): not an identifier for procedure argument in: %s",
+                ((SchemeCons) parameterList).getCar()));
+    }
+
+    /**
+     * Iterate over the function's body list and count all present define statements.
      *
      * @return The number of define statements found in the body list
      */
@@ -68,14 +121,8 @@ public final class SchemeCustomUserFunction extends SchemeFunction {
      * @return True if partialBody is a define statement, false otherwise
      */
     private boolean isDefinition(SchemeObject partialBody) {
-        if (partialBody.typeOf(SchemeCons.class)) {
-            if (((SchemeCons) partialBody).getCar().equals(new SchemeSymbol("define"))) {
-                return true;
-            } else {
-                return false;
-            }
-        }
-        return false;
+        return partialBody.typeOf(SchemeCons.class) && ((SchemeCons) partialBody).getCar().equals(new
+                SchemeSymbol("define"));
     }
 
 }
