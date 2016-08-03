@@ -13,14 +13,14 @@ import hdm.pk070.jscheme.table.environment.Environment;
  *
  * @author patrick.kleindienst
  */
-public final class SchemeCustomUserFunction extends SchemeFunction {
+public class SchemeCustomUserFunction extends SchemeFunction {
 
 
     private final SchemeObject parameterList;
     private final SchemeCons functionBodyList;
     private final Environment homeEnvironment;
-    private int localVariableCount;
-    private int paramCount;
+    private Integer localVariableCount;
+    private Integer paramCount;
 
     public static SchemeCustomUserFunction create(String internalName, SchemeObject parameterList, SchemeCons
             functionBodyList, Environment homeEnvironment) {
@@ -33,6 +33,8 @@ public final class SchemeCustomUserFunction extends SchemeFunction {
         this.parameterList = parameterList;
         this.functionBodyList = functionBodyList;
         this.homeEnvironment = homeEnvironment;
+        this.localVariableCount = 0;
+        this.paramCount = 0;
     }
 
     /**
@@ -125,4 +127,23 @@ public final class SchemeCustomUserFunction extends SchemeFunction {
                 SchemeSymbol("define"));
     }
 
+    public int getRequiredSlotsCount() {
+        return this.paramCount + this.localVariableCount;
+    }
+
+    public int getParamCount() {
+        return paramCount;
+    }
+
+    public Environment getHomeEnvironment() {
+        return homeEnvironment;
+    }
+
+    public SchemeObject getParameterList() {
+        return parameterList;
+    }
+
+    public SchemeCons getFunctionBodyList() {
+        return functionBodyList;
+    }
 }
