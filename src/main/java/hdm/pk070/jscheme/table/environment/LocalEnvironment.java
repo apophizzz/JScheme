@@ -15,7 +15,7 @@ import java.util.Optional;
  *
  * @author patrick.kleindienst
  */
-public final class LocalEnvironment extends FixedSizeTable<SchemeSymbol, EnvironmentEntry> implements
+public class LocalEnvironment extends FixedSizeTable<SchemeSymbol, EnvironmentEntry> implements
         Environment<SchemeSymbol, EnvironmentEntry> {
 
     private static final Logger LOGGER = LogManager.getLogger(LocalEnvironment.class.getName());
@@ -53,12 +53,10 @@ public final class LocalEnvironment extends FixedSizeTable<SchemeSymbol, Environ
         }
         if (!searchedEnvironmentEntry.isPresent()) {
             LOGGER.debug(String.format("Unable to find entry for key '%s' in %s hierarchy, return " +
-                    "empty Optional", schemeSymbol
-                    .toString(), this));
+                    "empty Optional", schemeSymbol.toString(), this));
         } else {
             LOGGER.debug(String.format("Found entry for key '%s' in %s hierarchy, return result",
-                    schemeSymbol
-                            .toString(), this));
+                    schemeSymbol.toString(), this));
         }
         return searchedEnvironmentEntry;
     }
