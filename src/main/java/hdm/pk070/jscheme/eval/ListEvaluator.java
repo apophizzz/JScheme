@@ -11,6 +11,7 @@ import hdm.pk070.jscheme.obj.custom.SchemeCustomUserFunction;
 import hdm.pk070.jscheme.reader.SchemeReader;
 import hdm.pk070.jscheme.stack.SchemeCallStack;
 import hdm.pk070.jscheme.table.environment.Environment;
+import hdm.pk070.jscheme.table.environment.LocalEnvironment;
 import hdm.pk070.jscheme.table.environment.entry.EnvironmentEntry;
 
 /**
@@ -58,7 +59,8 @@ class ListEvaluator extends AbstractEvaluator<SchemeCons> {
             return evaluateBuiltinSyntax(((SchemeBuiltinSyntax) evaluatedFunctionSlot), argumentList, environment);
             // Check if function slot is a user-defined function
         } else if (evaluatedFunctionSlot.typeOf(SchemeCustomUserFunction.class)) {
-
+            return evaluateCustomUserFunction(((SchemeCustomUserFunction) evaluatedFunctionSlot), argumentList,
+                    environment);
         }
 
         // Reaching this section means we don't have a valid function slot -> throw SchemeError
@@ -117,7 +119,55 @@ class ListEvaluator extends AbstractEvaluator<SchemeCons> {
      * @return
      */
     private SchemeObject evaluateCustomUserFunction(SchemeCustomUserFunction customFunction, SchemeObject
-            argumentList, Environment<SchemeSymbol, EnvironmentEntry> environment) {
-        return null;
+            argumentList, Environment<SchemeSymbol, EnvironmentEntry> environment) throws SchemeError {
+
+
+        LocalEnvironment functionBodyEvalEnvironment = LocalEnvironment.withSizeAndParent
+                (customFunction.getRequiredSlotsCount(), customFunction.getHomeEnvironment());
+
+        SchemeObject functionCallArgumentList = argumentList;
+        SchemeObject functionParameterList = customFunction.getParameterList();
+
+        int argumentCount = 0;
+
+        // As long as end of param list is not reached ...
+        while (functionParameterList.typeOf(SchemeCons.class)) {
+            // If we have another parameter, but there's no matching argument -> throw SchemeError
+            if (!functionCallArgumentList.typeOf(SchemeCons.class)) {
+                throw new SchemeError(String.format("(eval): arity mismatch, expected number of " +
+                        "arguments does not match the given number [expected: %d, given: %d]", customFunction
+                        .getParamCount(), argumentCount));
+            }
+
+            SchemeObject unevaluatedArgument = ((SchemeCons) functionCallArgumentList).getCar();
+            SchemeObject currentParameter = ((SchemeCons) functionParameterList).getCar();
+
+            // Evaluate the current Argument inside the outer environment
+            SchemeObject evaluatedArgument = SchemeEval.getInstance().eval(unevaluatedArgument, environment);
+
+            functionBodyEvalEnvironment.add(EnvironmentEntry.create(((SchemeSymbol) currentParameter),
+                    evaluatedArgument));
+
+            argumentCount++;
+            functionParameterList = ((SchemeCons) functionParameterList).getCdr();
+            functionCallArgumentList = ((SchemeCons) functionCallArgumentList).getCdr();
+        }
+
+        if (!functionCallArgumentList.typeOf(SchemeNil.class)) {
+            throw new SchemeError(String.format("(eval): arity mismatch, expected number of " +
+                            "arguments does not match the given number [expected: %d, more given!]",
+                    customFunction.getParamCount()));
+        }
+
+        SchemeObject bodyList = customFunction.getFunctionBodyList();
+        SchemeObject lastValue = null;
+
+        while (!bodyList.typeOf(SchemeNil.class)) {
+            SchemeObject nextBodyPart = ((SchemeCons) bodyList).getCar();
+            lastValue = SchemeEval.getInstance().eval(nextBodyPart, functionBodyEvalEnvironment);
+            bodyList = ((SchemeCons) bodyList).getCdr();
+        }
+
+        return lastValue;
     }
 }
