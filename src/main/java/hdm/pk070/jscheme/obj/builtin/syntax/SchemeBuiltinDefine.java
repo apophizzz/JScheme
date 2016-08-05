@@ -112,16 +112,18 @@ public final class SchemeBuiltinDefine extends SchemeBuiltinSyntax {
      * @throws SchemeError
      */
     private void ensureLastBodyListIsExpression(SchemeCons functionBody) throws SchemeError {
-        SchemeObject lastBodyList = functionBody;
-        while (lastBodyList.typeOf(SchemeCons.class) && !((SchemeCons) lastBodyList).getCdr().typeOf(SchemeNil.class)) {
-            lastBodyList = ((SchemeCons) lastBodyList).getCdr();
+        SchemeObject restBodyLists = functionBody;
+
+        while (restBodyLists.typeOf(SchemeCons.class) && !((SchemeCons) restBodyLists).getCdr().typeOf(SchemeNil
+                .class)) {
+            restBodyLists = ((SchemeCons) restBodyLists).getCdr();
         }
-        if (lastBodyList.typeOf(SchemeCons.class) && ((SchemeCons) lastBodyList).getCar().typeOf(SchemeCons.class)) {
-            SchemeCons lastList = (SchemeCons) ((SchemeCons) lastBodyList).getCar();
-            if (lastList.getCar().equals(new SchemeSymbol("define"))) {
-                throw new SchemeError("(define): no expression after sequence of " +
-                        "internal definitions");
-            }
+
+        SchemeObject lastBodyList = ((SchemeCons) restBodyLists).getCar();
+        if (lastBodyList.typeOf(SchemeCons.class) && ((SchemeCons) lastBodyList).getCar().equals(new SchemeSymbol
+                ("define"))) {
+            throw new SchemeError("(define): no expression after sequence of " +
+                    "internal definitions");
         }
     }
 
