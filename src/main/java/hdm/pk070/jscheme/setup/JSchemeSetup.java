@@ -9,6 +9,7 @@ import hdm.pk070.jscheme.obj.builtin.function.math.*;
 import hdm.pk070.jscheme.obj.builtin.simple.SchemeSymbol;
 import hdm.pk070.jscheme.obj.builtin.syntax.SchemeBuiltinDefine;
 import hdm.pk070.jscheme.obj.builtin.syntax.SchemeBuiltinIf;
+import hdm.pk070.jscheme.obj.builtin.syntax.SchemeBuiltinLambda;
 import hdm.pk070.jscheme.table.environment.GlobalEnvironment;
 import hdm.pk070.jscheme.table.environment.entry.EnvironmentEntry;
 import hdm.pk070.jscheme.table.symbolTable.SchemeSymbolTable;
@@ -48,6 +49,8 @@ public final class JSchemeSetup {
                 SchemeSymbol("define")), SchemeBuiltinDefine.create()));
         GlobalEnvironment.getInstance().add(EnvironmentEntry.create(SchemeSymbolTable.getInstance().add(new
                 SchemeSymbol("if")), SchemeBuiltinIf.create()));
+        GlobalEnvironment.getInstance().add(EnvironmentEntry.create(SchemeSymbolTable.getInstance().add(new
+                SchemeSymbol("lambda")), SchemeBuiltinLambda.create()));
     }
 
 
