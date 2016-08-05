@@ -8,6 +8,6 @@ import org.junit.runners.Suite;
  */
 
 @RunWith(Suite.class)
-@Suite.SuiteClasses({SchemeBuiltinDefineTest.class, SchemeBuiltinIfTest.class})
+@Suite.SuiteClasses({SchemeBuiltinDefineTest.class, SchemeBuiltinIfTest.class, SchemeBuiltinLambdaTest.class})
 public class SchemeBuiltinSyntaxTestSuite {
 }
