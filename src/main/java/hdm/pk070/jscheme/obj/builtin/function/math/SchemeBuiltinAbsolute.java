@@ -20,7 +20,7 @@ public final class SchemeBuiltinAbsolute extends SchemeBuiltinFunction {
     }
 
     @Override
-    public SchemeObject call(int argCount) throws SchemeError {
+    public SchemeNumber call(int argCount) throws SchemeError {
         if (argCount != 1) {
             throw new SchemeError(String.format("(abs): arity mismatch, expected number of arguments does not match " +
                     "given number [expected: 1, given: %d]", argCount));
