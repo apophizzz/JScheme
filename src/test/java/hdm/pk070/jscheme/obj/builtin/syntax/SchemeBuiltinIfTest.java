@@ -154,6 +154,22 @@ public class SchemeBuiltinIfTest {
     }
 
     @Test
+    public void testApplyEvaluatesFalseExpressionOnNull() throws SchemeError {
+        SchemeCons expression = new SchemeCons(new SchemeNil(), new SchemeCons(new SchemeString("wrong result")
+                , new SchemeCons(new SchemeInteger(42), new SchemeNil())));
+        SchemeEval schemeEvalMock = mock(SchemeEval.class);
+        when(schemeEvalMock.eval(new SchemeNil(), dummyEnvironment)).thenReturn(new SchemeNil());
+
+        PowerMockito.mockStatic(SchemeEval.class);
+        PowerMockito.when(SchemeEval.getInstance()).thenReturn(schemeEvalMock);
+
+        this.schemeBuiltinIf.apply(expression, dummyEnvironment);
+
+        verify(schemeEvalMock).eval(new SchemeNil(), dummyEnvironment);
+        verify(schemeEvalMock).eval(new SchemeInteger(42), dummyEnvironment);
+    }
+
+    @Test
     public void testApplyEvaluatesTrueExpressionOnSchemeTrue() throws SchemeError {
         SchemeCons expression = new SchemeCons(new SchemeTrue(), new SchemeCons(new SchemeInteger(42)
                 , new SchemeCons(new SchemeString("wrong result"), new SchemeNil())));
