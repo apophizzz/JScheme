@@ -1,5 +1,6 @@
 package hdm.pk070.jscheme.obj.builtin.function;
 
+import hdm.pk070.jscheme.obj.builtin.function.base.SchemeBuiltinEqTest;
 import hdm.pk070.jscheme.obj.builtin.function.list.SchemeBuiltinConsTest;
 import hdm.pk070.jscheme.obj.builtin.function.list.SchemeBuiltinGetCarTest;
 import hdm.pk070.jscheme.obj.builtin.function.list.SchemeBuiltinGetCdrTest;
@@ -15,6 +16,7 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({SchemeBuiltinPlusTest.class, SchemeBuiltinMinusTest.class, SchemeBuiltinTimesTest.class,
         SchemeBuiltinDivideTest.class, SchemeBuiltinAbsoluteTest.class, SchemeBuiltinConsTest.class,
-        SchemeBuiltinGetCarTest.class, SchemeBuiltinGetCdrTest.class, SchemeBuiltinIsConsTest.class})
+        SchemeBuiltinGetCarTest.class, SchemeBuiltinGetCdrTest.class, SchemeBuiltinIsConsTest.class,
+        SchemeBuiltinEqTest.class})
 public class SchemeBuiltinFunctionTestSuite {
 }
