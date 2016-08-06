@@ -1,6 +1,7 @@
 package hdm.pk070.jscheme.setup;
 
 import hdm.pk070.jscheme.error.SchemeError;
+import hdm.pk070.jscheme.obj.builtin.function.base.SchemeBuiltinEq;
 import hdm.pk070.jscheme.obj.builtin.function.list.SchemeBuiltinCons;
 import hdm.pk070.jscheme.obj.builtin.function.list.SchemeBuiltinGetCar;
 import hdm.pk070.jscheme.obj.builtin.function.list.SchemeBuiltinGetCdr;
@@ -40,6 +41,8 @@ public final class JSchemeSetup {
                 ("cdr")), SchemeBuiltinGetCdr.create()));
         GlobalEnvironment.getInstance().add(EnvironmentEntry.create(SchemeSymbolTable.getInstance().add(new SchemeSymbol
                 ("cons?")), SchemeBuiltinIsCons.create()));
+        GlobalEnvironment.getInstance().add(EnvironmentEntry.create(SchemeSymbolTable.getInstance().add(new
+                SchemeSymbol("eq?")), SchemeBuiltinEq.create()));
 
         registerBuiltinSyntax();
     }
