@@ -19,27 +19,9 @@ public final class SchemeFraction extends SchemeExactNumber {
         this.fraction = fraction;
     }
 
-    public SchemeFraction(SchemeNumber schemeNumber) {
-        if (schemeNumber.typeOf(SchemeInteger.class)) {
-            this.fraction = new Fraction(((SchemeInteger) schemeNumber).getValue());
-        } else if (schemeNumber.typeOf(SchemeFloat.class)) {
-            this.fraction = new Fraction(((SchemeFloat) schemeNumber).getValue());
-        } else {
-            throw new IllegalArgumentException("Invalid argument type!");
-        }
-    }
 
     public SchemeFraction(int numerator) {
         this(numerator, 1);
-    }
-
-    public SchemeFraction(double numerator) {
-        this.fraction = new Fraction(numerator);
-    }
-
-
-    public SchemeFraction(double numerator, int denominator) {
-        this.fraction = new Fraction(numerator, denominator);
     }
 
 
