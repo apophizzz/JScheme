@@ -27,6 +27,8 @@ import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertThat;
 
 /**
+ * A test class for {@link SchemeReader}.
+ *
  * @author patrick.kleindienst
  */
 
@@ -145,14 +147,6 @@ public class SchemeReaderTest {
         assertThat("symbol does not have expected value!", schemeObject, equalTo(expectedSymbol));
     }
 
-    @AfterClass
-    public static void tearDown() {
-        if (Objects.nonNull(schemeReader)) {
-            schemeReader.shutdown();
-        }
-    }
-
-
     private void assertNumberInput(String numberInput) throws SchemeError {
         schemeReader.switchInputStream(new ByteArrayInputStream(numberInput.getBytes()));
         SchemeObject number = schemeReader.read();
@@ -173,6 +167,13 @@ public class SchemeReaderTest {
         assertThat(schemeObject, notNullValue());
         assertThat(schemeObject.typeOf(SchemeString.class), equalTo(true));
         assertThat(schemeObject.getValue(), equalTo(stringInput.trim()));
+    }
+
+    @AfterClass
+    public static void tearDown() {
+        if (Objects.nonNull(schemeReader)) {
+            schemeReader.shutdown();
+        }
     }
 
 }
