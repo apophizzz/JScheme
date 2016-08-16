@@ -7,6 +7,7 @@ import hdm.pk070.jscheme.obj.builtin.simple.SchemeCons;
 import hdm.pk070.jscheme.obj.builtin.simple.SchemeNil;
 import hdm.pk070.jscheme.obj.builtin.simple.SchemeSymbol;
 import hdm.pk070.jscheme.table.environment.Environment;
+import hdm.pk070.jscheme.table.environment.entry.EnvironmentEntry;
 
 /**
  * This class represents a custom Scheme function defined by the user.
@@ -18,7 +19,7 @@ public class SchemeCustomUserFunction extends SchemeFunction {
 
     private final SchemeObject parameterList;
     private final SchemeCons functionBodyList;
-    private final Environment homeEnvironment;
+    private final Environment<SchemeSymbol, EnvironmentEntry> homeEnvironment;
     private Integer localVariableCount;
     private Integer paramCount;
 
@@ -28,7 +29,7 @@ public class SchemeCustomUserFunction extends SchemeFunction {
     }
 
     private SchemeCustomUserFunction(String internalName, SchemeObject parameterList, SchemeCons functionBodyList,
-                                     Environment homeEnvironment) {
+                                     Environment<SchemeSymbol, EnvironmentEntry> homeEnvironment) {
         super(internalName);
         this.parameterList = parameterList;
         this.functionBodyList = functionBodyList;
@@ -135,7 +136,7 @@ public class SchemeCustomUserFunction extends SchemeFunction {
         return paramCount;
     }
 
-    public Environment getHomeEnvironment() {
+    public Environment<SchemeSymbol, EnvironmentEntry> getHomeEnvironment() {
         return homeEnvironment;
     }
 
