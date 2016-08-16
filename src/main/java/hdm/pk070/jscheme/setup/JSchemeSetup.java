@@ -11,6 +11,7 @@ import hdm.pk070.jscheme.obj.builtin.simple.SchemeSymbol;
 import hdm.pk070.jscheme.obj.builtin.syntax.SchemeBuiltinDefine;
 import hdm.pk070.jscheme.obj.builtin.syntax.SchemeBuiltinIf;
 import hdm.pk070.jscheme.obj.builtin.syntax.SchemeBuiltinLambda;
+import hdm.pk070.jscheme.obj.builtin.syntax.SchemeBuiltinQuote;
 import hdm.pk070.jscheme.table.environment.GlobalEnvironment;
 import hdm.pk070.jscheme.table.environment.entry.EnvironmentEntry;
 import hdm.pk070.jscheme.table.symbolTable.SchemeSymbolTable;
@@ -21,8 +22,12 @@ import hdm.pk070.jscheme.table.symbolTable.SchemeSymbolTable;
 public final class JSchemeSetup {
 
     public static void init() throws SchemeError {
+        registerBuiltinFunctions();
+        registerBuiltinSyntax();
         printWelcomeScreen();
+    }
 
+    private static void registerBuiltinFunctions() throws SchemeError {
         GlobalEnvironment.getInstance().add(EnvironmentEntry.create(SchemeSymbolTable.getInstance().add(new SchemeSymbol
                 ("+")), SchemeBuiltinPlus.create()));
         GlobalEnvironment.getInstance().add(EnvironmentEntry.create(SchemeSymbolTable.getInstance().add(new SchemeSymbol
@@ -43,8 +48,6 @@ public final class JSchemeSetup {
                 ("cons?")), SchemeBuiltinIsCons.create()));
         GlobalEnvironment.getInstance().add(EnvironmentEntry.create(SchemeSymbolTable.getInstance().add(new
                 SchemeSymbol("eq?")), SchemeBuiltinEq.create()));
-
-        registerBuiltinSyntax();
     }
 
     private static void registerBuiltinSyntax() throws SchemeError {
@@ -54,6 +57,8 @@ public final class JSchemeSetup {
                 SchemeSymbol("if")), SchemeBuiltinIf.create()));
         GlobalEnvironment.getInstance().add(EnvironmentEntry.create(SchemeSymbolTable.getInstance().add(new
                 SchemeSymbol("lambda")), SchemeBuiltinLambda.create()));
+        GlobalEnvironment.getInstance().add(EnvironmentEntry.create(SchemeSymbolTable.getInstance().add(new
+                SchemeSymbol("quote")), SchemeBuiltinQuote.create()));
     }
 
 
