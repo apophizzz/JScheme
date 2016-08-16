@@ -2,15 +2,13 @@ package hdm.pk070.jscheme.reader;
 
 import hdm.pk070.jscheme.error.SchemeError;
 import hdm.pk070.jscheme.obj.SchemeObject;
-import hdm.pk070.jscheme.reader.obj.NumberObjReader;
-import hdm.pk070.jscheme.reader.obj.ListReader;
-import hdm.pk070.jscheme.reader.obj.StringObjReader;
-import hdm.pk070.jscheme.reader.obj.SymbolObjReader;
+import hdm.pk070.jscheme.reader.obj.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.InputStream;
 import java.util.Objects;
+import java.util.Optional;
 
 
 /**
@@ -36,6 +34,13 @@ public class SchemeReader {
         return schemeReader;
     }
 
+    public static Optional<SchemeReader> withCurrentStream() {
+        if (Objects.nonNull(schemeReader)) {
+            return Optional.of(schemeReader);
+        } else {
+            return Optional.empty();
+        }
+    }
 
     private SchemeReader(InputStream in) {
         Objects.requireNonNull(in);
@@ -46,6 +51,10 @@ public class SchemeReader {
     public SchemeObject read() throws SchemeError {
 
         schemeCharacterReader.skipLeadingWhitespace();
+
+        if (schemeCharacterReader.nextCharIs('\'')) {
+            return QuotedInputReader.createInstance(schemeCharacterReader).read();
+        }
 
         if (schemeCharacterReader.nextCharIs('(')) {
             schemeCharacterReader.skipNext();
@@ -75,5 +84,7 @@ public class SchemeReader {
         schemeCharacterReader = SchemeCharacterReader.withInputStream(inputStream);
     }
 
-
+    public SchemeCharacterReader getSchemeCharacterReader() {
+        return schemeCharacterReader;
+    }
 }
