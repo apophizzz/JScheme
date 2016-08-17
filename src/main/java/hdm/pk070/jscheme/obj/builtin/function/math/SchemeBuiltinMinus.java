@@ -17,11 +17,11 @@ import java.util.List;
 public class SchemeBuiltinMinus extends SchemeBuiltinFunction {
 
     public static SchemeBuiltinMinus create() {
-        return new SchemeBuiltinMinus("-");
+        return new SchemeBuiltinMinus();
     }
 
-    private SchemeBuiltinMinus(String internalName) {
-        super(internalName);
+    private SchemeBuiltinMinus() {
+        super("-");
     }
 
     @Override

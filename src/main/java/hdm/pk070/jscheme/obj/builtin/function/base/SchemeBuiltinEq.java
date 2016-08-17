@@ -7,7 +7,6 @@ import hdm.pk070.jscheme.obj.builtin.simple.SchemeCons;
 import hdm.pk070.jscheme.obj.builtin.simple.bool.SchemeBool;
 import hdm.pk070.jscheme.obj.builtin.simple.bool.SchemeFalse;
 import hdm.pk070.jscheme.obj.builtin.simple.bool.SchemeTrue;
-import hdm.pk070.jscheme.obj.builtin.simple.number.SchemeNumber;
 import hdm.pk070.jscheme.stack.SchemeCallStack;
 
 /**

@@ -16,11 +16,11 @@ public final class SchemeBuiltinIsCons extends SchemeBuiltinFunction {
 
 
     public static SchemeBuiltinIsCons create() {
-        return new SchemeBuiltinIsCons("cons?");
+        return new SchemeBuiltinIsCons();
     }
 
-    private SchemeBuiltinIsCons(String internalName) {
-        super(internalName);
+    private SchemeBuiltinIsCons() {
+        super("cons?");
     }
 
     @Override

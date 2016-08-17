@@ -23,7 +23,7 @@ public class SchemeBuiltinLambdaTest {
     private SchemeBuiltinLambda builtinLambda;
 
     @Rule
-    public ExpectedException expectedException = ExpectedException.none();
+    public final ExpectedException expectedException = ExpectedException.none();
 
     @Before
     public void setUp() {

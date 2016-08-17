@@ -18,10 +18,6 @@ public class SchemeCharacterReaderTest {
     private SchemeCharacterReader schemeCharacterReader;
 
     private final String testInput = "\t\nfoobar";
-    private final String inputWithSpace = " Leading space character";
-    private final String inputWithTab = "\tLeading tab character";
-    private final String inputWithNewLine = "\nLeading new line character";
-    private final String inputWithCarriageReturn = "\rLeading carriage return character";
 
 
     @Test
@@ -47,9 +43,16 @@ public class SchemeCharacterReaderTest {
 
     @Test
     public void testNextNonWhitespaceChar() {
+        String inputWithSpace = " Leading space character";
         assertWhitespaceIsSkipped(inputWithSpace);
+
+        String inputWithTab = "\tLeading tab character";
         assertWhitespaceIsSkipped(inputWithTab);
+
+        String inputWithNewLine = "\nLeading new line character";
         assertWhitespaceIsSkipped(inputWithNewLine);
+
+        String inputWithCarriageReturn = "\rLeading carriage return character";
         assertWhitespaceIsSkipped(inputWithCarriageReturn);
     }
 

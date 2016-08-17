@@ -12,11 +12,11 @@ import hdm.pk070.jscheme.stack.SchemeCallStack;
 public final class SchemeBuiltinAbsolute extends SchemeBuiltinFunction {
 
     public static SchemeBuiltinAbsolute create() {
-        return new SchemeBuiltinAbsolute("abs");
+        return new SchemeBuiltinAbsolute();
     }
 
-    private SchemeBuiltinAbsolute(String internalName) {
-        super(internalName);
+    private SchemeBuiltinAbsolute() {
+        super("abs");
     }
 
     @Override

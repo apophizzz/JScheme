@@ -13,11 +13,11 @@ public final class SchemeBuiltinGetCdr extends SchemeBuiltinFunction {
 
 
     public static SchemeBuiltinGetCdr create() {
-        return new SchemeBuiltinGetCdr("cdr");
+        return new SchemeBuiltinGetCdr();
     }
 
-    private SchemeBuiltinGetCdr(String internalName) {
-        super(internalName);
+    private SchemeBuiltinGetCdr() {
+        super("cdr");
     }
 
     @Override

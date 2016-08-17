@@ -14,7 +14,7 @@ public class SchemeSymbolTable extends ResizableTable<String, SchemeSymbol> {
 
     private static SchemeSymbolTable schemeSymbolTableInstance = null;
 
-    private HashAlgProvider hashAlgProvider;
+    private final HashAlgProvider hashAlgProvider;
 
     public static SchemeSymbolTable getInstance() {
         return withHashAlgorithm(new StandardHashAlgProvider());

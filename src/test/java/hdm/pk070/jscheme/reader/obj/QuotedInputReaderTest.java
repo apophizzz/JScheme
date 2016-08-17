@@ -35,12 +35,11 @@ import static org.mockito.Mockito.*;
 public class QuotedInputReaderTest {
 
     private SchemeObjReader quotedInputReader;
-    private SchemeCharacterReader schemeCharacterReader;
 
     @Before
     public void setUp() {
         String fakeInput = "'(+ a b c)";
-        schemeCharacterReader = SchemeCharacterReader.withInputStream(new ByteArrayInputStream
+        SchemeCharacterReader schemeCharacterReader = SchemeCharacterReader.withInputStream(new ByteArrayInputStream
                 (fakeInput.getBytes()));
         this.quotedInputReader = QuotedInputReader.createInstance(schemeCharacterReader);
     }

@@ -1,6 +1,8 @@
 package hdm.pk070.jscheme.obj;
 
 /**
+ * This class acts as a base class for all types of JScheme functions.
+ *
  * @author patrick.kleindienst
  */
 public class SchemeFunction extends SchemeObject {

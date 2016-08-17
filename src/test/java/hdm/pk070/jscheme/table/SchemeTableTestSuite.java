@@ -6,7 +6,10 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
 /**
- * Created by patrick on 19.06.16.
+ * A test suite collecting all the test classes which deal with the built-in symbol table as well as the hashing
+ * algorithms in use.
+ *
+ * @author patrick.kleindienst
  */
 
 @RunWith(Suite.class)

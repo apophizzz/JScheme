@@ -13,8 +13,9 @@ import hdm.pk070.jscheme.table.environment.GlobalEnvironment;
  *
  * @author patrick.kleindienst
  */
-public class JScheme {
+class JScheme {
 
+    @SuppressWarnings("InfiniteLoopStatement")
     public static void main(String[] args) throws SchemeError {
 
         JSchemeSetup.init();

@@ -12,11 +12,11 @@ import hdm.pk070.jscheme.stack.SchemeCallStack;
 public final class SchemeBuiltinCons extends SchemeBuiltinFunction {
 
     public static SchemeBuiltinCons create() {
-        return new SchemeBuiltinCons("cons");
+        return new SchemeBuiltinCons();
     }
 
-    private SchemeBuiltinCons(String internalName) {
-        super(internalName);
+    private SchemeBuiltinCons() {
+        super("cons");
     }
 
     @Override

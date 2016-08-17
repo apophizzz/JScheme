@@ -13,7 +13,7 @@ import hdm.pk070.jscheme.table.environment.entry.EnvironmentEntry;
  */
 public abstract class SchemeBuiltinSyntax extends SchemeObject {
 
-    private String internalName;
+    private final String internalName;
 
     protected SchemeBuiltinSyntax(String internalName) {
         this.internalName = internalName;

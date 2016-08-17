@@ -13,11 +13,11 @@ import hdm.pk070.jscheme.stack.SchemeCallStack;
 public final class SchemeBuiltinTimes extends SchemeBuiltinFunction {
 
     public static SchemeBuiltinTimes create() {
-        return new SchemeBuiltinTimes("*");
+        return new SchemeBuiltinTimes();
     }
 
-    private SchemeBuiltinTimes(String internalName) {
-        super(internalName);
+    private SchemeBuiltinTimes() {
+        super("*");
     }
 
     @Override

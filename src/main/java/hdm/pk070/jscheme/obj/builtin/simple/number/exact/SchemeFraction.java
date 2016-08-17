@@ -5,11 +5,13 @@ import hdm.pk070.jscheme.obj.builtin.simple.number.floatComplex.SchemeFloat;
 import org.apache.commons.math3.fraction.Fraction;
 
 /**
- * Created by patrick on 24.06.16.
+ *
+ *
+ * @author patrick kleindienst
  */
 public final class SchemeFraction extends SchemeExactNumber {
 
-    private Fraction fraction;
+    private final Fraction fraction;
 
     public SchemeFraction(int numerator, int denominator) {
         this.fraction = new Fraction(numerator, denominator);

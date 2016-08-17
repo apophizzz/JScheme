@@ -12,17 +12,19 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Created by patrick on 24.06.16.
+ * This class provides the built-in division operation for JScheme.
+ *
+ * @author patrick.kleindienst
  */
 public final class SchemeBuiltinDivide extends SchemeBuiltinFunction {
 
 
     public static SchemeBuiltinDivide create() {
-        return new SchemeBuiltinDivide("/");
+        return new SchemeBuiltinDivide();
     }
 
-    private SchemeBuiltinDivide(String internalName) {
-        super(internalName);
+    private SchemeBuiltinDivide() {
+        super("/");
     }
 
     @Override

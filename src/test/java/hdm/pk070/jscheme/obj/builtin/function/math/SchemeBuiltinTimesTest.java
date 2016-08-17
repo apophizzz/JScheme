@@ -3,9 +3,8 @@ package hdm.pk070.jscheme.obj.builtin.function.math;
 import hdm.pk070.jscheme.error.SchemeError;
 import hdm.pk070.jscheme.obj.SchemeObject;
 import hdm.pk070.jscheme.obj.builtin.function.SchemeBuiltinFunction;
-import hdm.pk070.jscheme.obj.builtin.function.math.SchemeBuiltinTimes;
-import hdm.pk070.jscheme.obj.builtin.simple.number.exact.SchemeInteger;
 import hdm.pk070.jscheme.obj.builtin.simple.SchemeString;
+import hdm.pk070.jscheme.obj.builtin.simple.number.exact.SchemeInteger;
 import hdm.pk070.jscheme.obj.builtin.simple.number.floatComplex.SchemeFloat;
 import hdm.pk070.jscheme.stack.SchemeCallStack;
 import org.junit.Before;
@@ -17,9 +16,11 @@ import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.notNullValue;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 /**
  * @author patrick.kleindienst
@@ -31,7 +32,7 @@ import static org.hamcrest.Matchers.*;
 public class SchemeBuiltinTimesTest {
 
     private SchemeBuiltinFunction builtinTimes;
-    private OngoingStubbing currentStackOngoingStubbing;
+    private OngoingStubbing<SchemeObject> currentStackOngoingStubbing;
 
     @Before
     public void setUp() {

@@ -29,7 +29,7 @@ public class SchemeBuiltinQuoteTest {
     private Environment<SchemeSymbol, EnvironmentEntry> dummyEnvironment;
 
     @Rule
-    public ExpectedException expectedException = ExpectedException.none();
+    public final ExpectedException expectedException = ExpectedException.none();
 
     @Before
     public void setUp() {

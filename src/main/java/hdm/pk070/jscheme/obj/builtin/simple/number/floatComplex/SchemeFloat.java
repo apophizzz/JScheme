@@ -1,7 +1,6 @@
 package hdm.pk070.jscheme.obj.builtin.simple.number.floatComplex;
 
 import hdm.pk070.jscheme.obj.builtin.simple.number.SchemeNumber;
-import hdm.pk070.jscheme.obj.builtin.simple.number.exact.SchemeExactNumber;
 import hdm.pk070.jscheme.obj.builtin.simple.number.exact.SchemeFraction;
 import hdm.pk070.jscheme.obj.builtin.simple.number.exact.SchemeInteger;
 
@@ -10,7 +9,7 @@ import hdm.pk070.jscheme.obj.builtin.simple.number.exact.SchemeInteger;
  */
 public final class SchemeFloat extends SchemeFloatComplex {
 
-    private float floatVal;
+    private final float floatVal;
 
     public SchemeFloat(float floatVal) {
         this.floatVal = floatVal;

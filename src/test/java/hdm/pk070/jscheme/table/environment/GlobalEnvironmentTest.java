@@ -121,8 +121,8 @@ public class GlobalEnvironmentTest {
     private boolean globalEnvironmentContains(EnvironmentEntry expectedEntry) {
         Object[] currentGlobalEnvironmentEntries = (Object[]) ReflectionUtils.getAttributeVal
                 (globalEnvironment, "entries");
-        Optional<Object> entryOptional = Arrays.asList(currentGlobalEnvironmentEntries).stream()
-                .filter(entry -> Objects.nonNull(entry))
+        Optional<Object> entryOptional = Arrays.stream(currentGlobalEnvironmentEntries)
+                .filter(Objects::nonNull)
                 .filter(envEntry -> envEntry.equals(expectedEntry))
                 .findAny();
 

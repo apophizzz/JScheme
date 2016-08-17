@@ -13,11 +13,11 @@ public final class SchemeBuiltinGetCar extends SchemeBuiltinFunction {
 
 
     public static SchemeBuiltinGetCar create() {
-        return new SchemeBuiltinGetCar("car");
+        return new SchemeBuiltinGetCar();
     }
 
-    private SchemeBuiltinGetCar(String internalName) {
-        super(internalName);
+    private SchemeBuiltinGetCar() {
+        super("car");
     }
 
     @Override

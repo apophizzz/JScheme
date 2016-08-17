@@ -14,6 +14,8 @@ import hdm.pk070.jscheme.table.environment.entry.EnvironmentEntry;
 import java.util.Objects;
 
 /**
+ *
+ *
  * @author patrick.kleindienst
  */
 public final class SchemeBuiltinDefine extends SchemeBuiltinSyntax {
@@ -108,8 +110,9 @@ public final class SchemeBuiltinDefine extends SchemeBuiltinSyntax {
      * statement instead, a {@link SchemeError} is thrown.
      *
      * @param functionBody
-     *         The function body that shall be checked
+     *         The function body that shall be checked.
      * @throws SchemeError
+     *         If the syntax rules are violated.
      */
     private void ensureLastBodyListIsExpression(SchemeCons functionBody) throws SchemeError {
         SchemeObject restBodyLists = functionBody;

@@ -26,7 +26,7 @@ public class SchemeCharacterReader {
 
     private static final Logger LOGGER = LogManager.getRootLogger();
 
-    private PushbackReader pushbackReader;
+    private final PushbackReader pushbackReader;
 
     public static SchemeCharacterReader withInputStream(InputStream inputStream) {
         return new SchemeCharacterReader(inputStream);
@@ -82,12 +82,12 @@ public class SchemeCharacterReader {
             }
 
             LOGGER.debug("Found that input is a number!");
-            charBuffer.forEach(ch -> unreadCharacter(ch));
+            charBuffer.forEach(this::unreadCharacter);
             return true;
         }
 
         LOGGER.debug("Found that input is a symbol!");
-        charBuffer.forEach(ch -> unreadCharacter(ch));
+        charBuffer.forEach(this::unreadCharacter);
         return false;
     }
 

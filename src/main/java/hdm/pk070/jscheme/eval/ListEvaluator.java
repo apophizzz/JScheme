@@ -34,11 +34,12 @@ class ListEvaluator extends AbstractEvaluator<SchemeCons> {
      * has to evaluate the function slot, which is accessible as the CAR of the list expression.
      *
      * @param expression
-     *         The list expression to evaluate
+     *         The list expression to evaluate.
      * @param environment
-     *         The evaluation context
-     * @return A {@link SchemeObject} as a list evaluation result
+     *         The evaluation context.
+     * @return A {@link SchemeObject} as a list evaluation result.
      * @throws SchemeError
+     *         If evaluation fails for some reason.
      */
     @Override
     public SchemeObject doEval(SchemeCons expression, Environment<SchemeSymbol, EnvironmentEntry> environment) throws
@@ -80,13 +81,14 @@ class ListEvaluator extends AbstractEvaluator<SchemeCons> {
      * argument.
      *
      * @param builtinFunction
-     *         The pre-defined function to call
+     *         The pre-defined function to call.
      * @param argumentList
-     *         The argument list for the function call
+     *         The argument list for the function call.
      * @param environment
      *         The {@link Environment} the function body gets evaluated in
-     * @return A {@link SchemeObject} as a result of the function call
+     * @return A {@link SchemeObject} as a result of the function call.
      * @throws SchemeError
+     *         If evaluation of built-in function fails.
      */
     private SchemeObject evaluateBuiltinFunction(SchemeBuiltinFunction builtinFunction, SchemeObject argumentList,
                                                  Environment<SchemeSymbol, EnvironmentEntry> environment) throws
@@ -113,10 +115,15 @@ class ListEvaluator extends AbstractEvaluator<SchemeCons> {
     }
 
     /**
+     * Evaluating a {@link SchemeCustomUserFunction}.
+     *
      * @param customFunction
+     *         The {@link SchemeCustomUserFunction} to be evaluated.
      * @param argumentList
+     *         The arguments that shall be passed to the function which is about to be called.
      * @param environment
-     * @return
+     *         The {@link Environment} within which the function shall be evaluated.
+     * @return The result of the function call.
      */
     private SchemeObject evaluateCustomUserFunction(SchemeCustomUserFunction customFunction, SchemeObject
             argumentList, Environment<SchemeSymbol, EnvironmentEntry> environment) throws SchemeError {

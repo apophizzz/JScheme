@@ -24,7 +24,9 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 /**
- * Created by patrick on 24.06.16.
+ * A test class for {@link SchemeBuiltinDivide}.
+ *
+ * @author patrick.kleindienst
  */
 
 @RunWith(PowerMockRunner.class)

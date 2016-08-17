@@ -4,7 +4,9 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
 /**
- * Created by patrick on 19.06.16.
+ * A test suite collecting all test classes dealing with evaluation of different JScheme objects.
+ *
+ * @author patrick.kleindienst
  */
 
 @RunWith(Suite.class)

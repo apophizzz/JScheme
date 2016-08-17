@@ -39,7 +39,7 @@ public class SchemeBuiltinEqTest {
     private SchemeBuiltinFunction builtinEq;
 
     @Rule
-    public ExpectedException expectedException = ExpectedException.none();
+    public final ExpectedException expectedException = ExpectedException.none();
 
     @Before
     public void setUp() {

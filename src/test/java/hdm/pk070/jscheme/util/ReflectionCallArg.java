@@ -7,8 +7,8 @@ import java.util.Objects;
  */
 public class ReflectionCallArg {
 
-    private Class clazz;
-    private Object value;
+    private final Class clazz;
+    private final Object value;
 
     public ReflectionCallArg(Class clazz, Object value) {
         Objects.requireNonNull(clazz);

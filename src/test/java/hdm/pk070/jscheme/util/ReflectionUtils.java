@@ -141,7 +141,7 @@ public class ReflectionUtils {
 
     private static Constructor getConstructorWithArgs(Class clazz, ReflectionCallArg... callArgs) {
         Constructor targetConstructor;
-        List<Class> collectedTypes = Arrays.asList(callArgs).stream().map(element -> element.getClazz())
+        List<Class> collectedTypes = Arrays.stream(callArgs).map(ReflectionCallArg::getClazz)
                 .collect(Collectors.toList());
 
         try {
@@ -156,7 +156,7 @@ public class ReflectionUtils {
     public static Object createInstance(Class clazz, ReflectionCallArg... callArgs) {
         Object instance;
         Constructor targetConstructor = getConstructorWithArgs(clazz, callArgs);
-        List<Object> collectedArgs = Arrays.asList(callArgs).stream().map(element -> element.getValue())
+        List<Object> collectedArgs = Arrays.stream(callArgs).map(ReflectionCallArg::getValue)
                 .collect(Collectors.toList());
         try {
             instance = targetConstructor.newInstance(collectedArgs.toArray());

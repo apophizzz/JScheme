@@ -26,6 +26,8 @@ import static org.junit.Assert.fail;
 import static org.mockito.Mockito.*;
 
 /**
+ * A test class for {@link SchemeBuiltinDefine}.
+ *
  * @author patrick.kleindienst
  */
 
@@ -35,8 +37,8 @@ import static org.mockito.Mockito.*;
 public class SchemeBuiltinDefineTest {
 
     private SchemeBuiltinSyntax builtinDefine;
-    private Environment dummyEnvironment;
-    private Environment environmentMock;
+    private Environment<SchemeSymbol, EnvironmentEntry> dummyEnvironment;
+    private Environment<SchemeSymbol, EnvironmentEntry> environmentMock;
 
     private SchemeCons validFunctionSignature;
     private SchemeCons invalidFunctionSignature;

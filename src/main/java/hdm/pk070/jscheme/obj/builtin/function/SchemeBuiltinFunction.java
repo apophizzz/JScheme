@@ -5,7 +5,9 @@ import hdm.pk070.jscheme.obj.SchemeFunction;
 import hdm.pk070.jscheme.obj.SchemeObject;
 
 /**
- * Created by patrick on 19.06.16.
+ * This class acts as an abstraction for all implementations of built-in JScheme functions.
+ *
+ * @author patrick.kleindienst
  */
 public abstract class SchemeBuiltinFunction extends SchemeFunction {
 

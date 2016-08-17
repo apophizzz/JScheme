@@ -30,11 +30,12 @@ public class SchemeEval {
      * according to the expression type.
      *
      * @param expression
-     *         The expression to evaluate as passed by {@link SchemeReader}
+     *         The expression to evaluate as passed by {@link SchemeReader}.
      * @param environment
-     *         The evaluation context
-     * @return A {@link SchemeObject} as evaluation result
+     *         The evaluation context.
+     * @return A {@link SchemeObject} as evaluation result.
      * @throws SchemeError
+     *         If evaluation fails for some reason.
      */
     public SchemeObject eval(SchemeObject expression, Environment<SchemeSymbol, EnvironmentEntry> environment) throws
             SchemeError {

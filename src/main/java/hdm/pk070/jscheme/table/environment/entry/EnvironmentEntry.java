@@ -13,7 +13,7 @@ import java.util.Objects;
  */
 public class EnvironmentEntry {
 
-    private SchemeSymbol key;
+    private final SchemeSymbol key;
     private SchemeObject value;
 
     public static EnvironmentEntry create(SchemeSymbol key, SchemeObject value) {

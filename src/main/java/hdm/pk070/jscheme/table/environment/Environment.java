@@ -1,7 +1,5 @@
 package hdm.pk070.jscheme.table.environment;
 
-import hdm.pk070.jscheme.error.SchemeError;
-
 import java.util.Optional;
 
 /**
@@ -13,6 +11,6 @@ public interface Environment<KEY, VALUE> {
 
     Optional<VALUE> get(final KEY key);
 
-    VALUE add(final VALUE value) throws SchemeError;
+    VALUE add(final VALUE value);
 
 }

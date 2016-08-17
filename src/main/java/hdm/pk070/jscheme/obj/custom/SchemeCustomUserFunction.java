@@ -24,7 +24,7 @@ public class SchemeCustomUserFunction extends SchemeFunction {
     private Integer paramCount;
 
     public static SchemeCustomUserFunction create(String internalName, SchemeObject parameterList, SchemeCons
-            functionBodyList, Environment homeEnvironment) {
+            functionBodyList, Environment<SchemeSymbol, EnvironmentEntry> homeEnvironment) {
         return new SchemeCustomUserFunction(internalName, parameterList, functionBodyList, homeEnvironment);
     }
 

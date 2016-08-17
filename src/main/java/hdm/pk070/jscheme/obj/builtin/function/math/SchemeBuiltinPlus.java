@@ -16,11 +16,11 @@ public class SchemeBuiltinPlus extends SchemeBuiltinFunction {
 
 
     public static SchemeBuiltinPlus create() {
-        return new SchemeBuiltinPlus("+");
+        return new SchemeBuiltinPlus();
     }
 
-    private SchemeBuiltinPlus(String internalName) {
-        super(internalName);
+    private SchemeBuiltinPlus() {
+        super("+");
     }
 
     @Override

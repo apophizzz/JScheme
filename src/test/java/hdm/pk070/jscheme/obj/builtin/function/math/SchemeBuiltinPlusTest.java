@@ -22,7 +22,9 @@ import static org.hamcrest.Matchers.*;
 import static org.mockito.Mockito.*;
 
 /**
- * Created by patrick on 19.06.16.
+ * A test class for {@link SchemeBuiltinPlus}.
+ *
+ * @author patrick.kleindienst
  */
 
 @RunWith(PowerMockRunner.class)

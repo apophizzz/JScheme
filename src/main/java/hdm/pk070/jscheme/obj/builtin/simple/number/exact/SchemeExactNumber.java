@@ -3,7 +3,9 @@ package hdm.pk070.jscheme.obj.builtin.simple.number.exact;
 import hdm.pk070.jscheme.obj.builtin.simple.number.SchemeNumber;
 
 /**
- * Created by patrick on 24.06.16.
+ * Provides an abstraction for exact number types.
+ *
+ * @author patrick.kleindienst
  */
-public abstract class SchemeExactNumber extends SchemeNumber {
+abstract class SchemeExactNumber extends SchemeNumber {
 }

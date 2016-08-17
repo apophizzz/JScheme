@@ -7,7 +7,9 @@ import static org.junit.Assert.*;
 import static org.hamcrest.Matchers.*;
 
 /**
- * Created by patrick on 24.06.16.
+ * A test class for learning how to deal with Fractions.
+ *
+ * @author patrick.kleindienst
  */
 public class ApacheCommonsFractionLearningTest {
 

@@ -10,7 +10,9 @@ import static org.junit.Assert.*;
 import static org.hamcrest.Matchers.*;
 
 /**
- * Created by patrick on 01.07.16.
+ * A test class for {@link SchemeFraction}.
+ *
+ * @author patrick.kleindienst
  */
 public class SchemeFractionTest {
 
