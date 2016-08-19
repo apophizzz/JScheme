@@ -114,7 +114,7 @@ public final class SchemeBuiltinDefine extends SchemeBuiltinSyntax {
      * @throws SchemeError
      *         If the syntax rules are violated.
      */
-    private void ensureLastBodyListIsExpression(SchemeCons functionBody) throws SchemeError {
+    public void ensureLastBodyListIsExpression(SchemeCons functionBody) throws SchemeError {
         SchemeObject restBodyLists = functionBody;
 
         while (restBodyLists.typeOf(SchemeCons.class) && !((SchemeCons) restBodyLists).getCdr().typeOf(SchemeNil

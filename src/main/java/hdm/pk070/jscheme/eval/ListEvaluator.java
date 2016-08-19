@@ -19,9 +19,9 @@ import hdm.pk070.jscheme.table.environment.entry.EnvironmentEntry;
  *
  * @author patrick.kleindienst
  */
-class ListEvaluator extends AbstractEvaluator<SchemeCons> {
+public class ListEvaluator extends AbstractEvaluator<SchemeCons> {
 
-    static ListEvaluator getInstance() {
+    public static ListEvaluator getInstance() {
         return new ListEvaluator();
     }
 
@@ -93,11 +93,18 @@ class ListEvaluator extends AbstractEvaluator<SchemeCons> {
     private SchemeObject evaluateBuiltinFunction(SchemeBuiltinFunction builtinFunction, SchemeObject argumentList,
                                                  Environment<SchemeSymbol, EnvironmentEntry> environment) throws
             SchemeError {
-        SchemeObject restArguments;
-        restArguments = argumentList;
-        int argumentCount = 0;
 
-        // as long as end of argumentList is not reached ...
+        int argumentCount = countAndPushEvaluatedArguments(argumentList, environment);
+
+        // call built-in function
+        return builtinFunction.call(argumentCount);
+    }
+
+    public int countAndPushEvaluatedArguments(SchemeObject argumentList, Environment<SchemeSymbol, EnvironmentEntry>
+            environment) throws SchemeError {
+        int argumentCount = 0;
+        SchemeObject restArguments = argumentList;
+
         while (!restArguments.typeOf(SchemeNil.class)) {
             SchemeObject currentArgument = ((SchemeCons) restArguments).getCar();
             SchemeObject evaluatedArgument = SchemeEval.getInstance().eval(currentArgument, environment);
@@ -109,9 +116,7 @@ class ListEvaluator extends AbstractEvaluator<SchemeCons> {
             // increment arg counter
             argumentCount++;
         }
-
-        // call built-in function
-        return builtinFunction.call(argumentCount);
+        return argumentCount;
     }
 
     /**

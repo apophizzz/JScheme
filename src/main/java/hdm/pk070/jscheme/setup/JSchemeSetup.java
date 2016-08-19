@@ -12,6 +12,10 @@ import hdm.pk070.jscheme.obj.builtin.syntax.SchemeBuiltinDefine;
 import hdm.pk070.jscheme.obj.builtin.syntax.SchemeBuiltinIf;
 import hdm.pk070.jscheme.obj.builtin.syntax.SchemeBuiltinLambda;
 import hdm.pk070.jscheme.obj.builtin.syntax.SchemeBuiltinQuote;
+import hdm.pk070.jscheme.obj.builtin.syntax.cp.define_cp.SchemeBuiltinSyntaxDefineCP;
+import hdm.pk070.jscheme.obj.builtin.syntax.cp.if_cp.SchemeBuiltinSyntaxIfCP;
+import hdm.pk070.jscheme.obj.builtin.syntax.cp.lambda_cp.SchemeBuiltinSyntaxLambdaCP;
+import hdm.pk070.jscheme.obj.builtin.syntax.cp.quote_cp.SchemeBuiltinSyntaxQuoteCP;
 import hdm.pk070.jscheme.table.environment.GlobalEnvironment;
 import hdm.pk070.jscheme.table.environment.entry.EnvironmentEntry;
 import hdm.pk070.jscheme.table.symbolTable.SchemeSymbolTable;
@@ -23,7 +27,7 @@ public final class JSchemeSetup {
 
     public static void init() throws SchemeError {
         registerBuiltinFunctions();
-        registerBuiltinSyntax();
+        registerBuiltinSyntaxCP();
         printWelcomeScreen();
     }
 
@@ -59,6 +63,17 @@ public final class JSchemeSetup {
                 SchemeSymbol("lambda")), SchemeBuiltinLambda.create()));
         GlobalEnvironment.getInstance().add(EnvironmentEntry.create(SchemeSymbolTable.getInstance().add(new
                 SchemeSymbol("quote")), SchemeBuiltinQuote.create()));
+    }
+
+    private static void registerBuiltinSyntaxCP() throws SchemeError {
+        GlobalEnvironment.getInstance().add(EnvironmentEntry.create(SchemeSymbolTable.getInstance().add(new
+                SchemeSymbol("define")), SchemeBuiltinSyntaxDefineCP.create()));
+        GlobalEnvironment.getInstance().add(EnvironmentEntry.create(SchemeSymbolTable.getInstance().add(new
+                SchemeSymbol("if")), SchemeBuiltinSyntaxIfCP.create()));
+        GlobalEnvironment.getInstance().add(EnvironmentEntry.create(SchemeSymbolTable.getInstance().add(new
+                SchemeSymbol("lambda")), SchemeBuiltinSyntaxLambdaCP.create()));
+        GlobalEnvironment.getInstance().add(EnvironmentEntry.create(SchemeSymbolTable.getInstance().add(new
+                SchemeSymbol("quote")), SchemeBuiltinSyntaxQuoteCP.create()));
     }
 
 

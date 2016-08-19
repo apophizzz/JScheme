@@ -17,9 +17,9 @@ import java.util.Optional;
  *
  * @author patrick.kleindienst
  */
-class SymbolEvaluator extends AbstractEvaluator<SchemeSymbol> {
+public class SymbolEvaluator extends AbstractEvaluator<SchemeSymbol> {
 
-    static SymbolEvaluator getInstance() {
+    public static SymbolEvaluator getInstance() {
         return new SymbolEvaluator();
     }
 
