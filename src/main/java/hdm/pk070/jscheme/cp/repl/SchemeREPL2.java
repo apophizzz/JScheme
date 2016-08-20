@@ -13,8 +13,6 @@ public class SchemeREPL2 extends SchemeContinuationFunction {
 
     @Override
     public SchemeContinuation call(SchemeContinuation continuation) {
-        System.out.println("Finally here in REPL2");
-
         SchemeObject returnValue = continuation.getReturnValue();
         SchemePrint.printEvalResult(returnValue);
 
