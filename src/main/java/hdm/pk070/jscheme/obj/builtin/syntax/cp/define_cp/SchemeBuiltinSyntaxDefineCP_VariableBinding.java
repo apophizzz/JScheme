@@ -14,6 +14,7 @@ import hdm.pk070.jscheme.table.environment.entry.EnvironmentEntry;
 /**
  * @author patrick.kleindienst
  */
+@SuppressWarnings("unchecked")
 public class SchemeBuiltinSyntaxDefineCP_VariableBinding extends SchemeContinuationFunction {
 
 

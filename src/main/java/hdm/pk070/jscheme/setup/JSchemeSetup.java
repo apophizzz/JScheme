@@ -8,10 +8,6 @@ import hdm.pk070.jscheme.obj.builtin.function.list.SchemeBuiltinGetCdr;
 import hdm.pk070.jscheme.obj.builtin.function.list.SchemeBuiltinIsCons;
 import hdm.pk070.jscheme.obj.builtin.function.math.*;
 import hdm.pk070.jscheme.obj.builtin.simple.SchemeSymbol;
-import hdm.pk070.jscheme.obj.builtin.syntax.SchemeBuiltinDefine;
-import hdm.pk070.jscheme.obj.builtin.syntax.SchemeBuiltinIf;
-import hdm.pk070.jscheme.obj.builtin.syntax.SchemeBuiltinLambda;
-import hdm.pk070.jscheme.obj.builtin.syntax.SchemeBuiltinQuote;
 import hdm.pk070.jscheme.obj.builtin.syntax.cp.define_cp.SchemeBuiltinSyntaxDefineCP;
 import hdm.pk070.jscheme.obj.builtin.syntax.cp.if_cp.SchemeBuiltinSyntaxIfCP;
 import hdm.pk070.jscheme.obj.builtin.syntax.cp.lambda_cp.SchemeBuiltinSyntaxLambdaCP;
@@ -54,16 +50,6 @@ public final class JSchemeSetup {
                 SchemeSymbol("eq?")), SchemeBuiltinEq.create()));
     }
 
-    private static void registerBuiltinSyntax() throws SchemeError {
-        GlobalEnvironment.getInstance().add(EnvironmentEntry.create(SchemeSymbolTable.getInstance().add(new
-                SchemeSymbol("define")), SchemeBuiltinDefine.create()));
-        GlobalEnvironment.getInstance().add(EnvironmentEntry.create(SchemeSymbolTable.getInstance().add(new
-                SchemeSymbol("if")), SchemeBuiltinIf.create()));
-        GlobalEnvironment.getInstance().add(EnvironmentEntry.create(SchemeSymbolTable.getInstance().add(new
-                SchemeSymbol("lambda")), SchemeBuiltinLambda.create()));
-        GlobalEnvironment.getInstance().add(EnvironmentEntry.create(SchemeSymbolTable.getInstance().add(new
-                SchemeSymbol("quote")), SchemeBuiltinQuote.create()));
-    }
 
     private static void registerBuiltinSyntaxCP() throws SchemeError {
         GlobalEnvironment.getInstance().add(EnvironmentEntry.create(SchemeSymbolTable.getInstance().add(new

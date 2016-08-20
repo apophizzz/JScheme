@@ -1,7 +1,6 @@
 package hdm.pk070.jscheme.eval.cp.list.builtinFunction;
 
 import hdm.pk070.jscheme.error.SchemeError;
-import hdm.pk070.jscheme.eval.ListEvaluator;
 import hdm.pk070.jscheme.eval.cp.SchemeEvalCP;
 import hdm.pk070.jscheme.obj.SchemeContinuationFunction;
 import hdm.pk070.jscheme.obj.SchemeObject;
@@ -16,6 +15,7 @@ import hdm.pk070.jscheme.table.environment.entry.EnvironmentEntry;
 /**
  * @author patrick.kleindienst
  */
+@SuppressWarnings("unchecked")
 public class SchemeEvalBuiltinFunctionCP extends SchemeContinuationFunction {
 
     @Override

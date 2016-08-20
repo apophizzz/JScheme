@@ -15,7 +15,7 @@ import org.apache.logging.log4j.Logger;
  */
 abstract class AbstractEvaluator<T extends SchemeObject> {
 
-    protected static final Logger LOGGER = LogManager.getLogger("hdm.pk070.jscheme.EvalLogger");
+    static final Logger LOGGER = LogManager.getLogger("hdm.pk070.jscheme.EvalLogger");
 
     public abstract SchemeObject doEval(T expression, Environment<SchemeSymbol, EnvironmentEntry> environment) throws
             SchemeError;

@@ -4,11 +4,8 @@ import hdm.pk070.jscheme.error.SchemeError;
 import hdm.pk070.jscheme.obj.SchemeObject;
 import hdm.pk070.jscheme.obj.builtin.simple.SchemeCons;
 import hdm.pk070.jscheme.obj.builtin.simple.SchemeNil;
-import hdm.pk070.jscheme.obj.builtin.simple.SchemeSymbol;
 import hdm.pk070.jscheme.obj.builtin.syntax.cp.SchemeBuiltinSyntaxCP;
 import hdm.pk070.jscheme.obj.continuation.SchemeContinuation;
-import hdm.pk070.jscheme.table.environment.Environment;
-import hdm.pk070.jscheme.table.environment.entry.EnvironmentEntry;
 
 /**
  * @author patrick.kleindienst
@@ -27,8 +24,6 @@ public class SchemeBuiltinSyntaxQuoteCP extends SchemeBuiltinSyntaxCP {
     public SchemeContinuation apply(SchemeContinuation continuation) throws SchemeError {
         Object[] arguments = continuation.getArguments();
         SchemeObject argumentList = (SchemeObject) arguments[0];
-        Environment<SchemeSymbol, EnvironmentEntry> environment = (Environment<SchemeSymbol, EnvironmentEntry>)
-                arguments[1];
 
         if (!argumentList.typeOf(SchemeCons.class)) {
             throw new SchemeError("(quote): bad syntax in: (quote) [expected 1 argument, 0 given]");

@@ -7,7 +7,6 @@ import hdm.pk070.jscheme.obj.builtin.simple.SchemeCons;
 import hdm.pk070.jscheme.obj.builtin.simple.SchemeNil;
 import hdm.pk070.jscheme.obj.builtin.simple.SchemeSymbol;
 import hdm.pk070.jscheme.obj.builtin.simple.SchemeVoid;
-import hdm.pk070.jscheme.obj.builtin.syntax.SchemeBuiltinDefine;
 import hdm.pk070.jscheme.obj.continuation.SchemeContinuation;
 import hdm.pk070.jscheme.obj.custom.SchemeCustomUserFunction;
 import hdm.pk070.jscheme.table.environment.Environment;
@@ -16,6 +15,7 @@ import hdm.pk070.jscheme.table.environment.entry.EnvironmentEntry;
 /**
  * @author patrick.kleindienst
  */
+@SuppressWarnings("unchecked")
 public class SchemeBuiltinSyntaxDefineCP_FunctionBinding extends SchemeContinuationFunction {
 
 
@@ -36,7 +36,7 @@ public class SchemeBuiltinSyntaxDefineCP_FunctionBinding extends SchemeContinuat
             throw new SchemeError("(define): missing procedure expression");
         }
 
-        SchemeBuiltinDefine.create().ensureLastBodyListIsExpression(functionBodyList);
+        ensureLastBodyListIsExpression(functionBodyList);
 
         // Extract function name from signature after having ensured that the signature's CAR is actually a symbol
         SchemeSymbol functionName = (SchemeSymbol) functionSignature.getCar();
@@ -53,5 +53,30 @@ public class SchemeBuiltinSyntaxDefineCP_FunctionBinding extends SchemeContinuat
 
         continuation.getCallerContinuation().setReturnValue(new SchemeVoid());
         return continuation.getCallerContinuation();
+    }
+
+    /**
+     * Inspect function body and make sure that the last partial body list is an expression. If it's a define
+     * statement instead, a {@link SchemeError} is thrown.
+     *
+     * @param functionBody
+     *         The function body that shall be checked.
+     * @throws SchemeError
+     *         If the syntax rules are violated.
+     */
+    private void ensureLastBodyListIsExpression(SchemeCons functionBody) throws SchemeError {
+        SchemeObject restBodyLists = functionBody;
+
+        while (restBodyLists.typeOf(SchemeCons.class) && !((SchemeCons) restBodyLists).getCdr().typeOf(SchemeNil
+                .class)) {
+            restBodyLists = ((SchemeCons) restBodyLists).getCdr();
+        }
+
+        SchemeObject lastBodyList = ((SchemeCons) restBodyLists).getCar();
+        if (lastBodyList.typeOf(SchemeCons.class) && ((SchemeCons) lastBodyList).getCar().equals(new SchemeSymbol
+                ("define"))) {
+            throw new SchemeError("(define): no expression after sequence of " +
+                    "internal definitions");
+        }
     }
 }

@@ -152,18 +152,4 @@ public class ReflectionUtils {
         return targetConstructor;
     }
 
-
-    public static Object createInstance(Class clazz, ReflectionCallArg... callArgs) {
-        Object instance;
-        Constructor targetConstructor = getConstructorWithArgs(clazz, callArgs);
-        List<Object> collectedArgs = Arrays.stream(callArgs).map(ReflectionCallArg::getValue)
-                .collect(Collectors.toList());
-        try {
-            instance = targetConstructor.newInstance(collectedArgs.toArray());
-        } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
-            throw new ReflectionUtilsException("Something went wrong while invoking a constructor!", e);
-        }
-        return instance;
-    }
-
 }

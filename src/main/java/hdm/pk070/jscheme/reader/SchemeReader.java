@@ -84,7 +84,4 @@ public class SchemeReader {
         schemeCharacterReader = SchemeCharacterReader.withInputStream(inputStream);
     }
 
-    public SchemeCharacterReader getSchemeCharacterReader() {
-        return schemeCharacterReader;
-    }
 }
