@@ -1,6 +1,5 @@
 package hdm.pk070.jscheme;
 
-import hdm.pk070.jscheme.eval.SchemeEvalTestSuite;
 import hdm.pk070.jscheme.obj.SchemeObjectTestSuite;
 import hdm.pk070.jscheme.reader.SchemeReaderTestSuite;
 import hdm.pk070.jscheme.table.SchemeTableTestSuite;
@@ -15,7 +14,7 @@ import org.junit.runners.Suite;
  */
 
 @RunWith(Suite.class)
-@Suite.SuiteClasses({SchemeObjectTestSuite.class, SchemeReaderTestSuite.class, SchemeEvalTestSuite.class,
+@Suite.SuiteClasses({SchemeObjectTestSuite.class, SchemeReaderTestSuite.class,
         SchemeEnvironmentTestSuite.class, SchemeTableTestSuite.class})
 public class JSchemeTestSuite {
 }
