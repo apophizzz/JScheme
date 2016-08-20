@@ -1,7 +1,6 @@
 package hdm.pk070.jscheme.eval.cp.list.customFunction;
 
 import hdm.pk070.jscheme.error.SchemeError;
-import hdm.pk070.jscheme.eval.SchemeEval;
 import hdm.pk070.jscheme.eval.cp.SchemeEvalCP;
 import hdm.pk070.jscheme.obj.SchemeContinuationFunction;
 import hdm.pk070.jscheme.obj.SchemeObject;
@@ -19,6 +18,7 @@ import java.util.Objects;
 /**
  * @author patrick.kleindienst
  */
+@SuppressWarnings("unchecked")
 public class SchemeEvalCustomUserFunctionCP extends SchemeContinuationFunction {
 
 
@@ -80,26 +80,10 @@ public class SchemeEvalCustomUserFunctionCP extends SchemeContinuationFunction {
         }
 
 
-        SchemeObject bodyList;
-        if (arguments.length > 6 && Objects.nonNull(arguments[6])) {
-            bodyList = (SchemeObject) arguments[6];
-        } else {
-            bodyList = customUserFunction.getFunctionBodyList();
-        }
+        SchemeObject bodyList = customUserFunction.getFunctionBodyList();
 
-
-        if (!bodyList.typeOf(SchemeNil.class)) {
-            SchemeObject nextBodyPart = ((SchemeCons) bodyList).getCar();
-
-            continuation.setProgramCounter(this);
-            continuation.setArguments(customUserFunction, argumentList, environment, functionBodyEvalEnvironment,
-                    functionParameterList, argumentCount, ((SchemeCons) bodyList).getCdr());
-
-            return SchemeContinuation.create(continuation, SchemeEvalCP.getInstance(), nextBodyPart,
-                    functionBodyEvalEnvironment);
-        }
-
-        continuation.getCallerContinuation().setReturnValue(continuation.getReturnValue());
-        return continuation.getCallerContinuation();
+        continuation.setProgramCounter(new SchemeEvalCustomUserFunctionCP3());
+        continuation.setArguments(bodyList, functionBodyEvalEnvironment);
+        return continuation;
     }
 }
