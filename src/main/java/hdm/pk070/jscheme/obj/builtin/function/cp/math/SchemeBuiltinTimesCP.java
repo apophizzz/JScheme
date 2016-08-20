@@ -1,27 +1,31 @@
-package hdm.pk070.jscheme.obj.builtin.function.math;
+package hdm.pk070.jscheme.obj.builtin.function.cp.math;
 
 import hdm.pk070.jscheme.error.SchemeError;
 import hdm.pk070.jscheme.obj.SchemeObject;
-import hdm.pk070.jscheme.obj.builtin.function.SchemeBuiltinFunction;
+import hdm.pk070.jscheme.obj.builtin.function.SchemeBuiltinFunctionCP;
 import hdm.pk070.jscheme.obj.builtin.simple.number.SchemeNumber;
 import hdm.pk070.jscheme.obj.builtin.simple.number.exact.SchemeInteger;
+import hdm.pk070.jscheme.obj.continuation.SchemeContinuation;
 import hdm.pk070.jscheme.stack.SchemeCallStack;
 
 /**
  * @author patrick.kleindienst
  */
-public final class SchemeBuiltinTimes extends SchemeBuiltinFunction {
+public class SchemeBuiltinTimesCP extends SchemeBuiltinFunctionCP {
 
-    public static SchemeBuiltinTimes create() {
-        return new SchemeBuiltinTimes();
+    public static SchemeBuiltinTimesCP create() {
+        return new SchemeBuiltinTimesCP();
     }
 
-    private SchemeBuiltinTimes() {
+    private SchemeBuiltinTimesCP() {
         super("*");
     }
 
     @Override
-    public SchemeNumber call(int argCount) throws SchemeError {
+    public SchemeContinuation call(SchemeContinuation continuation) throws SchemeError {
+        Object[] arguments = continuation.getArguments();
+        int argCount = (int) arguments[0];
+
         SchemeNumber product = new SchemeInteger(1);
 
         // pop argCount arguments from stack and multiply them
@@ -35,6 +39,8 @@ public final class SchemeBuiltinTimes extends SchemeBuiltinFunction {
             // do multiply
             product = product.multiply(((SchemeNumber) currentArg));
         }
-        return product;
+
+        continuation.getCallerContinuation().setReturnValue(product);
+        return continuation.getCallerContinuation();
     }
 }

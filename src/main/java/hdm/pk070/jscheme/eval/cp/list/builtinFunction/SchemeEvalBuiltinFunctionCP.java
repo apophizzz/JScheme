@@ -4,7 +4,7 @@ import hdm.pk070.jscheme.error.SchemeError;
 import hdm.pk070.jscheme.eval.cp.SchemeEvalCP;
 import hdm.pk070.jscheme.obj.SchemeContinuationFunction;
 import hdm.pk070.jscheme.obj.SchemeObject;
-import hdm.pk070.jscheme.obj.builtin.function.SchemeBuiltinFunction;
+import hdm.pk070.jscheme.obj.builtin.function.SchemeBuiltinFunctionCP;
 import hdm.pk070.jscheme.obj.builtin.simple.SchemeCons;
 import hdm.pk070.jscheme.obj.builtin.simple.SchemeNil;
 import hdm.pk070.jscheme.obj.builtin.simple.SchemeSymbol;
@@ -22,7 +22,7 @@ public class SchemeEvalBuiltinFunctionCP extends SchemeContinuationFunction {
     public SchemeContinuation call(SchemeContinuation continuation) throws SchemeError {
         Object[] arguments = continuation.getArguments();
 
-        SchemeBuiltinFunction builtinFunction = (SchemeBuiltinFunction) arguments[0];
+        SchemeBuiltinFunctionCP builtinFunction = (SchemeBuiltinFunctionCP) arguments[0];
         SchemeObject argumentList = (SchemeObject) arguments[1];
         Environment<SchemeSymbol, EnvironmentEntry> environment = (Environment<SchemeSymbol, EnvironmentEntry>)
                 arguments[2];
@@ -42,8 +42,11 @@ public class SchemeEvalBuiltinFunctionCP extends SchemeContinuationFunction {
             return SchemeContinuation.create(continuation, SchemeEvalCP.getInstance(), currentArg, environment);
         }
 
+        continuation.setArguments(argCount);
+        return builtinFunction.call(continuation);
+
         // call built-in function and set result at caller continuation
-        continuation.getCallerContinuation().setReturnValue(builtinFunction.call(argCount));
-        return continuation.getCallerContinuation();
+        //        continuation.getCallerContinuation().setReturnValue(builtinFunction.call(argCount));
+        //        return continuation.getCallerContinuation();
     }
 }

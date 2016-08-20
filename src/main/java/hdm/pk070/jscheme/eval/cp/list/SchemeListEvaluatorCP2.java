@@ -6,7 +6,7 @@ import hdm.pk070.jscheme.eval.cp.list.builtinSyntax.SchemeEvalBuiltinSyntaxCP;
 import hdm.pk070.jscheme.eval.cp.list.customFunction.SchemeEvalCustomUserFunctionCP;
 import hdm.pk070.jscheme.obj.SchemeContinuationFunction;
 import hdm.pk070.jscheme.obj.SchemeObject;
-import hdm.pk070.jscheme.obj.builtin.function.SchemeBuiltinFunction;
+import hdm.pk070.jscheme.obj.builtin.function.SchemeBuiltinFunctionCP;
 import hdm.pk070.jscheme.obj.builtin.simple.SchemeCons;
 import hdm.pk070.jscheme.obj.builtin.simple.SchemeSymbol;
 import hdm.pk070.jscheme.obj.builtin.syntax.cp.SchemeBuiltinSyntaxCP;
@@ -31,7 +31,7 @@ public class SchemeListEvaluatorCP2 extends SchemeContinuationFunction {
         SchemeObject evaluatedFunctionSlot = continuation.getReturnValue();
         SchemeObject argumentList = expression.getCdr();
 
-        if (evaluatedFunctionSlot.subtypeOf(SchemeBuiltinFunction.class)) {
+        if (evaluatedFunctionSlot.subtypeOf(SchemeBuiltinFunctionCP.class)) {
             continuation.setArguments(evaluatedFunctionSlot, argumentList, environment);
             continuation.setProgramCounter(new SchemeEvalBuiltinFunctionCP());
             return continuation;

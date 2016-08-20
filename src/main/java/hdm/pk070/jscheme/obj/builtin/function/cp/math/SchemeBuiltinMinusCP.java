@@ -1,10 +1,11 @@
-package hdm.pk070.jscheme.obj.builtin.function.math;
+package hdm.pk070.jscheme.obj.builtin.function.cp.math;
 
 import hdm.pk070.jscheme.error.SchemeError;
 import hdm.pk070.jscheme.obj.SchemeObject;
-import hdm.pk070.jscheme.obj.builtin.function.SchemeBuiltinFunction;
+import hdm.pk070.jscheme.obj.builtin.function.SchemeBuiltinFunctionCP;
 import hdm.pk070.jscheme.obj.builtin.simple.number.SchemeNumber;
 import hdm.pk070.jscheme.obj.builtin.simple.number.exact.SchemeInteger;
+import hdm.pk070.jscheme.obj.continuation.SchemeContinuation;
 import hdm.pk070.jscheme.stack.SchemeCallStack;
 
 import java.util.Collections;
@@ -14,18 +15,21 @@ import java.util.List;
 /**
  * @author patrick.kleindienst
  */
-public class SchemeBuiltinMinus extends SchemeBuiltinFunction {
+public class SchemeBuiltinMinusCP extends SchemeBuiltinFunctionCP {
 
-    public static SchemeBuiltinMinus create() {
-        return new SchemeBuiltinMinus();
+    public static SchemeBuiltinMinusCP create() {
+        return new SchemeBuiltinMinusCP();
     }
 
-    private SchemeBuiltinMinus() {
+    private SchemeBuiltinMinusCP() {
         super("-");
     }
 
     @Override
-    public SchemeNumber call(int argCount) throws SchemeError {
+    public SchemeContinuation call(SchemeContinuation continuation) throws SchemeError {
+        Object[] arguments = continuation.getArguments();
+        int argCount = (int) arguments[0];
+
         SchemeNumber difference;
 
         // throw SchemeError if argCount == 0
@@ -43,7 +47,9 @@ public class SchemeBuiltinMinus extends SchemeBuiltinFunction {
                         singleArg));
             }
             // if the single arg is a number, return inverse
-            return ((SchemeNumber) singleArg).multiply(new SchemeInteger(-1));
+            continuation.getCallerContinuation().setReturnValue(((SchemeNumber) singleArg).multiply(new SchemeInteger
+                    (-1)));
+            return continuation.getCallerContinuation();
         }
 
         // in all the other cases: argCount is valid
@@ -72,7 +78,7 @@ public class SchemeBuiltinMinus extends SchemeBuiltinFunction {
                 difference = difference.subtract(schemeNumber);
             }
         }
-        return difference;
+        continuation.getCallerContinuation().setReturnValue(difference);
+        return continuation.getCallerContinuation();
     }
-
 }

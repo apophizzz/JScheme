@@ -1,27 +1,31 @@
-package hdm.pk070.jscheme.obj.builtin.function.list;
+package hdm.pk070.jscheme.obj.builtin.function.cp.list;
 
 import hdm.pk070.jscheme.error.SchemeError;
 import hdm.pk070.jscheme.obj.SchemeObject;
-import hdm.pk070.jscheme.obj.builtin.function.SchemeBuiltinFunction;
+import hdm.pk070.jscheme.obj.builtin.function.SchemeBuiltinFunctionCP;
 import hdm.pk070.jscheme.obj.builtin.simple.SchemeCons;
+import hdm.pk070.jscheme.obj.continuation.SchemeContinuation;
 import hdm.pk070.jscheme.stack.SchemeCallStack;
 
 /**
  * @author patrick.kleindienst
  */
-public final class SchemeBuiltinGetCdr extends SchemeBuiltinFunction {
+public class SchemeBuiltinGetCdrCP extends SchemeBuiltinFunctionCP {
 
 
-    public static SchemeBuiltinGetCdr create() {
-        return new SchemeBuiltinGetCdr();
+    public static SchemeBuiltinGetCdrCP create() {
+        return new SchemeBuiltinGetCdrCP();
     }
 
-    private SchemeBuiltinGetCdr() {
+    private SchemeBuiltinGetCdrCP() {
         super("cdr");
     }
 
     @Override
-    public SchemeObject call(int argCount) throws SchemeError {
+    public SchemeContinuation call(SchemeContinuation continuation) throws SchemeError {
+        Object[] arguments = continuation.getArguments();
+        int argCount = (int) arguments[0];
+
         if (argCount != 1) {
             throw new SchemeError(String.format("(cdr): arity mismatch, expected number of arguments does not match " +
                     "given number [expected: 1, given: %d]", argCount));
@@ -32,7 +36,8 @@ public final class SchemeBuiltinGetCdr extends SchemeBuiltinFunction {
             throw new SchemeError(String.format("(cdr): contract violation [expected: cons, given: %s]",
                     poppedArg));
         }
-        return ((SchemeCons) poppedArg).getCdr();
-    }
 
+        continuation.getCallerContinuation().setReturnValue(((SchemeCons) poppedArg).getCdr());
+        return continuation.getCallerContinuation();
+    }
 }

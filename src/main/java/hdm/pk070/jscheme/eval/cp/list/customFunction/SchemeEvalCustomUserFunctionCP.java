@@ -39,8 +39,6 @@ public class SchemeEvalCustomUserFunctionCP extends SchemeContinuationFunction {
                     (customUserFunction.getRequiredSlotsCount(), customUserFunction.getHomeEnvironment());
         }
 
-        SchemeObject functionCallArgumentList = argumentList;
-
         SchemeObject functionParameterList;
         if (arguments.length > 4 && Objects.nonNull(arguments[4])) {
             functionParameterList = (SchemeObject) arguments[4];
@@ -55,7 +53,7 @@ public class SchemeEvalCustomUserFunctionCP extends SchemeContinuationFunction {
 
         if (functionParameterList.typeOf(SchemeCons.class)) {
             // If we have another parameter, but there's no matching argument -> throw SchemeError
-            if (!functionCallArgumentList.typeOf(SchemeCons.class)) {
+            if (!argumentList.typeOf(SchemeCons.class)) {
                 throw new SchemeError(String.format("(eval): arity mismatch, expected number of " +
                         "arguments does not match the given number [expected: %d, given: %d]", customUserFunction
                         .getParamCount(), argumentCount));
@@ -63,9 +61,9 @@ public class SchemeEvalCustomUserFunctionCP extends SchemeContinuationFunction {
 
             argumentCount++;
 
-            SchemeObject unevaluatedArgument = ((SchemeCons) functionCallArgumentList).getCar();
+            SchemeObject unevaluatedArgument = ((SchemeCons) argumentList).getCar();
 
-            continuation.setArguments(customUserFunction, functionCallArgumentList, environment,
+            continuation.setArguments(customUserFunction, argumentList, environment,
                     functionBodyEvalEnvironment, functionParameterList, argumentCount);
             continuation.setProgramCounter(new SchemeEvalCustomUserFunctionCP2());
             return SchemeContinuation.create(continuation, SchemeEvalCP.getInstance(), unevaluatedArgument,
@@ -73,7 +71,7 @@ public class SchemeEvalCustomUserFunctionCP extends SchemeContinuationFunction {
 
         }
 
-        if (!functionCallArgumentList.typeOf(SchemeNil.class)) {
+        if (!argumentList.typeOf(SchemeNil.class)) {
             throw new SchemeError(String.format("(eval): arity mismatch, expected number of " +
                             "arguments does not match the given number [expected: %d, more given!]",
                     customUserFunction.getParamCount()));

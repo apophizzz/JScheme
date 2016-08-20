@@ -1,12 +1,12 @@
 package hdm.pk070.jscheme.setup;
 
 import hdm.pk070.jscheme.error.SchemeError;
-import hdm.pk070.jscheme.obj.builtin.function.base.SchemeBuiltinEq;
-import hdm.pk070.jscheme.obj.builtin.function.list.SchemeBuiltinCons;
-import hdm.pk070.jscheme.obj.builtin.function.list.SchemeBuiltinGetCar;
-import hdm.pk070.jscheme.obj.builtin.function.list.SchemeBuiltinGetCdr;
-import hdm.pk070.jscheme.obj.builtin.function.list.SchemeBuiltinIsCons;
-import hdm.pk070.jscheme.obj.builtin.function.math.*;
+import hdm.pk070.jscheme.obj.builtin.function.cp.base.SchemeBuiltinEqCP;
+import hdm.pk070.jscheme.obj.builtin.function.cp.list.SchemeBuiltinConsCP;
+import hdm.pk070.jscheme.obj.builtin.function.cp.list.SchemeBuiltinGetCarCP;
+import hdm.pk070.jscheme.obj.builtin.function.cp.list.SchemeBuiltinGetCdrCP;
+import hdm.pk070.jscheme.obj.builtin.function.cp.list.SchemeBuiltinIsConsCP;
+import hdm.pk070.jscheme.obj.builtin.function.cp.math.*;
 import hdm.pk070.jscheme.obj.builtin.simple.SchemeSymbol;
 import hdm.pk070.jscheme.obj.builtin.syntax.cp.define_cp.SchemeBuiltinSyntaxDefineCP;
 import hdm.pk070.jscheme.obj.builtin.syntax.cp.if_cp.SchemeBuiltinSyntaxIfCP;
@@ -22,32 +22,33 @@ import hdm.pk070.jscheme.table.symbolTable.SchemeSymbolTable;
 public final class JSchemeSetup {
 
     public static void init() throws SchemeError {
-        registerBuiltinFunctions();
+        registerBuiltinFunctionsCP();
         registerBuiltinSyntaxCP();
         printWelcomeScreen();
     }
 
-    private static void registerBuiltinFunctions() throws SchemeError {
+    private static void registerBuiltinFunctionsCP() throws SchemeError {
         GlobalEnvironment.getInstance().add(EnvironmentEntry.create(SchemeSymbolTable.getInstance().add(new SchemeSymbol
-                ("+")), SchemeBuiltinPlus.create()));
+                ("+")), SchemeBuiltinPlusCP.create()));
         GlobalEnvironment.getInstance().add(EnvironmentEntry.create(SchemeSymbolTable.getInstance().add(new SchemeSymbol
-                ("-")), SchemeBuiltinMinus.create()));
+                ("-")), SchemeBuiltinMinusCP.create()));
         GlobalEnvironment.getInstance().add(EnvironmentEntry.create(SchemeSymbolTable.getInstance().add(new SchemeSymbol
-                ("*")), SchemeBuiltinTimes.create()));
+                ("*")), SchemeBuiltinTimesCP.create()));
         GlobalEnvironment.getInstance().add(EnvironmentEntry.create(SchemeSymbolTable.getInstance().add(new SchemeSymbol
-                ("/")), SchemeBuiltinDivide.create()));
+                ("/")), SchemeBuiltinDivideCP.create()));
         GlobalEnvironment.getInstance().add(EnvironmentEntry.create(SchemeSymbolTable.getInstance().add(new SchemeSymbol
-                ("abs")), SchemeBuiltinAbsolute.create()));
+                ("abs")), SchemeBuiltinAbsoluteCP.create()));
         GlobalEnvironment.getInstance().add(EnvironmentEntry.create(SchemeSymbolTable.getInstance().add(new SchemeSymbol
-                ("cons")), SchemeBuiltinCons.create()));
+                ("cons")), SchemeBuiltinConsCP.create()));
         GlobalEnvironment.getInstance().add(EnvironmentEntry.create(SchemeSymbolTable.getInstance().add(new SchemeSymbol
-                ("car")), SchemeBuiltinGetCar.create()));
+                ("car")), SchemeBuiltinGetCarCP.create()));
         GlobalEnvironment.getInstance().add(EnvironmentEntry.create(SchemeSymbolTable.getInstance().add(new SchemeSymbol
-                ("cdr")), SchemeBuiltinGetCdr.create()));
+                ("cdr")), SchemeBuiltinGetCdrCP.create()));
         GlobalEnvironment.getInstance().add(EnvironmentEntry.create(SchemeSymbolTable.getInstance().add(new SchemeSymbol
-                ("cons?")), SchemeBuiltinIsCons.create()));
+                ("cons?")), SchemeBuiltinIsConsCP.create()));
+
         GlobalEnvironment.getInstance().add(EnvironmentEntry.create(SchemeSymbolTable.getInstance().add(new
-                SchemeSymbol("eq?")), SchemeBuiltinEq.create()));
+                SchemeSymbol("eq?")), SchemeBuiltinEqCP.create()));
     }
 
 

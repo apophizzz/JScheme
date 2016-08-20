@@ -1,26 +1,31 @@
-package hdm.pk070.jscheme.obj.builtin.function.math;
+package hdm.pk070.jscheme.obj.builtin.function.cp.math;
 
 import hdm.pk070.jscheme.error.SchemeError;
 import hdm.pk070.jscheme.obj.SchemeObject;
-import hdm.pk070.jscheme.obj.builtin.function.SchemeBuiltinFunction;
+import hdm.pk070.jscheme.obj.builtin.function.SchemeBuiltinFunctionCP;
 import hdm.pk070.jscheme.obj.builtin.simple.number.SchemeNumber;
+import hdm.pk070.jscheme.obj.continuation.SchemeContinuation;
 import hdm.pk070.jscheme.stack.SchemeCallStack;
 
 /**
  * @author patrick.kleindienst
  */
-public final class SchemeBuiltinAbsolute extends SchemeBuiltinFunction {
+public class SchemeBuiltinAbsoluteCP extends SchemeBuiltinFunctionCP {
 
-    public static SchemeBuiltinAbsolute create() {
-        return new SchemeBuiltinAbsolute();
+
+    public static SchemeBuiltinAbsoluteCP create() {
+        return new SchemeBuiltinAbsoluteCP();
     }
 
-    private SchemeBuiltinAbsolute() {
+    private SchemeBuiltinAbsoluteCP() {
         super("abs");
     }
 
     @Override
-    public SchemeNumber call(int argCount) throws SchemeError {
+    public SchemeContinuation call(SchemeContinuation continuation) throws SchemeError {
+        Object[] arguments = continuation.getArguments();
+        int argCount = (int) arguments[0];
+
         if (argCount != 1) {
             throw new SchemeError(String.format("(abs): arity mismatch, expected number of arguments does not match " +
                     "given number [expected: 1, given: %d]", argCount));
@@ -30,7 +35,8 @@ public final class SchemeBuiltinAbsolute extends SchemeBuiltinFunction {
                 throw new SchemeError(String.format("(abs): contract violation [expected: number, given: %s]",
                         poppedArg));
             } else {
-                return ((SchemeNumber) poppedArg).absolute();
+                continuation.getCallerContinuation().setReturnValue(((SchemeNumber) poppedArg).absolute());
+                return continuation.getCallerContinuation();
             }
         }
     }

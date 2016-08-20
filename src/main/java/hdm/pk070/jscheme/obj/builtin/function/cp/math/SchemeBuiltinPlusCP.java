@@ -1,30 +1,31 @@
-package hdm.pk070.jscheme.obj.builtin.function.math;
+package hdm.pk070.jscheme.obj.builtin.function.cp.math;
 
 import hdm.pk070.jscheme.error.SchemeError;
 import hdm.pk070.jscheme.obj.SchemeObject;
-import hdm.pk070.jscheme.obj.builtin.function.SchemeBuiltinFunction;
+import hdm.pk070.jscheme.obj.builtin.function.SchemeBuiltinFunctionCP;
 import hdm.pk070.jscheme.obj.builtin.simple.number.SchemeNumber;
 import hdm.pk070.jscheme.obj.builtin.simple.number.exact.SchemeInteger;
+import hdm.pk070.jscheme.obj.continuation.SchemeContinuation;
 import hdm.pk070.jscheme.stack.SchemeCallStack;
 
 /**
- * Implementing "+" as a built-in function for JScheme
- *
  * @author patrick.kleindienst
  */
-public class SchemeBuiltinPlus extends SchemeBuiltinFunction {
+public class SchemeBuiltinPlusCP extends SchemeBuiltinFunctionCP {
 
-
-    public static SchemeBuiltinPlus create() {
-        return new SchemeBuiltinPlus();
+    public static SchemeBuiltinPlusCP create() {
+        return new SchemeBuiltinPlusCP();
     }
 
-    private SchemeBuiltinPlus() {
+    private SchemeBuiltinPlusCP() {
         super("+");
     }
 
     @Override
-    public SchemeNumber call(int argCount) throws SchemeError {
+    public SchemeContinuation call(SchemeContinuation continuation) throws SchemeError {
+        Object[] arguments = continuation.getArguments();
+        int argCount = (int) arguments[0];
+
         SchemeNumber result = new SchemeInteger(0);
 
         for (int i = 0; i < argCount; i++) {
@@ -35,6 +36,8 @@ public class SchemeBuiltinPlus extends SchemeBuiltinFunction {
             }
             result = result.add(((SchemeNumber) poppedArg));
         }
-        return result;
+
+        continuation.getCallerContinuation().setReturnValue(result);
+        return continuation.getCallerContinuation();
     }
 }

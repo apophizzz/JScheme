@@ -1,10 +1,11 @@
-package hdm.pk070.jscheme.obj.builtin.function.math;
+package hdm.pk070.jscheme.obj.builtin.function.cp.math;
 
 import hdm.pk070.jscheme.error.SchemeError;
 import hdm.pk070.jscheme.obj.SchemeObject;
-import hdm.pk070.jscheme.obj.builtin.function.SchemeBuiltinFunction;
+import hdm.pk070.jscheme.obj.builtin.function.SchemeBuiltinFunctionCP;
 import hdm.pk070.jscheme.obj.builtin.simple.number.SchemeNumber;
 import hdm.pk070.jscheme.obj.builtin.simple.number.exact.SchemeInteger;
+import hdm.pk070.jscheme.obj.continuation.SchemeContinuation;
 import hdm.pk070.jscheme.stack.SchemeCallStack;
 
 import java.util.Collections;
@@ -12,23 +13,24 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * This class provides the built-in division operation for JScheme.
- *
  * @author patrick.kleindienst
  */
-public final class SchemeBuiltinDivide extends SchemeBuiltinFunction {
+public class SchemeBuiltinDivideCP extends SchemeBuiltinFunctionCP {
 
 
-    public static SchemeBuiltinDivide create() {
-        return new SchemeBuiltinDivide();
+    public static SchemeBuiltinDivideCP create() {
+        return new SchemeBuiltinDivideCP();
     }
 
-    private SchemeBuiltinDivide() {
+    private SchemeBuiltinDivideCP() {
         super("/");
     }
 
     @Override
-    public SchemeNumber call(int argCount) throws SchemeError {
+    public SchemeContinuation call(SchemeContinuation continuation) throws SchemeError {
+        Object[] arguments = continuation.getArguments();
+        int argCount = (int) arguments[0];
+
         SchemeNumber divisionResult;
 
         // Division expects at least one argument
@@ -43,7 +45,9 @@ public final class SchemeBuiltinDivide extends SchemeBuiltinFunction {
                 throw new SchemeError(String.format("(/): contract violation [expected: number, given: %s]",
                         poppedArg));
             }
-            return new SchemeInteger(1).divide(((SchemeNumber) poppedArg));
+            continuation.getCallerContinuation().setReturnValue(new SchemeInteger(1).divide(((SchemeNumber)
+                    poppedArg)));
+            return continuation.getCallerContinuation();
         } else {
 
             List<SchemeNumber> argList = new LinkedList<>();
@@ -65,9 +69,8 @@ public final class SchemeBuiltinDivide extends SchemeBuiltinFunction {
             for (SchemeNumber currentArg : argList) {
                 divisionResult = divisionResult.divide(currentArg);
             }
-
-            return divisionResult;
+            continuation.getCallerContinuation().setReturnValue(divisionResult);
+            return continuation.getCallerContinuation();
         }
     }
-
 }
