@@ -33,7 +33,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <mainClass>hdm.pk070.jscheme.JScheme</mainClass>
+                    <mainClass>hdm.pk070.jscheme.JSchemeCP</mainClass>
                 </configuration>
             </plugin>
 
