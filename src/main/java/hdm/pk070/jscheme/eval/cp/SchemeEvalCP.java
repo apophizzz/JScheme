@@ -1,8 +1,8 @@
 package hdm.pk070.jscheme.eval.cp;
 
 import hdm.pk070.jscheme.error.SchemeError;
-import hdm.pk070.jscheme.eval.SymbolEvaluator;
 import hdm.pk070.jscheme.eval.cp.list.SchemeListEvaluatorCP;
+import hdm.pk070.jscheme.eval.cp.symbol.SchemeSymbolEvaluatorCP;
 import hdm.pk070.jscheme.obj.SchemeContinuationFunction;
 import hdm.pk070.jscheme.obj.SchemeObject;
 import hdm.pk070.jscheme.obj.builtin.simple.SchemeCons;
@@ -38,9 +38,9 @@ public class SchemeEvalCP extends SchemeContinuationFunction {
                 arguments[1];
 
         if (expression.typeOf(SchemeSymbol.class)) {
-            SchemeObject result = SymbolEvaluator.getInstance().doEval((SchemeSymbol) expression, environment);
-            continuation.getCallerContinuation().setReturnValue(result);
-            return continuation.getCallerContinuation();
+            continuation.setArguments(expression, environment);
+            continuation.setProgramCounter(new SchemeSymbolEvaluatorCP());
+            return continuation;
         } else if (expression.typeOf(SchemeCons.class)) {
             continuation.setArguments(expression, environment);
             continuation.setProgramCounter(new SchemeListEvaluatorCP());
