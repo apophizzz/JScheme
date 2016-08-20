@@ -65,13 +65,16 @@ public final class JSchemeSetup {
 
     private static void printWelcomeScreen() {
         System.out.println();
+        System.out.println("  Welcome to");
         System.out.println(" *****************************************");
-        System.out.println("  ####  ###   ### #   # #### #   # ####");
-        System.out.println("     # #     #    #   # #    ## ## #");
-        System.out.println("     # #### #     ##### #### # # # ####");
-        System.out.println("     #    #  #    #   # #    #   # #");
-        System.out.println("  #### ###    ### #   # #### #   # ####");
+        System.out.println("   ####  ###   ### #   # #### #   # ####");
+        System.out.println("      # #     #    #   # #    ## ## #");
+        System.out.println("      # #### #     ##### #### # # # ####");
+        System.out.println("      #    #  #    #   # #    #   # #");
+        System.out.println("   #### ###    ### #   # #### #   # ####");
         System.out.println(" *****************************************");
+        System.out.println(" [continuation passing enabled]");
         System.out.println();
     }
+
 }
