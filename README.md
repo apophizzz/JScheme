@@ -196,5 +196,21 @@ might lead to a bloated stack.
 Consider a function which computes the faculty of number x:
     
 ```
-(define (fac x) (eq? x 0) 1 (* x (fac (- x 1))))
-```    
+>> (define (fac x) (if (eq? 0 x) 1 (* x (fac (- x 1)))))
+>> (fac 5)
+=> 120
+```   
+
+Now see what happens if you pass a very large number to _fac_:
+
+```java
+>> (fac 1000)
+Exception in thread "main" java.lang.StackOverflowError
+	at java.lang.Character.codePointAt(Character.java:4866)
+	at java.util.regex.Pattern$CharProperty.match(Pattern.java:3775)
+	at java.util.regex.Pattern$GroupHead.match(Pattern.java:4658)
+	at java.util.regex.Pattern$Branch.match(Pattern.java:4602)
+	at java.util.regex.Pattern$Branch.match(Pattern.java:4602)
+	at java.util.regex.Pattern$Branch.match(Pattern.java:4602)
+```
+ 
