@@ -18,6 +18,8 @@ offered by Claus Gittinger at [Stuttgart Media University](https://www.hdm-stutt
 On the master branch, you will find a version that has been implemented in classical style, whereas the _cont\_passing_ branch offers tail call
 optimization in the form of continuation passing style. 
 
+Current branch: master (continuation passing **disabled**)
+
 <br>
 
 ## CI status
