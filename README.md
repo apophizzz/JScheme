@@ -8,13 +8,13 @@ offered by Claus Gittinger at [Stuttgart Media University](https://www.hdm-stutt
 On the master branch, you will find a version that has been implemented in classical style, whereas the _cont\_passing_ branch offers tail call
 optimization in the form of continuation passing style. 
 
----
+
 
 ## CI status
 
 Travis CI: [![Build Status](https://travis-ci.org/PaddySmalls/JScheme.svg?branch=master)](https://travis-ci.org/PaddySmalls/JScheme)
 
----
+
 
 ## Getting started
 
@@ -33,7 +33,6 @@ Make sure that Maven has been added to your _PATH_ and run the following goals:
 ```$ mvn compile exec:java```
 
 
----
 
 ## Functional range
 
@@ -58,7 +57,7 @@ Special types:
 ### 2) Built-in functions
 A great set of pre-defined functions are available out of the box. 
 
-#### Arithmetic functions
+#### a) Arithmetic functions:
 
 Addition:
 ```
@@ -91,7 +90,7 @@ Absolute value:
 ```
 
 
-#### Working with lists
+#### b) Working with lists:
 
 Create lists (1):
 ```
@@ -125,7 +124,7 @@ Check if any Scheme object is a list:
 => #f
 ```
 
-#### Comparing Scheme objects
+#### c) Comparing Scheme objects:
 ```
 >> (eq? 1 1)
 => #t
@@ -137,14 +136,14 @@ Check if any Scheme object is a list:
 
 ### 3) Syntax
 
-#### Defining variables
+#### a) Defining variables:
 ```
 >> (define foo 42)
 >> foo
 => 42
 ```
 
-#### Defining custom functions
+#### b) Defining custom functions:
 ```
 >> (define (add1 x) (+ x 1))
 >> add1
@@ -153,3 +152,28 @@ Check if any Scheme object is a list:
 => 3
 ```
 
+#### c) Using lambda and higher order functions:
+```
+>> (define (make-adder x) (lambda (y) (+ x y)))
+>> (define add5 (make-adder 5))
+>> add5
+=> <procedure: anonymous lambda>
+>> (add5 1)
+=> 6
+```
+
+#### d) If statements:
+```
+>> (if #t "true" "false")
+=> "true"
+>> (if "" "true" "false")
+=> "false"
+```
+
+#### e) Quoting your input:
+```
+>> (quote (+ 1 2 3 4 5))
+=> '(+ 1 2 3 4 5)
+>> 'foobar
+=> foobar
+```
