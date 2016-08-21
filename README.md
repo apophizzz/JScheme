@@ -1,8 +1,6 @@
 # JScheme - Scheme interpreter written in Java
 
 
-## Synopsis
-
 This is my implementation of a Scheme interpreter which has been developed for the lecture _Design und Implementierung fortgeschrittener Programmiersprachen_
 offered by Claus Gittinger at [Stuttgart Media University](https://www.hdm-stuttgart.de/) (course of studies: Computer Science and Media). 
 On the master branch, you will find a version that has been implemented in classical style, whereas the _cont\_passing_ branch offers tail call
