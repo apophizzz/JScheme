@@ -203,14 +203,23 @@ Consider a function which computes the faculty of number x:
 
 Now see what happens if you pass a very large number to _fac_:
 
-```java
+```
 >> (fac 1000)
 Exception in thread "main" java.lang.StackOverflowError
 	at java.lang.Character.codePointAt(Character.java:4866)
 	at java.util.regex.Pattern$CharProperty.match(Pattern.java:3775)
 	at java.util.regex.Pattern$GroupHead.match(Pattern.java:4658)
-	at java.util.regex.Pattern$Branch.match(Pattern.java:4602)
-	at java.util.regex.Pattern$Branch.match(Pattern.java:4602)
-	at java.util.regex.Pattern$Branch.match(Pattern.java:4602)
+	...
 ```
  
+The JScheme version on this branch is based on continuation passing, transforming
+recursive calls into loops. Therefore, the Java stack won't become very large, regardless
+of how many recursive calls arr triggered:
+
+```
+>> (fac 1000)
+=> 0
+```
+
+In fact, we get an integer overflow. But you can also see that there's no _StackOverflowError_
+any more.
