@@ -6,13 +6,13 @@ offered by Claus Gittinger at [Stuttgart Media University](https://www.hdm-stutt
 On the master branch, you will find a version that has been implemented in classical style, whereas the _cont\_passing_ branch offers tail call
 optimization in the form of continuation passing style. 
 
-
+<br>
 
 ## CI status
 
 Travis CI: [![Build Status](https://travis-ci.org/PaddySmalls/JScheme.svg?branch=master)](https://travis-ci.org/PaddySmalls/JScheme)
 
-
+<br>
 
 ## Getting started
 
@@ -30,7 +30,7 @@ Make sure that Maven has been added to your _PATH_ and run the following goals:
 
 ```$ mvn compile exec:java```
 
-
+<br>
 
 ## Functional range
 
