@@ -1,14 +1,14 @@
 package hdm.pk070.jscheme.table.symbolTable;
 
-import hdm.pk070.jscheme.table.hash.HashAlgProvider;
-import hdm.pk070.jscheme.table.hash.impl.StandardHashAlgProvider;
 import hdm.pk070.jscheme.obj.builtin.simple.SchemeSymbol;
 import hdm.pk070.jscheme.table.ResizableTable;
+import hdm.pk070.jscheme.table.hash.HashAlgProvider;
+import hdm.pk070.jscheme.table.hash.impl.StandardHashAlgProvider;
 
 import java.util.Objects;
 
 /**
- *
+ * @author patrick.kleindienst
  */
 public class SchemeSymbolTable extends ResizableTable<String, SchemeSymbol> {
 

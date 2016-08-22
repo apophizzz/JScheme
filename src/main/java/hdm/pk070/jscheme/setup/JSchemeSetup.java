@@ -17,6 +17,8 @@ import hdm.pk070.jscheme.table.environment.entry.EnvironmentEntry;
 import hdm.pk070.jscheme.table.symbolTable.SchemeSymbolTable;
 
 /**
+ * This class is responsible for setting up all built-in functions as well as built-in syntax.
+ *
  * @author patrick.kleindienst
  */
 public final class JSchemeSetup {

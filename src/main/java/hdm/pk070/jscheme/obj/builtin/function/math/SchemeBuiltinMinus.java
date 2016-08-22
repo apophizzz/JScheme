@@ -12,6 +12,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
+ * Computing the difference of two {@link SchemeNumber} objects.
+ *
  * @author patrick.kleindienst
  */
 public class SchemeBuiltinMinus extends SchemeBuiltinFunction {

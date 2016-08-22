@@ -5,6 +5,9 @@ import hdm.pk070.jscheme.obj.SchemeObject;
 import java.util.Objects;
 
 /**
+ * This class poses a JScheme list. In Scheme, every list is made up of one or more cons cells. In other words, lists
+ * in Scheme are implemented as linked lists.
+ *
  * @author patrick.kleindienst
  */
 public final class SchemeCons extends SchemeObject {

@@ -9,7 +9,7 @@ import hdm.pk070.jscheme.setup.JSchemeSetup;
 import hdm.pk070.jscheme.table.environment.GlobalEnvironment;
 
 /**
- * JScheme starting point
+ * JScheme starting point.
  *
  * @author patrick.kleindienst
  */

@@ -7,8 +7,12 @@ import hdm.pk070.jscheme.obj.builtin.simple.SchemeNil;
 import hdm.pk070.jscheme.reader.SchemeCharacterReader;
 import hdm.pk070.jscheme.reader.SchemeReader;
 
+import java.io.InputStream;
+
 /**
+ * Read a list from current {@link InputStream}.
  *
+ * @author patrick.kleindienst
  */
 public class ListReader extends SchemeObjReader {
 

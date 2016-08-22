@@ -2,19 +2,22 @@ package hdm.pk070.jscheme.reader.obj;
 
 import hdm.pk070.jscheme.SchemeConstants;
 import hdm.pk070.jscheme.error.SchemeError;
-import hdm.pk070.jscheme.obj.builtin.simple.bool.SchemeFalse;
 import hdm.pk070.jscheme.obj.builtin.simple.SchemeNil;
 import hdm.pk070.jscheme.obj.builtin.simple.SchemeSymbol;
+import hdm.pk070.jscheme.obj.builtin.simple.bool.SchemeFalse;
 import hdm.pk070.jscheme.obj.builtin.simple.bool.SchemeTrue;
 import hdm.pk070.jscheme.reader.SchemeCharacterReader;
 import hdm.pk070.jscheme.table.symbolTable.SchemeSymbolTable;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.io.InputStream;
 import java.util.Optional;
 
 /**
+ * Read a {@link SchemeSymbol} from {@link InputStream}.
  *
+ * @author patrick.kleindienst
  */
 public class SymbolObjReader extends SchemeObjReader {
 

@@ -10,6 +10,8 @@ import hdm.pk070.jscheme.obj.builtin.simple.bool.SchemeTrue;
 import hdm.pk070.jscheme.stack.SchemeCallStack;
 
 /**
+ * Checks if the uppermost element on {@link SchemeCallStack} is a list.
+ *
  * @author patrick.kleindienst
  */
 public final class SchemeBuiltinIsCons extends SchemeBuiltinFunction {

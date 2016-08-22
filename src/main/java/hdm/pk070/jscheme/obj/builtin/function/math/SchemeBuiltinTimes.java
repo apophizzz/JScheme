@@ -8,6 +8,8 @@ import hdm.pk070.jscheme.obj.builtin.simple.number.exact.SchemeInteger;
 import hdm.pk070.jscheme.stack.SchemeCallStack;
 
 /**
+ * Computing the product of n {@link SchemeNumber} objects.
+ *
  * @author patrick.kleindienst
  */
 public final class SchemeBuiltinTimes extends SchemeBuiltinFunction {

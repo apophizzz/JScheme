@@ -69,6 +69,19 @@ class ListEvaluator extends AbstractEvaluator<SchemeCons> {
                 " arguments, given: %s]", functionSlot));
     }
 
+    /**
+     * Invoking any built-in syntax. That might be any existing implementation of {@link SchemeBuiltinSyntax}.
+     *
+     * @param builtinSyntax
+     *         The syntax to invoke.
+     * @param argumentList
+     *         The arguments that shall be passed to the syntax.
+     * @param environment
+     *         The environment in whose context the syntax shall be evaluated.
+     * @return Whatever is produced when applying syntax.
+     * @throws SchemeError
+     *         In case any syntax is not used correctly.
+     */
     private SchemeObject evaluateBuiltinSyntax(SchemeBuiltinSyntax builtinSyntax, SchemeObject argumentList,
                                                Environment<SchemeSymbol, EnvironmentEntry> environment) throws
             SchemeError {

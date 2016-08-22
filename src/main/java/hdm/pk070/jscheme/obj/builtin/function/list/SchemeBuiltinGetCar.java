@@ -7,6 +7,8 @@ import hdm.pk070.jscheme.obj.builtin.simple.SchemeCons;
 import hdm.pk070.jscheme.stack.SchemeCallStack;
 
 /**
+ * Returns the CAR of a list.
+ *
  * @author patrick.kleindienst
  */
 public final class SchemeBuiltinGetCar extends SchemeBuiltinFunction {

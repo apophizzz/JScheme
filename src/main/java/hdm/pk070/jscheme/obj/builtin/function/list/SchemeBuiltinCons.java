@@ -7,6 +7,8 @@ import hdm.pk070.jscheme.obj.builtin.simple.SchemeCons;
 import hdm.pk070.jscheme.stack.SchemeCallStack;
 
 /**
+ * This function can be used to create lists consisting of {@link SchemeCons} cells.
+ *
  * @author patrick.kleindienst
  */
 public final class SchemeBuiltinCons extends SchemeBuiltinFunction {
@@ -26,7 +28,7 @@ public final class SchemeBuiltinCons extends SchemeBuiltinFunction {
                     "given number [expected: 2, given: %d]", argCount));
         }
 
-        // switch order of argument
+        // switch order of arguments
         SchemeObject arg2 = SchemeCallStack.instance().pop();
         SchemeObject arg1 = SchemeCallStack.instance().pop();
 

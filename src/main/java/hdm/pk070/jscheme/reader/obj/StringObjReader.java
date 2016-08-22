@@ -7,8 +7,12 @@ import hdm.pk070.jscheme.reader.SchemeCharacterReader;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.io.InputStream;
+
 /**
+ * Read {@link SchemeString} from {@link InputStream}.
  *
+ * @author patrick.kleindienst
  */
 public class StringObjReader extends SchemeObjReader {
 

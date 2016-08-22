@@ -7,6 +7,8 @@ import hdm.pk070.jscheme.obj.builtin.simple.number.SchemeNumber;
 import hdm.pk070.jscheme.stack.SchemeCallStack;
 
 /**
+ * Returning the absolute value of any number.
+ *
  * @author patrick.kleindienst
  */
 public final class SchemeBuiltinAbsolute extends SchemeBuiltinFunction {
