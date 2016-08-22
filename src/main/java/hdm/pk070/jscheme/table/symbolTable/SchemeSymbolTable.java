@@ -8,7 +8,7 @@ import hdm.pk070.jscheme.table.ResizableTable;
 import java.util.Objects;
 
 /**
- *
+ * @author patrick.kleindienst
  */
 public class SchemeSymbolTable extends ResizableTable<String, SchemeSymbol> {
 

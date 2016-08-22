@@ -3,7 +3,9 @@ package hdm.pk070.jscheme.obj.builtin.simple;
 import hdm.pk070.jscheme.obj.SchemeObject;
 
 /**
+ * A JScheme symbol which is used for defining variable and function bindings.
  *
+ * @author patrick.kleindienst
  */
 public class SchemeSymbol extends SchemeObject {
 

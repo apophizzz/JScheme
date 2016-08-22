@@ -25,9 +25,9 @@ abstract class SchemeObjReader {
     /**
      * Read the next {@link SchemeObject} available from the input stream.
      *
-     * @return The object which has been read
+     * @return The object which has been read.
      * @throws SchemeError
-     *         if anything goes wrong during read process
+     *         if anything goes wrong during read process.
      */
     public abstract SchemeObject read() throws SchemeError;
 

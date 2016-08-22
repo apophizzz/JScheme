@@ -6,11 +6,14 @@ import hdm.pk070.jscheme.obj.builtin.simple.number.exact.SchemeInteger;
 import hdm.pk070.jscheme.obj.builtin.simple.number.floatComplex.SchemeFloat;
 import hdm.pk070.jscheme.reader.SchemeCharacterReader;
 
+import java.io.InputStream;
 import java.util.LinkedList;
 import java.util.List;
 
 /**
+ * Read {@link SchemeNumber} from {@link InputStream}.
  *
+ * @author patrick.kleindienst
  */
 public class NumberObjReader extends SchemeObjReader {
 

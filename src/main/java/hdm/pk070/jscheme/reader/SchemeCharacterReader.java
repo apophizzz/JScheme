@@ -2,6 +2,7 @@ package hdm.pk070.jscheme.reader;
 
 import hdm.pk070.jscheme.SchemeConstants;
 import hdm.pk070.jscheme.error.SchemeError;
+import hdm.pk070.jscheme.obj.builtin.simple.number.SchemeNumber;
 import hdm.pk070.jscheme.reader.exception.SchemeReaderException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -51,6 +52,13 @@ public class SchemeCharacterReader {
         return nextChar == ch;
     }
 
+    /**
+     * Check if the next char available equals <code>ch</code>.
+     *
+     * @param ch
+     *         The character the next char from {@link InputStream} shall be compared to.
+     * @return True if next char and <code>ch/code> are equal, false otherwise.
+     */
     public boolean nextCharIs(char ch) {
         char nextChar = readFromPushbackReader();
         unreadCharacter(nextChar);
@@ -58,12 +66,24 @@ public class SchemeCharacterReader {
     }
 
 
+    /**
+     * Fetch next char available.
+     *
+     * @return The next char available at the {@link InputStream}.
+     */
     public char nextChar() {
         char ch = readFromPushbackReader();
         LOGGER.debug(String.format("CharacterReader consumed char %c", ch));
         return ch;
     }
 
+    /**
+     * Check if the current input is a {@link SchemeNumber}.
+     *
+     * @return True if number, false otherwise.
+     * @throws SchemeError
+     *         In case of invalid input.
+     */
     public boolean inputIsNumber() throws SchemeError {
         List<Character> charBuffer = new LinkedList<>();
         while (nextCharIsDigit() || nextCharIsDecimalSeparator() || nextCharIsPrefix()) {
@@ -91,6 +111,11 @@ public class SchemeCharacterReader {
         return false;
     }
 
+    /**
+     * Check if next char is the algebraic sign of a number.
+     *
+     * @return
+     */
     public boolean nextCharIsPrefix() {
         char nextChar = readFromPushbackReader();
         boolean isPrefix = (nextChar == '-' || nextChar == '+') && nextCharIsDigit();
@@ -99,6 +124,13 @@ public class SchemeCharacterReader {
     }
 
 
+    /**
+     * Check if next character marks the beginning or end of a list.
+     *
+     * @param ch
+     *         The character to check.
+     * @return True if '(' or ')', false otherwise.
+     */
     private boolean isBeginningOrEndOfList(char ch) {
         return ((ch == '(') || (ch == ')'));
     }
@@ -114,6 +146,11 @@ public class SchemeCharacterReader {
         return Character.isDigit(nextChar);
     }
 
+    /**
+     * Check if next char is decimal separator.
+     *
+     * @return True if decimal separator, false otherwise.
+     */
     public boolean nextCharIsDecimalSeparator() {
         char nextChar = readFromPushbackReader();
         unreadCharacter(nextChar);
@@ -121,6 +158,11 @@ public class SchemeCharacterReader {
     }
 
 
+    /**
+     * Check if next char is whitespace.
+     *
+     * @return True if whitespace, false otherwise.
+     */
     public boolean nextCharIsWhiteSpace() {
         char ch = readFromPushbackReader();
         unreadCharacter(ch);
@@ -162,7 +204,7 @@ public class SchemeCharacterReader {
     /**
      * Read the next non-whitespace character from the input stream.
      *
-     * @return the next non-whitespace character available
+     * @return the next non-whitespace character available.
      */
     public char nextNonWhitespaceChar() {
         char ch;
@@ -172,6 +214,9 @@ public class SchemeCharacterReader {
         return ch;
     }
 
+    /**
+     * Skip over input as long as it's whitespace.
+     */
     public void skipLeadingWhitespace() {
         char ch;
         do {
@@ -181,14 +226,14 @@ public class SchemeCharacterReader {
     }
 
     /**
-     *
+     * Read and simply drop next character.
      */
     public void skipNext() {
         readFromPushbackReader();
     }
 
     /**
-     *
+     * Read and drop anything from {@link PushbackReader} until its empty.
      */
     public void clearInputStream() {
         do {
@@ -196,6 +241,11 @@ public class SchemeCharacterReader {
         } while (isPushbackReaderReady());
     }
 
+    /**
+     * Check if {@link PushbackReader} is ready.
+     *
+     * @return True if {@link PushbackReader} is ready, false otherwise.
+     */
     private boolean isPushbackReaderReady() {
         boolean ready = false;
         try {
@@ -207,7 +257,7 @@ public class SchemeCharacterReader {
     }
 
     /**
-     * Free the {@link PushbackReader} instance and all associated resources
+     * Free the {@link PushbackReader} instance and all associated resources.
      */
     public void shutdown() {
         try {

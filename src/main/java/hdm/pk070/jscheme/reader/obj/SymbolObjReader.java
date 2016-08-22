@@ -11,10 +11,13 @@ import hdm.pk070.jscheme.table.symbolTable.SchemeSymbolTable;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.io.InputStream;
 import java.util.Optional;
 
 /**
+ * Read a {@link SchemeSymbol} from {@link InputStream}.
  *
+ * @author patrick.kleindienst
  */
 public class SymbolObjReader extends SchemeObjReader {
 

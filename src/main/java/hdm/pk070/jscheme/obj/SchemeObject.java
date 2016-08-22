@@ -3,6 +3,8 @@ package hdm.pk070.jscheme.obj;
 import java.util.Objects;
 
 /**
+ * This is the most essential type in JScheme. Almost anything in JScheme is a {@link SchemeObject}.
+ *
  * @author patrick.kleindienst
  */
 public abstract class SchemeObject {
@@ -13,6 +15,13 @@ public abstract class SchemeObject {
     }
 
 
+    /**
+     * Check if a {@link SchemeObject} instance has a certain type.
+     *
+     * @param clazz
+     *         The type the object shall be checked against.
+     * @return True if this object is of type <code>clazz</code>, false otherwise.
+     */
     public final <T extends SchemeObject> boolean typeOf(Class<T> clazz) {
         if (Objects.nonNull(clazz)) {
             return this.getClass().equals(clazz);
@@ -20,6 +29,13 @@ public abstract class SchemeObject {
         throw new IllegalArgumentException("Parameter 'clazz' must not be null.");
     }
 
+    /**
+     * Check if a {@link SchemeObject} is of type <code>clazz</code> or is a subtype of it.
+     *
+     * @param clazz
+     *         The type the object shall be checked against.
+     * @return True if this object is of type <code>clazz</code> (or subtype of it), false otherwise.
+     */
     public final <T extends SchemeObject> boolean subtypeOf(Class<T> clazz) {
         if (Objects.nonNull(clazz)) {
             return clazz.isAssignableFrom(this.getClass());

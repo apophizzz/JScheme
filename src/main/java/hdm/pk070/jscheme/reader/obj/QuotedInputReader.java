@@ -9,7 +9,11 @@ import hdm.pk070.jscheme.reader.SchemeCharacterReader;
 import hdm.pk070.jscheme.reader.SchemeReader;
 import hdm.pk070.jscheme.table.symbolTable.SchemeSymbolTable;
 
+import java.io.InputStream;
+
 /**
+ * Read any sort of quoted {@link SchemeObject} from {@link InputStream}.
+ *
  * @author patrick.kleindienst
  */
 public class QuotedInputReader extends SchemeObjReader {

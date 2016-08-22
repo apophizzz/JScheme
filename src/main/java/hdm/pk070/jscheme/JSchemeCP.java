@@ -10,7 +10,7 @@ import hdm.pk070.jscheme.setup.JSchemeSetup;
 /**
  * @author patrick.kleindienst
  */
-public class JSchemeCP {
+class JSchemeCP {
 
     public static void main(String[] args) throws SchemeError {
 
