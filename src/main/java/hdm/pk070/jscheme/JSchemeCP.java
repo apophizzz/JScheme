@@ -8,14 +8,15 @@ import hdm.pk070.jscheme.obj.continuation.SchemeContinuation;
 import hdm.pk070.jscheme.setup.JSchemeSetup;
 
 /**
+ * Start CPS-flavoured JScheme and enter trampoline. We need a trampoline here because Assembler-like jumps are not
+ * possible in Java.
+ *
  * @author patrick.kleindienst
  */
 class JSchemeCP {
 
     public static void main(String[] args) throws SchemeError {
-
         JSchemeSetup.init();
-
         startup();
     }
 
