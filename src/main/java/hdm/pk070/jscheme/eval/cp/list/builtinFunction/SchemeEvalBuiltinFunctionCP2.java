@@ -7,6 +7,9 @@ import hdm.pk070.jscheme.obj.continuation.SchemeContinuation;
 import hdm.pk070.jscheme.stack.SchemeCallStack;
 
 /**
+ * Part 2 of built-in function evaluation. The evaluation result is pushed on the stack. Afterwards, the execution
+ * flow jumps back to first part.
+ *
  * @author patrick.kleindienst
  */
 public class SchemeEvalBuiltinFunctionCP2 extends SchemeContinuationFunction {

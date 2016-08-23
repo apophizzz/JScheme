@@ -1,6 +1,7 @@
 package hdm.pk070.jscheme.eval.cp.list.customFunction;
 
 import hdm.pk070.jscheme.error.SchemeError;
+import hdm.pk070.jscheme.eval.cp.SchemeEvalCP;
 import hdm.pk070.jscheme.obj.SchemeContinuationFunction;
 import hdm.pk070.jscheme.obj.SchemeObject;
 import hdm.pk070.jscheme.obj.builtin.simple.SchemeCons;
@@ -12,6 +13,9 @@ import hdm.pk070.jscheme.table.environment.LocalEnvironment;
 import hdm.pk070.jscheme.table.environment.entry.EnvironmentEntry;
 
 /**
+ * Part 2: Take the evaluated argument from {@link SchemeEvalCP} and add it to the function's environment.
+ * Afterwards, the argument and parameter list CAR is dropped, whereas the rest list is again passed to part 1.
+ *
  * @author patrick.kleindienst
  */
 @SuppressWarnings("unchecked")

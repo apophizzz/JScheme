@@ -10,6 +10,8 @@ import hdm.pk070.jscheme.obj.continuation.SchemeContinuation;
 import hdm.pk070.jscheme.table.environment.LocalEnvironment;
 
 /**
+ * Part 3: Evaluate the function body and return the (last) result by attaching it to the caller continuation.
+ *
  * @author patrick.kleindienst
  */
 public class SchemeEvalCustomUserFunctionCP3 extends SchemeContinuationFunction {

@@ -1,9 +1,15 @@
 package hdm.pk070.jscheme.obj.continuation;
 
+import hdm.pk070.jscheme.cp.trampoline.SchemeTrampoline;
 import hdm.pk070.jscheme.obj.SchemeContinuationFunction;
 import hdm.pk070.jscheme.obj.SchemeObject;
 
 /**
+ * This class represents a continuation for realizing a program flow based on CP-style. Direct function calls are
+ * replaced by continuation objects being returned to {@link SchemeTrampoline}, which in turn extracts and invokes
+ * the next available program counter set at the current continuation. A continuation object can be regarded as an
+ * equivalent to a stack frame.
+ *
  * @author patrick.kleindienst
  */
 public class SchemeContinuation {

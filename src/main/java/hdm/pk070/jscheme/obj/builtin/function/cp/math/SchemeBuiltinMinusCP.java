@@ -13,6 +13,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
+ * Built-in "-" in CP-style.
+ *
  * @author patrick.kleindienst
  */
 public class SchemeBuiltinMinusCP extends SchemeBuiltinFunctionCP {

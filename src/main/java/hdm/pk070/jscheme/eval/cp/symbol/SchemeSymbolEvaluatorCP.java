@@ -10,6 +10,8 @@ import hdm.pk070.jscheme.table.environment.entry.EnvironmentEntry;
 import java.util.Optional;
 
 /**
+ * Evaluate a {@link SchemeSymbol} in CP-style.
+ *
  * @author patrick.kleindienst
  */
 @SuppressWarnings("unchecked")

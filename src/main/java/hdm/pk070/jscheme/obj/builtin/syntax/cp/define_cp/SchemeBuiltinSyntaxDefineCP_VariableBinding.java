@@ -12,6 +12,9 @@ import hdm.pk070.jscheme.table.environment.Environment;
 import hdm.pk070.jscheme.table.environment.entry.EnvironmentEntry;
 
 /**
+ * The first part of creating a variable binding. Passes the variable value to {@link SchemeEvalCP} for evaluation
+ * and sets the second part as program counter.
+ *
  * @author patrick.kleindienst
  */
 @SuppressWarnings("unchecked")

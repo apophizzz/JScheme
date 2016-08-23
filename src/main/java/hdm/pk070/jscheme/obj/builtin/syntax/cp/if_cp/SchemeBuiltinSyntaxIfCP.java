@@ -12,6 +12,9 @@ import hdm.pk070.jscheme.table.environment.Environment;
 import hdm.pk070.jscheme.table.environment.entry.EnvironmentEntry;
 
 /**
+ * Part 1: Check if "if" has been invoked correctly, passing the condition to {@link SchemeEvalCP} for evaluation and
+ * finally continue with the second part as soon as the evaluation is finished.
+ *
  * @author patrick.kleindienst
  */
 @SuppressWarnings("unchecked")

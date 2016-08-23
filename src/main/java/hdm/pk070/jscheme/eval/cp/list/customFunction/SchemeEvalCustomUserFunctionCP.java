@@ -16,6 +16,10 @@ import hdm.pk070.jscheme.table.environment.entry.EnvironmentEntry;
 import java.util.Objects;
 
 /**
+ * Part 1: Fetch the custom function's param list and delegate the evaluation of corresponding arguments to
+ * {@link SchemeEvalCP}. As soon as all arguments have been evaluated, proceed with part 3 which evaluates the
+ * function body in the context of the function's environment.
+ *
  * @author patrick.kleindienst
  */
 @SuppressWarnings("unchecked")

@@ -10,6 +10,9 @@ import hdm.pk070.jscheme.table.environment.Environment;
 import hdm.pk070.jscheme.table.environment.entry.EnvironmentEntry;
 
 /**
+ * Part 1: Check if "define" has been invoked correctly and delegate the call to the next part, depending on whether
+ * a variable or function binding should be created.
+ *
  * @author patrick.kleindienst
  */
 @SuppressWarnings("unchecked")

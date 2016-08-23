@@ -10,6 +10,8 @@ import hdm.pk070.jscheme.obj.continuation.SchemeContinuation;
 import hdm.pk070.jscheme.stack.SchemeCallStack;
 
 /**
+ * Built-in "cons?" in CP-style.
+ *
  * @author patrick.kleindienst
  */
 public class SchemeBuiltinIsConsCP extends SchemeBuiltinFunctionCP {

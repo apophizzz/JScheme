@@ -13,6 +13,10 @@ import hdm.pk070.jscheme.table.environment.Environment;
 import hdm.pk070.jscheme.table.environment.entry.EnvironmentEntry;
 
 /**
+ * Part 1 of built-in function call evaluation. It passes the unevaluated arguments to {@link SchemeEvalCP} and
+ * determines the second part of built-in function evaluation to push the outcome onto the stack. As soon as all
+ * arguments have been evaluated and pushed, the built-in function is invoked.
+ *
  * @author patrick.kleindienst
  */
 @SuppressWarnings("unchecked")
@@ -44,9 +48,5 @@ public class SchemeEvalBuiltinFunctionCP extends SchemeContinuationFunction {
 
         continuation.setArguments(argCount);
         return builtinFunction.call(continuation);
-
-        // call built-in function and set result at caller continuation
-        //        continuation.getCallerContinuation().setReturnValue(builtinFunction.call(argCount));
-        //        return continuation.getCallerContinuation();
     }
 }

@@ -12,6 +12,8 @@ import hdm.pk070.jscheme.table.environment.Environment;
 import hdm.pk070.jscheme.table.environment.entry.EnvironmentEntry;
 
 /**
+ * Defining an anonymous function in CP-style.
+ *
  * @author patrick.kleindienst
  */
 @SuppressWarnings("unchecked")

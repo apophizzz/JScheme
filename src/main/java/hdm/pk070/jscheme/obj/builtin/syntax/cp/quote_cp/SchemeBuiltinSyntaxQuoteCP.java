@@ -8,6 +8,8 @@ import hdm.pk070.jscheme.obj.builtin.syntax.cp.SchemeBuiltinSyntaxCP;
 import hdm.pk070.jscheme.obj.continuation.SchemeContinuation;
 
 /**
+ * Quoting input in CP-style.
+ *
  * @author patrick.kleindienst
  */
 public class SchemeBuiltinSyntaxQuoteCP extends SchemeBuiltinSyntaxCP {

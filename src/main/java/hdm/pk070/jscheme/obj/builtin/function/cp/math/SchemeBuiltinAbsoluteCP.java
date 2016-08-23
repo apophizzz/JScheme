@@ -8,6 +8,8 @@ import hdm.pk070.jscheme.obj.continuation.SchemeContinuation;
 import hdm.pk070.jscheme.stack.SchemeCallStack;
 
 /**
+ * Built-in "abs" in CP-style.
+ *
  * @author patrick.kleindienst
  */
 public class SchemeBuiltinAbsoluteCP extends SchemeBuiltinFunctionCP {

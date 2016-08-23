@@ -9,6 +9,8 @@ import hdm.pk070.jscheme.obj.continuation.SchemeContinuation;
 import hdm.pk070.jscheme.stack.SchemeCallStack;
 
 /**
+ * Built-in "*" in CP-style.
+ *
  * @author patrick.kleindienst
  */
 public class SchemeBuiltinTimesCP extends SchemeBuiltinFunctionCP {

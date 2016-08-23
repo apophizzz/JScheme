@@ -1,6 +1,7 @@
 package hdm.pk070.jscheme.obj.builtin.syntax.cp.define_cp;
 
 import hdm.pk070.jscheme.error.SchemeError;
+import hdm.pk070.jscheme.eval.cp.SchemeEvalCP;
 import hdm.pk070.jscheme.obj.SchemeContinuationFunction;
 import hdm.pk070.jscheme.obj.SchemeObject;
 import hdm.pk070.jscheme.obj.builtin.simple.SchemeSymbol;
@@ -10,6 +11,9 @@ import hdm.pk070.jscheme.table.environment.Environment;
 import hdm.pk070.jscheme.table.environment.entry.EnvironmentEntry;
 
 /**
+ * The second part of creating a variable binding. It gets the evaluated variable value from {@link SchemeEvalCP} and
+ * stores the binding inside the available environment.
+ *
  * @author patrick.kleindienst
  */
 @SuppressWarnings("unchecked")

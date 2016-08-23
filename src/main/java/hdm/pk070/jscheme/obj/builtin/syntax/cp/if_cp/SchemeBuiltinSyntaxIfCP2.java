@@ -13,6 +13,9 @@ import hdm.pk070.jscheme.table.environment.Environment;
 import hdm.pk070.jscheme.table.environment.entry.EnvironmentEntry;
 
 /**
+ * Part 2: With the evaluated condition at hand, either the condition-met or condition-false expression is passed to
+ * {@link SchemeEvalCP}.
+ *
  * @author patrick.kleindienst
  */
 @SuppressWarnings("unchecked")

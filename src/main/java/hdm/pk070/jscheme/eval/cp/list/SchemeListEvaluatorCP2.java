@@ -16,6 +16,8 @@ import hdm.pk070.jscheme.table.environment.Environment;
 import hdm.pk070.jscheme.table.environment.entry.EnvironmentEntry;
 
 /**
+ * Part 2: Check the evaluated function slot and decide which operation to start next.
+ *
  * @author patrick.kleindienst
  */
 @SuppressWarnings("unchecked")

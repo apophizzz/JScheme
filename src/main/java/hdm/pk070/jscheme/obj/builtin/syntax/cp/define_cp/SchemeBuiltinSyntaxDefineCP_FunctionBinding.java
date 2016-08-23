@@ -13,6 +13,8 @@ import hdm.pk070.jscheme.table.environment.Environment;
 import hdm.pk070.jscheme.table.environment.entry.EnvironmentEntry;
 
 /**
+ * Creating a function binding in CP-style. Afterwards, the control flow returns to the caller.
+ *
  * @author patrick.kleindienst
  */
 @SuppressWarnings("unchecked")

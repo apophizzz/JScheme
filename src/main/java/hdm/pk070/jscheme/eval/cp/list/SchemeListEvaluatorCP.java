@@ -11,6 +11,9 @@ import hdm.pk070.jscheme.table.environment.Environment;
 import hdm.pk070.jscheme.table.environment.entry.EnvironmentEntry;
 
 /**
+ * Part 1: Pass the function slot to {@link SchemeEvalCP} to check if we have a built-in function, built-in syntax or
+ * custom function. After having finished evaluation, continue with part 2.
+ *
  * @author patrick.kleindienst
  */
 @SuppressWarnings("unchecked")
