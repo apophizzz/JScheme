@@ -39,7 +39,14 @@ Checkout the latest version of JScheme:
 
 ```$ git clone https://github.com/PaddySmalls/JScheme```
 
-### 3) Start JScheme
+### 3) Fetch and checkout _cont\_passing_ remote branch
+The CP-style branch explicitly has to be fetched and checked out:
+
+```$ git fetch```
+```$ git checkout cont_passing```
+
+
+### 4) Start JScheme
 Make sure that Maven has been added to your _PATH_ and run the following goals:
 
 ```$ mvn compile exec:java```
