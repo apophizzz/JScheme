@@ -9,8 +9,8 @@ import java.util.Objects;
 import java.util.Optional;
 
 /**
- * An abstract implementation for tables which can grow in size dynamically by rehashing their contents. A concrete
- * example is {@link GlobalEnvironment}.
+ * An abstract implementation for hash tables which can grow in size dynamically by rehashing their contents. A concrete
+ * example is {@link GlobalEnvironment}. This implementation employs a closed hash.
  *
  * @author patrick.kleindienst
  */
@@ -32,20 +32,20 @@ public abstract class ResizableTable<KEY, VALUE> extends BaseTable<KEY, VALUE> {
     public Optional<VALUE> get(final KEY key) {
         Objects.requireNonNull(key);
 
-        // 1. Extract integer hash out of key param
+        // Compute hash out of key param
         int hash = keyToHashVal(key);
 
-        // 2. Compute start index with hash
+        // Compute start index with hash (avoid negative hash values!)
         int startIndex = (hash & 0x7FFFFFFF) % currentTableSize;
 
-        // 3. Start searching value at startIndex
+        // Start searching value at startIndex
         int nextIndex = startIndex;
         LOGGER.debug(String.format("Start searching for entry with key %s at index %d", key.toString(), nextIndex));
 
-        // 4. Jump into infinite loop
+        // Jump into infinite loop
         for (; ; ) {
 
-            // 5. Check if an entry exists at current index
+            // Check if an entry exists at current index
             if (Objects.nonNull(entries[nextIndex])) {
                 VALUE entryFound = (VALUE) entries[nextIndex];
                 if (keysMatch(key, entryFound)) {
@@ -54,14 +54,14 @@ public abstract class ResizableTable<KEY, VALUE> extends BaseTable<KEY, VALUE> {
                     return Optional.of(entryFound);
                 }
 
-                // 6. Keys did not match, proceed with next index
+                // Keys did not match, proceed with next index
             } else {
-                // 7. No entry found for specified key -> Return null.
+                // No entry found for specified key -> return empty result
                 LOGGER.debug(String.format("No entry found for key %s", key.toString()));
                 return Optional.empty();
             }
 
-            // 8. Entry found was not null but didn't match -> try next
+            // Entry found was not null but didn't match -> try next
             nextIndex = ++nextIndex % currentTableSize;
 
             if (reachedStartIndexAgain(nextIndex, startIndex)) {
@@ -192,12 +192,48 @@ public abstract class ResizableTable<KEY, VALUE> extends BaseTable<KEY, VALUE> {
         return Objects.nonNull(entries[index]);
     }
 
+    /**
+     * It's left to subclasses how duplicated entries should be handled.
+     *
+     * @param newEntry
+     *         The entry which shall be inserted into table.
+     * @param oldEntry
+     *         Existing entry which has same value as {@code newEntry}.
+     * @param oldEntryIndex
+     *         The table index of the existing entry.
+     * @return The value which shall be valid. The decision is up to the subclass.
+     */
     protected abstract VALUE handleDuplicateEntries(final VALUE newEntry, final VALUE oldEntry, int oldEntryIndex);
 
+    /**
+     * It's left to subclasses how {@code key} shall be transformed into a hash. This operation is applied when
+     * searching an element within the table by a key.
+     *
+     * @param key
+     *         The key which shall be applied in order to compute a hash value.
+     * @return The computed hash.
+     */
     protected abstract int keyToHashVal(final KEY key);
 
+    /**
+     * It's left to subclasses how {@code value} shall be transformed into a hash. This operation is applied when
+     * adding an element to the table.
+     *
+     * @param value
+     *         The value which shall be applied in order to compute a hash value.
+     * @return The computed hash.
+     */
     protected abstract int valueToHashVal(final VALUE value);
 
+    /**
+     * It's left to subclasses when to entries shall be considered equal.
+     *
+     * @param entryToAdd
+     *         The entry which should be added to the table.
+     * @param existingEntry
+     *         An entry which already exists within the table.
+     * @return True if equal, false otherwise.
+     */
     protected abstract boolean entriesMatch(final VALUE entryToAdd, final VALUE existingEntry);
 
 }

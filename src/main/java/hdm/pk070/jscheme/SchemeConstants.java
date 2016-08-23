@@ -1,7 +1,9 @@
 package hdm.pk070.jscheme;
 
 /**
+ * A collection of frequently used constants.
  *
+ * @author patrick.kleindienst
  */
 public class SchemeConstants {
 
