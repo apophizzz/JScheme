@@ -1,4 +1,4 @@
-# JScheme - Scheme interpreter written in Java
+# JScheme (CPS) - Scheme interpreter written in Java
 
 
 ```
@@ -191,9 +191,8 @@ Check if any Scheme object is a list:
 ```
 
 ### 4) Special feature: Continuation passing
-Since Java does not offer tail call optimization evaluating deeply nested recursive function calls
-might lead to a bloated stack. 
-Consider a function which computes the faculty of number x:
+Since the Java stack keeps growing when evaluating deeply nested recursive function calls, you might encounter a _StackOverflowError_ when running 
+JScheme with continuation passing disabled. Consider a function which computes the faculty of number x:
     
 ```
 >> (define (fac x) (if (eq? 0 x) 1 (* x (fac (- x 1)))))
@@ -212,9 +211,9 @@ Exception in thread "main" java.lang.StackOverflowError
 	...
 ```
  
-The JScheme version on this branch is based on continuation passing, transforming
-recursive calls into loops. Therefore, the Java stack won't become very large, regardless
-of how many recursive calls arr triggered:
+The JScheme version on this branch is based on continuation passing, realizing the control flow with continuation objects 
+instead of directly calling functions. Therefore, the Java stack won't become very large, regardless
+of how many recursive calls are triggered:
 
 ```
 >> (fac 1000)
