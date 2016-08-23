@@ -42,9 +42,10 @@ Checkout the latest version of JScheme:
 ### 3) Fetch and checkout _cont\_passing_ remote branch
 The CP-style branch explicitly has to be fetched and checked out:
 
-```$ git fetch```
-
-```$ git checkout cont_passing```
+```
+$ git fetch
+$ git checkout cont_passing
+```
 
 
 ### 4) Start JScheme
