@@ -43,6 +43,7 @@ Checkout the latest version of JScheme:
 The CP-style branch explicitly has to be fetched and checked out:
 
 ```$ git fetch```
+
 ```$ git checkout cont_passing```
 
 
