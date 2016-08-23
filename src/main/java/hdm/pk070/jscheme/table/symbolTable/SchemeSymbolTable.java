@@ -8,6 +8,11 @@ import hdm.pk070.jscheme.table.hash.impl.StandardHashAlgProvider;
 import java.util.Objects;
 
 /**
+ * As the name indicated, SchemeSymbolTable is a symbol store. During JScheme execution, every symbol is only saved
+ * once. Saving symbols within the table is done by computing a hash out of the value which shall be added, whereas
+ * searching a value is done by hashing the key. The exact hashing algorithm can be replaced but has to implement
+ * {@link HashAlgProvider}.
+ *
  * @author patrick.kleindienst
  */
 public class SchemeSymbolTable extends ResizableTable<String, SchemeSymbol> {
@@ -16,10 +21,24 @@ public class SchemeSymbolTable extends ResizableTable<String, SchemeSymbol> {
 
     private final HashAlgProvider hashAlgProvider;
 
+    /**
+     * Instantiate a symbol table with a default hashing algorithm. Consider that the symbol table is implemented as
+     * a singleton.
+     *
+     * @return The symbol table instance.
+     */
     public static SchemeSymbolTable getInstance() {
         return withHashAlgorithm(new StandardHashAlgProvider());
     }
 
+    /**
+     * Instantiate a symbol table with a certain hashing algorithm. Consider that the symbol table is implemented as
+     * a singleton.
+     *
+     * @param hashAlgProvider
+     *         Hashing algorithm which implements {@link HashAlgProvider}.
+     * @return The symbol table instance.
+     */
     public static SchemeSymbolTable withHashAlgorithm(final HashAlgProvider hashAlgProvider) {
         if (Objects.isNull(schemeSymbolTableInstance)) {
             schemeSymbolTableInstance = new SchemeSymbolTable(hashAlgProvider);
