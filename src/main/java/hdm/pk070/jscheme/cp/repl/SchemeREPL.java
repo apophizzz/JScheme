@@ -10,6 +10,8 @@ import hdm.pk070.jscheme.reader.SchemeReader;
 import hdm.pk070.jscheme.table.environment.GlobalEnvironment;
 
 /**
+ * This is the entry point for JScheme REPL.
+ *
  * @author patrick.kleindienst
  */
 public class SchemeREPL extends SchemeContinuationFunction {

@@ -6,6 +6,8 @@ import hdm.pk070.jscheme.obj.continuation.SchemeContinuation;
 import hdm.pk070.jscheme.print.SchemePrint;
 
 /**
+ * REPL part 2: Printing the result and re-entering the REPL.
+ *
  * @author patrick.kleindienst
  */
 public class SchemeREPL2 extends SchemeContinuationFunction {
