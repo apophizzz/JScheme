@@ -49,7 +49,7 @@ Instead of starting JScheme directly using Maven, you can also build a JAR and r
 
 ```
 $ mvn clean package
-$ cd /target
+$ cd target/
 $ java -jar JScheme-1.0-jar-with-dependencies.jar
 ```
 
