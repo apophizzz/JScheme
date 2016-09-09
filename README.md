@@ -53,6 +53,16 @@ Make sure that Maven has been added to your _PATH_ and run the following goals:
 
 ```$ mvn compile exec:java```
 
+### 5) Alternative approach: Build and run JAR
+Instead of starting JScheme directly using Maven, you can also build a JAR and run it:
+
+```
+$ mvn clean package
+$ cd /target
+$ java -jar JScheme-1.0-jar-with-dependencies.jar
+```
+
+
 <br>
 
 ## Functional range
