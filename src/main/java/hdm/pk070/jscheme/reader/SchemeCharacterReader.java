@@ -191,13 +191,13 @@ public class SchemeCharacterReader {
      * is called next time.
      *
      * @param ch
-     *         the character to 'unread'
+     *         the character to 'unread'.
      */
     private void unreadCharacter(char ch) {
         try {
             pushbackReader.unread(ch);
         } catch (IOException e) {
-            throw new SchemeReaderException("Buffer full or some other I/O issue occurred", e);
+            throw new SchemeReaderException("Buffer full or some other I/O issue occurred.", e);
         }
     }
 
