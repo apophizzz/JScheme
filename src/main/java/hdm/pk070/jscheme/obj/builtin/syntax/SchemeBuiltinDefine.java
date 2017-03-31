@@ -14,7 +14,14 @@ import hdm.pk070.jscheme.table.environment.entry.EnvironmentEntry;
 import java.util.Objects;
 
 /**
- *
+ * Create a binding between a {@link SchemeSymbol} and a variable or rather a function
+ * in a local or global environment.
+ * <br/><br/>
+ * Usage examples:
+ * <br/><br/>
+ * (define abc 123)<br/>
+ * (define abc (+ 42 1))<br/>
+ * (define (add1 x) (+ 1 x))<br/>
  *
  * @author patrick.kleindienst
  */
@@ -35,9 +42,6 @@ public final class SchemeBuiltinDefine extends SchemeBuiltinSyntax {
         Objects.requireNonNull(argumentList);
         Objects.requireNonNull(environment);
 
-        // (define abc 123)
-        // (define abc (+ 42 1))
-        // (define (add1 x) (+ 1 x))
         // Argument list must be a cons
         if (!argumentList.typeOf(SchemeCons.class) || !((SchemeCons) argumentList).getCdr().typeOf(SchemeCons.class)) {
             throw new SchemeError("(define): bad syntax (requires exactly 2 arguments)");
