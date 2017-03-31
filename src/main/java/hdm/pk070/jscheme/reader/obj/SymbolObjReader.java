@@ -54,7 +54,7 @@ public class SymbolObjReader extends SchemeObjReader {
             }
         }
 
-        if (symbolBuilder.toString().length() > 0) {
+        if (!symbolBuilder.toString().isEmpty()) {
             Optional<SchemeSymbol> searchedSymbolOptional = SchemeSymbolTable.getInstance().
                     get(symbolBuilder.toString());
             return searchedSymbolOptional.orElse(SchemeSymbolTable.getInstance().
