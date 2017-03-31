@@ -44,7 +44,7 @@ public class SchemeEval {
         } else if (expression.typeOf(SchemeCons.class)) {
             return ListEvaluator.getInstance().doEval(((SchemeCons) expression), environment);
         } else {
-            // return expression without further evaluation in all the other cases
+            // Return expression without further evaluation in all the other cases.
             return expression;
         }
     }
