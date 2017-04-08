@@ -63,7 +63,7 @@ $ java -jar JScheme-1.0-jar-with-dependencies.jar
 
 <br>
 
-### Running *JScheme* from JAR file 
+### Running *JScheme* in Docker 
 Alternatively, you can also build a Docker image and launch *JScheme* from a Docker container. 
 That approach requires Docker to be installed on your machine: 
 
