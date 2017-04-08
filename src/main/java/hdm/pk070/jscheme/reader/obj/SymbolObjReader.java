@@ -42,23 +42,26 @@ public class SymbolObjReader extends SchemeObjReader {
             LOGGER.debug(String.format("Added character %c (%d) to symbol buffer", ch, (int) ch));
         }
 
-        if (symbolBuilder.toString().equals(SchemeConstants.NIL_VAL)) {
+
+        String symbolRead = symbolBuilder.toString();
+
+        if (symbolRead.equals(SchemeConstants.NIL_VAL)) {
             return new SchemeNil();
         }
 
-        if (symbolBuilder.toString().startsWith("#")) {
-            if (symbolBuilder.toString().equals(SchemeConstants.BOOL_TRUE_VAL)) {
+        if (symbolRead.startsWith("#")) {
+            if (symbolRead.equals(SchemeConstants.BOOL_TRUE_VAL)) {
                 return new SchemeTrue();
-            } else if (symbolBuilder.toString().equals(SchemeConstants.BOOL_FALSE_VAL)) {
+            } else if (symbolRead.equals(SchemeConstants.BOOL_FALSE_VAL)) {
                 return new SchemeFalse();
             }
         }
 
-        if (!symbolBuilder.toString().isEmpty()) {
+        if (!symbolRead.isEmpty()) {
             Optional<SchemeSymbol> searchedSymbolOptional = SchemeSymbolTable.getInstance().
-                    get(symbolBuilder.toString());
+                    get(symbolRead);
             return searchedSymbolOptional.orElse(SchemeSymbolTable.getInstance().
-                    add(new SchemeSymbol(symbolBuilder.toString())));
+                    add(new SchemeSymbol(symbolRead)));
         } else {
             throw new SchemeError("Cannot process empty symbol name!");
         }
