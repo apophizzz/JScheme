@@ -1,5 +1,6 @@
 # JScheme - Scheme interpreter written in Java
 
+<br/>
 
 ```
   Welcome to
@@ -69,7 +70,14 @@ That approach requires Docker to be installed on your machine:
 
 ```
 $ make docker
-$ docker run -i -t jscheme
+$ docker run -i -t pkleindienst/jscheme
+```
+
+Running JScheme from Docker hub is even more easier and preserves you from having to install
+and setup any other tooling except Docker:
+
+```
+$ docker run -i -t pkleindienst/jscheme
 ```
 
 <br/>
