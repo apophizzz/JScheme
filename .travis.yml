@@ -13,5 +13,5 @@ script: make all
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
-  - docker login -u="$DOCKER_USERNAME" -p="DOCKER_PASSWORD"
+  - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD";
     docker push pkleindienst/jscheme
