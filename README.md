@@ -28,33 +28,51 @@ Travis CI: [![Build Status](https://travis-ci.org/PaddySmalls/JScheme.svg?branch
 
 <br>
 
-## Getting started
+## Getting started with *JScheme* 
 
-### 1) Requirements
-JScheme uses [Maven 3](https://maven.apache.org/) for build management. If Maven is not already present on your machine get it and
-install it first.  
+Currently, there're several ways to get *JScheme* up and running on your local machine. Before you
+can start using your preferred method, make sure you performed the following steps:
 
-### 2) Clone repository
+#### 1) Install Apache Maven 3
+JScheme uses [Maven 3](https://maven.apache.org/) for build management. Ensure it's installed on your machine
+and `MVN_HOME` is set properly, pointing to the installation directory.
+
+#### 2) Clone repository
 Checkout the latest version of JScheme:   
 
 ```$ git clone https://github.com/PaddySmalls/JScheme```
 
-### 3) Start JScheme
-Make sure that Maven has been added to your _PATH_ and run the following goals:
+<br/>
+
+### Running *JScheme* with Maven
+
+Make sure Maven has been added to your _PATH_ and run the following goals:
 
 ```$ mvn compile exec:java```
 
-### 4) Alternative approach: Build and run JAR
-Instead of starting JScheme directly using Maven, you can also build a JAR and run it:
+<br>
+
+### Running *JScheme* from JAR file 
+Instead of starting JScheme using Maven directly, you can also build a JAR and run it:
 
 ```
-$ mvn clean package
+$ make
 $ cd target/
 $ java -jar JScheme-1.0-jar-with-dependencies.jar
 ```
 
-
 <br>
+
+### Running *JScheme* from JAR file 
+Alternatively, you can also build a Docker image and launch *JScheme* from a Docker container. 
+That approach requires Docker to be installed on your machine: 
+
+```
+$ make docker
+$ docker run -i -t jscheme
+```
+
+<br/>
 
 ## Functional range
 
