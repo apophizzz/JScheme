@@ -9,9 +9,8 @@ jdk:
 services:
   - docker
 
-script: make docker
+script: make
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
-  - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD";
-    docker push pkleindienst/jscheme
+  - curl -H "Content-Type: application/json" --data '{"docker_tag": "master"}' -X POST ${DOCKER_TRIGGER_URL}
