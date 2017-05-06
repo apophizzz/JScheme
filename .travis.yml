@@ -13,5 +13,4 @@ script: make
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
-  - | -
-    curl -H "Content-Type: application/json" --data '{"docker_tag": "master"}' -X POST ${DOCKER_TRIGGER_URL}
+  - make travis
