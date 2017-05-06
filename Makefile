@@ -2,7 +2,7 @@
 all:
 	mvn clean test package
 
-travis:
+trigger-docker-build:
 	curl -H "Content-Type: application/json" --data '{"docker_tag": "master"}' -X POST ${DOCKER_TRIGGER_URL}
 
 skipTests:
