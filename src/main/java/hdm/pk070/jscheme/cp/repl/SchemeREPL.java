@@ -18,15 +18,13 @@ public class SchemeREPL extends SchemeContinuationFunction {
 
     @Override
     public SchemeContinuation call(SchemeContinuation continuation) throws SchemeError {
-
         SchemePrint.showPrompt();
 
         SchemeReader schemeReader = SchemeReader.withStdin();
-        SchemeObject readResult;
-
-        readResult = schemeReader.read();
+        SchemeObject readResult = schemeReader.read();
 
         continuation.setProgramCounter(new SchemeREPL2());
+
         return SchemeContinuation.create(continuation, SchemeEvalCP.getInstance(), readResult,
                 GlobalEnvironment.getInstance());
     }

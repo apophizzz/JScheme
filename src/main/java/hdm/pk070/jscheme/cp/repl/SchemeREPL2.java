@@ -19,7 +19,7 @@ public class SchemeREPL2 extends SchemeContinuationFunction {
         SchemePrint.printEvalResult(returnValue);
 
         continuation.setProgramCounter(new SchemeREPL());
-        return continuation;
 
+        return continuation;
     }
 }
