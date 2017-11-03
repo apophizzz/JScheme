@@ -14,9 +14,9 @@
 
 
 This is my implementation of a Scheme interpreter which has been developed for the lecture _Design und Implementierung fortgeschrittener Programmiersprachen_
-offered by Claus Gittinger at [Stuttgart Media University](https://www.hdm-stuttgart.de/) (course of studies: Computer Science and Media). 
+offered by Claus Gittinger at [Stuttgart Media University](https://www.hdm-stuttgart.de/) (course of studies: Computer Science and Media).
 On the master branch, you will find a version that has been implemented in classical style, whereas the _cont\_passing_ branch offers tail call
-optimization in the form of continuation passing style. 
+optimization in the form of continuation passing style.
 
 Current branch: _cont\_passing_ (continuation passing **enabled**)
 
@@ -24,7 +24,7 @@ Current branch: _cont\_passing_ (continuation passing **enabled**)
 
 ## CI status
 
-Travis CI: [![Build Status](https://travis-ci.org/PaddySmalls/JScheme.svg?branch=master)](https://travis-ci.org/PaddySmalls/JScheme)
+Travis CI: [![Build Status](https://travis-ci.org/apophis90/JScheme.svg?branch=master)](https://travis-ci.org/PaddySmalls/JScheme)
 
 <br>
 
@@ -80,13 +80,13 @@ JScheme ships with a wide range of built-in data types:
 
 Special types:
 * Void
-* Nil 
+* Nil
 
 
 ---
 
 ### 2) Built-in functions
-A great set of pre-defined functions are available out of the box. 
+A great set of pre-defined functions are available out of the box.
 
 #### a) Arithmetic functions:
 
@@ -99,7 +99,7 @@ Addition:
 Subtraction:
 ```
 >> (- 3 2.0)
-=> 1.0 
+=> 1.0
 ```
 
 Multiplication:
@@ -210,9 +210,9 @@ Check if any Scheme object is a list:
 ```
 
 ### 4) Special feature: Continuation passing
-Since the Java stack keeps growing when evaluating deeply nested recursive function calls, you might encounter a _StackOverflowError_ when running 
+Since the Java stack keeps growing when evaluating deeply nested recursive function calls, you might encounter a _StackOverflowError_ when running
 JScheme with continuation passing disabled. Consider a function which computes the faculty of number x:
-    
+
 ```
 >> (define (fac x) (if (eq? 0 x) 1 (* x (fac (- x 1)))))
 >> (fac 5)
@@ -229,8 +229,8 @@ Exception in thread "main" java.lang.StackOverflowError
 	at java.util.regex.Pattern$GroupHead.match(Pattern.java:4658)
 	...
 ```
- 
-The JScheme version on this branch is based on continuation passing, realizing the control flow with continuation objects 
+
+The JScheme version on this branch is based on continuation passing, realizing the control flow with continuation objects
 instead of directly calling functions. Therefore, the Java stack won't become very large, regardless
 of how many recursive calls are triggered:
 
