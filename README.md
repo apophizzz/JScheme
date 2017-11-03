@@ -15,9 +15,9 @@
 
 
 This is my implementation of a Scheme interpreter which has been developed for the lecture _Design und Implementierung fortgeschrittener Programmiersprachen_
-offered by Claus Gittinger at [Stuttgart Media University](https://www.hdm-stuttgart.de/) (course of studies: Computer Science and Media). 
+offered by Claus Gittinger at [Stuttgart Media University](https://www.hdm-stuttgart.de/) (course of studies: Computer Science and Media).
 On the master branch, you will find a version that has been implemented in classical style, whereas the _cont\_passing_ branch offers tail call
-optimization in the form of continuation passing style. 
+optimization in the form of continuation passing style.
 
 Current branch: _master_ (continuation passing **disabled**)
 
@@ -25,11 +25,11 @@ Current branch: _master_ (continuation passing **disabled**)
 
 ## CI status
 
-Travis CI: [![Build Status](https://travis-ci.org/PaddySmalls/JScheme.svg?branch=master)](https://travis-ci.org/PaddySmalls/JScheme)
+Travis CI: [![Build Status](https://travis-ci.org/apophis90/JScheme.svg?branch=master)](https://travis-ci.org/PaddySmalls/JScheme)
 
 <br>
 
-## Getting started with *JScheme* 
+## Getting started with *JScheme*
 
 Currently, there're several ways to get *JScheme* up and running on your local machine. Before you
 can start using your preferred method, make sure you performed the following steps:
@@ -53,7 +53,7 @@ Make sure Maven has been added to your _PATH_ and run the following goals:
 
 <br>
 
-### Running *JScheme* from JAR file 
+### Running *JScheme* from JAR file
 Instead of starting JScheme using Maven directly, you can also build a JAR and run it:
 
 ```
@@ -64,9 +64,9 @@ $ java -jar JScheme-1.0-jar-with-dependencies.jar
 
 <br>
 
-### Running *JScheme* in Docker 
-Alternatively, you can also build a Docker image and launch *JScheme* from a Docker container. 
-That approach requires Docker to be installed on your machine: 
+### Running *JScheme* in Docker
+Alternatively, you can also build a Docker image and launch *JScheme* from a Docker container.
+That approach requires Docker to be installed on your machine:
 
 ```
 $ make docker
@@ -97,13 +97,13 @@ JScheme ships with a wide range of built-in data types:
 
 Special types:
 * Void
-* Nil 
+* Nil
 
 
 ---
 
 ### 2) Built-in functions
-A great set of pre-defined functions are available out of the box. 
+A great set of pre-defined functions are available out of the box.
 
 #### a) Arithmetic functions:
 
@@ -116,7 +116,7 @@ Addition:
 Subtraction:
 ```
 >> (- 3 2.0)
-=> 1.0 
+=> 1.0
 ```
 
 Multiplication:
