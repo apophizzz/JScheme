@@ -25,7 +25,7 @@ Current branch: _master_ (continuation passing **disabled**)
 
 ## CI status
 
-Travis CI: [![Build Status](https://travis-ci.org/apophis90/JScheme.svg?branch=master)](https://travis-ci.org/PaddySmalls/JScheme)
+Travis CI: [![Build Status](https://travis-ci.org/apophis90/JScheme.svg?branch=master)](https://travis-ci.org/apophis90/JScheme)
 
 <br>
 
